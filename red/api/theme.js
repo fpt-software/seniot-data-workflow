@@ -22,11 +22,11 @@ var clone = require("clone");
 
 var defaultContext = {
     page: {
-        title: "Node-RED",
+        title: "Seniot™ Gateway",
         favicon: "favicon.ico"
     },
     header: {
-        title: "Node-RED",
+        title: "Seniot™ Gateway",
         image: "red/images/node-red.png"
     },
     asset: {
@@ -82,7 +82,7 @@ module.exports = {
                 }
 
                 if (theme.page.favicon) {
-                    url = serveFile(themeApp,"/favicon/",theme.page.favicon)
+                    url = serveFile(themeApp,"/favicon/",theme.page.favicon);
                     if (url) {
                         themeContext.page.favicon = url;
                     }
@@ -115,7 +115,7 @@ module.exports = {
                 if (theme.deployButton.type == "simple") {
                     themeSettings.deployButton = {
                         type: "simple"
-                    }
+                    };
                     if (theme.deployButton.label) {
                         themeSettings.deployButton.label = theme.deployButton.label;
                     }
@@ -138,7 +138,7 @@ module.exports = {
                     if (url) {
                         themeContext.login = {
                             image: url
-                        }
+                        };
                     }
                 }
             }
@@ -156,4 +156,4 @@ module.exports = {
     settings: function() {
         return themeSettings;
     }
-}
+};

@@ -73,9 +73,9 @@ RED.menu = (function() {
 
             if (opt.sublabel) {
                 linkContent += '<span class="menu-label-container"><span class="menu-label">'+opt.label+'</span>'+
-                               '<span class="menu-sublabel">'+opt.sublabel+'</span></span>'
+                               '<span class="menu-sublabel">'+opt.sublabel+'</span></span>';
             } else {
-                linkContent += '<span class="menu-label">'+opt.label+'</span>'
+                linkContent += '<span class="menu-label">'+opt.label+'</span>';
             }
 
             linkContent += '</a>';
@@ -253,5 +253,5 @@ RED.menu = (function() {
         removeItem: removeItem,
         setAction: setAction
         //TODO: add an api for replacing a submenu - see library.js:loadFlowLibrary
-    }
+    };
 })();

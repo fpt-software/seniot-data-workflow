@@ -88,7 +88,7 @@ RED.settings = (function () {
         });
 
         load(done);
-    }
+    };
     
     var load = function(done) {
         $.ajax({
@@ -143,6 +143,6 @@ RED.settings = (function () {
         remove: remove,
         
         theme: theme
-    }
+    };
 })
 ();

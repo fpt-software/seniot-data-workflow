@@ -223,7 +223,7 @@ var RED = (function() {
 
         RED.i18n.init(function() {
             RED.settings.init(loadEditor);
-        })
+        });
     });
 
 

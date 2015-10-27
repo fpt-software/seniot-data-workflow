@@ -61,7 +61,7 @@ RED.view = (function() {
         "yellow": "#F9DF31",
         "blue":   "#53A3F3",
         "grey":   "#d3d3d3"
-    }
+    };
 
     var outer = d3.select("#chart")
         .append("svg:svg")
@@ -113,7 +113,7 @@ RED.view = (function() {
                 moveTouchCenter = [
                     touch1['pageX']+(b/2),
                     touch1['pageY']+(a/2)
-                ]
+                ];
                 startTouchDistance = Math.sqrt((a*a)+(b*b));
             } else {
                 var obj = d3.select(document.body);
@@ -352,7 +352,7 @@ RED.view = (function() {
                     t:'add',
                     nodes:[nn.id],
                     dirty:RED.nodes.dirty()
-                }
+                };
                 if (activeSubflow) {
                     var subflowRefresh = RED.subflow.refresh(true);
                     if (subflowRefresh) {
@@ -360,7 +360,7 @@ RED.view = (function() {
                             id:activeSubflow.id,
                             changed: activeSubflow.changed,
                             instances: subflowRefresh.instances
-                        }
+                        };
                     }
                 }
 

@@ -35,7 +35,7 @@ function checkBuild() {
     try {
         var stats = fs.statSync(editorFile);
     } catch(err) {
-        var e = new Error("Node-RED not built");
+        var e = new Error("Seniot™ Gateway not built");
         e.code = "not_built";
         throw e;
     }

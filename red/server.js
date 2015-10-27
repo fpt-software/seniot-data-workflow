@@ -60,7 +60,7 @@ function start() {
             }
             console.log("\n\n"+log._("runtime.welcome")+"\n===================\n");
             if (settings.version) {
-                log.info(log._("runtime.version",{component:"Node-RED",version:"v"+settings.version}));
+                log.info(log._("runtime.version",{component:"Seniot™ Gateway",version:"v"+settings.version}));
             }
             log.info(log._("runtime.version",{component:"Node.js ",version:process.version}));
             log.info(log._("server.loading"));

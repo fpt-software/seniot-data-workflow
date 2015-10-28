@@ -44,7 +44,7 @@ describe("theme handler", function() {
         context.page.should.have.a.property("favicon","favicon.ico");
         context.should.have.a.property("header");
         context.header.should.have.a.property("title","Seniot™ Gateway");
-        context.header.should.have.a.property("image","red/images/fpt-software.jpg");
+        context.header.should.have.a.property("image","red/images/fpt-software.png");
         
         should.not.exist(theme.settings());
     });

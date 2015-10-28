@@ -27,7 +27,7 @@ var defaultContext = {
     },
     header: {
         title: "Seniot™ Gateway",
-        image: "red/images/fpt-software.jpg"
+        image: "red/images/fpt-software.png"
     },
     asset: {
         red: (process.env.NODE_ENV == "development")? "red/red.js":"red/red.min.js"

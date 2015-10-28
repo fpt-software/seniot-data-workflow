@@ -22,11 +22,11 @@ var clone = require("clone");
 
 var defaultContext = {
     page: {
-        title: "Seniot™ Gateway",
+        title: "Seniot™ Data Workflow Platform",
         favicon: "favicon.ico"
     },
     header: {
-        title: "Seniot™ Gateway",
+        title: "Seniot™ Data Workflow Platform",
         image: "red/images/fpt-software.png"
     },
     asset: {

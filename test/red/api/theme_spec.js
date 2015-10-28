@@ -40,11 +40,11 @@ describe("theme handler", function() {
         
         var context = theme.context();
         context.should.have.a.property("page");
-        context.page.should.have.a.property("title","Node-RED");
+        context.page.should.have.a.property("title","Seniot™ Gateway");
         context.page.should.have.a.property("favicon","favicon.ico");
         context.should.have.a.property("header");
-        context.header.should.have.a.property("title","Node-RED");
-        context.header.should.have.a.property("image","red/images/node-red.png");
+        context.header.should.have.a.property("title","Seniot™ Gateway");
+        context.header.should.have.a.property("image","red/images/fpt-software.jpg");
         
         should.not.exist(theme.settings());
     });

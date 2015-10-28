@@ -39,7 +39,7 @@ function MQTTClient(port,host) {
          this.messageId = 1;
       }
       return this.messageId;
-   }
+   };
    events.EventEmitter.call(this);
 }
 util.inherits(MQTTClient, events.EventEmitter);
@@ -108,8 +108,8 @@ MQTTClient.prototype.connect = function(options) {
 
                       },self.options.keepalive*500,self);
                       self.pingOutstanding = false;
-                      self.lastInbound = (new Date()).getTime()
-                      self.lastOutbound = (new Date()).getTime()
+                      self.lastInbound = (new Date()).getTime();
+                      self.lastOutbound = (new Date()).getTime();
                       self.connected = true;
                       self.connectionError = false;
                       self.emit('connect');
@@ -119,13 +119,13 @@ MQTTClient.prototype.connect = function(options) {
                    }
              });
              client.on('suback',function(packet) {
-                   self.lastInbound = (new Date()).getTime()
+                   self.lastInbound = (new Date()).getTime();
                    var topic = self.pendingSubscriptions[packet.messageId];
                    self.emit('subscribe',topic,packet.granted[0]);
                    delete self.pendingSubscriptions[packet.messageId];
              });
              client.on('unsuback',function(packet) {
-                   self.lastInbound = (new Date()).getTime()
+                   self.lastInbound = (new Date()).getTime();
                    var topic = self.pendingSubscriptions[packet.messageId];
                    self.emit('unsubscribe',topic);
                    delete self.pendingSubscriptions[packet.messageId];
@@ -137,52 +137,52 @@ MQTTClient.prototype.connect = function(options) {
                       self.emit('message',p.topic,p.payload,p.qos,p.retain);
                    } else {
                       self.inboundMessages[packet.messageId] = packet;
-                      this.lastOutbound = (new Date()).getTime()
+                      this.lastOutbound = (new Date()).getTime();
                       self.client.pubrec(packet);
                    }
                    if (packet.qos == 1) {
-                      this.lastOutbound = (new Date()).getTime()
+                      this.lastOutbound = (new Date()).getTime();
                       self.client.puback(packet);
                    }
              });
 
              client.on('pubrel',function(packet) {
-                   self.lastInbound = (new Date()).getTime()
+                   self.lastInbound = (new Date()).getTime();
                    var p = self.inboundMessages[packet.messageId];
                    if (p) {
                        self.emit('message',p.topic,p.payload,p.qos,p.retain);
                        delete self.inboundMessages[packet.messageId];
                    }
-                   self.lastOutbound = (new Date()).getTime()
+                   self.lastOutbound = (new Date()).getTime();
                    self.client.pubcomp(packet);
              });
 
              client.on('puback',function(packet) {
-                   self.lastInbound = (new Date()).getTime()
+                   self.lastInbound = (new Date()).getTime();
                    // outbound qos-1 complete
              });
 
              client.on('pubrec',function(packet) {
-                   self.lastInbound = (new Date()).getTime()
-                   self.lastOutbound = (new Date()).getTime()
+                   self.lastInbound = (new Date()).getTime();
+                   self.lastOutbound = (new Date()).getTime();
                    self.client.pubrel(packet);
              });
              client.on('pubcomp',function(packet) {
-                   self.lastInbound = (new Date()).getTime()
+                   self.lastInbound = (new Date()).getTime();
                    // outbound qos-2 complete
              });
              client.on('pingresp',function(packet) {
                    //util.log('[mqtt] ['+self.uid+'] received pingresp');
-                   self.lastInbound = (new Date()).getTime()
+                   self.lastInbound = (new Date()).getTime();
                    self.pingOutstanding = false;
              });
 
-             this.lastOutbound = (new Date()).getTime()
+             this.lastOutbound = (new Date()).getTime();
              this.connectionError = false;
              client.connect(self.options);
        });
    }
-}
+};
 
 MQTTClient.prototype.subscribe = function(topic,qos) {
    var self = this;
@@ -196,7 +196,7 @@ MQTTClient.prototype.subscribe = function(topic,qos) {
       self.client.subscribe(options);
       self.client.setPacketEncoding('binary');
    }
-}
+};
 MQTTClient.prototype.unsubscribe = function(topic) {
    var self = this;
    if (self.connected) {
@@ -205,10 +205,10 @@ MQTTClient.prototype.unsubscribe = function(topic) {
          messageId: self._nextMessageId()
       };
       this.pendingSubscriptions[options.messageId] = topic;
-      this.lastOutbound = (new Date()).getTime()
+      this.lastOutbound = (new Date()).getTime();
       self.client.unsubscribe(options);
    }
-}
+};
 
 MQTTClient.prototype.publish = function(topic,payload,qos,retain) {
    var self = this;
@@ -230,10 +230,10 @@ MQTTClient.prototype.publish = function(topic,payload,qos,retain) {
       if (options.qos != 0) {
          options.messageId = self._nextMessageId();
       }
-      this.lastOutbound = (new Date()).getTime()
+      this.lastOutbound = (new Date()).getTime();
       self.client.publish(options);
    }
-}
+};
 
 MQTTClient.prototype.disconnect = function() {
    var self = this;
@@ -244,11 +244,11 @@ MQTTClient.prototype.disconnect = function() {
        } catch(err) {
        }
    }
-}
+};
 MQTTClient.prototype.isConnected = function() {
     return this.connected;
-}
+};
 module.exports.createClient = function(port,host) {
    var mqtt_client = new MQTTClient(port,host);
    return mqtt_client;
-}
+};

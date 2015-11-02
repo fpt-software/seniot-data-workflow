@@ -12,6 +12,8 @@
 coverage
 credentials.json
 flows*.json
+awsCerts
+azureCerts
 nodes/node-red-nodes/
 node_modules
 public

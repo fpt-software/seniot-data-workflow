@@ -147,7 +147,7 @@ var storageModuleInterface = {
         }
 /* End deprecated functions */
 
-}
+};
 
 
 function listFlows(path) {

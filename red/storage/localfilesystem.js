@@ -220,13 +220,13 @@ var localfilesystem = {
             fs.exists(credentialsFile, function(exists) {
                 if (exists) {
                     resolve(nodeFn.call(fs.readFile, credentialsFile, 'utf8').then(function(data) {
-                        return JSON.parse(data)
+                        return JSON.parse(data);
                     }));
                 } else {
                     fs.exists(oldCredentialsFile, function(exists) {
                         if (exists) {
                             resolve(nodeFn.call(fs.readFile, oldCredentialsFile, 'utf8').then(function(data) {
-                                return JSON.parse(data)
+                                return JSON.parse(data);
                             }));
                         } else {
                             resolve({});

@@ -1,5 +1,5 @@
 {
-    "name"         : "node-red",
+    "name"         : "seniot-data-workflow",
     "version"      : "0.11.2",
     "description"  : "A visual tool for wiring the Internet of Things",
     "homepage"     : "http://nodered.org",
@@ -19,7 +19,8 @@
     },
     "contributors": [
         {"name": "Nick O'Leary"},
-        {"name": "Dave Conway-Jones"}
+        {"name": "Dave Conway-Jones"},
+        {"name": "Duong Dinh Cuong"}
     ],
     "keywords": [
         "editor", "messaging", "iot", "m2m", "pi", "arduino", "beaglebone", "ibm", "flow"

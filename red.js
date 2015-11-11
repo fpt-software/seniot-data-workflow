@@ -24,6 +24,7 @@ var path = require("path");
 var fs = require("fs-extra");
 var RED = require("./red/red.js");
 var log = require("./red/log");
+var pmx = require('pmx').init();
 
 var server;
 var app = express();
@@ -42,6 +43,101 @@ var shortHands = {
     "u":["--userDir"],
     "?":["--help"]
 };
+
+
+var probe = pmx.probe();
+
+/**
+ * Probe system #1 - Histograms
+ *
+ * Measuring the event loop delay
+ */
+
+// refresh in one hour
+var TIME_INTERVAL = 60*60*1000; 
+
+var oldTime = process.hrtime();
+
+var histogram = probe.histogram({
+  name        : 'Loop delay',
+  measurement : 'mean',
+  unit        : 'ms'
+});
+
+setInterval(function() {
+  var newTime = process.hrtime();
+  var delay = (newTime[0] - oldTime[0]) * 1e3 + (newTime[1] - oldTime[1]) / 1e6 - TIME_INTERVAL;
+  oldTime = newTime;
+  histogram.update(delay);
+}, TIME_INTERVAL);
+
+/**
+ * Probe system #3 - Meter
+ *
+ * Probe things that are measured as events / interval.
+ */
+var meter = probe.meter({
+  name    : 'req/min',
+  seconds : 60
+});
+
+/**
+ * Probe system #4 - Counter
+ *
+ * Measure things that increment or decrement
+ */
+var counter = probe.counter({
+  name : 'Downloads'
+});
+
+var req_counter = 0;
+/**
+ * Probe system #2 - Metrics
+ *
+ * Probe values that can be read instantly.
+ */
+var rt_users = probe.metric({
+  name : 'Req count',
+  value : function() {
+    return req_counter;
+  }
+});
+/**
+ * Now let's create some remote action
+ * And act on the Counter probe we just created
+ */
+pmx.action('decrement', {comment : 'Increment downloads'}, function(reply) {
+  // Decrement the previous counter
+  counter.dec();
+  reply({success : true});
+});
+
+pmx.action('increment', {comment : 'Decrement downloads'}, function(reply) {
+  // Increment the previous counter
+  counter.inc();
+  reply({success : true});
+});
+
+pmx.action('throw error', {comment : 'Throw a random error'}, function(reply) {
+  // Increment the previous counter
+  throw new Error('This error will be caught!');
+});
+
+pmx.action('get env', function(reply) {
+  // Increment the previous counter
+  reply(process.env);
+});
+
+pmx.action('modules version', {comment : 'Get modules version'}, function(reply) {
+  // Increment the previous counter
+  reply(process.versions);
+});
+
+pmx.action('Action with params', {comment: 'Returns sent params'}, function(data, reply) {
+  // Replies the received data
+  reply("Data received: " + JSON.stringify(data));
+});
+
 nopt.invalidHandler = function(k,v,t) {
     // TODO: console.log(k,v,t);
 }
@@ -245,6 +341,7 @@ RED.start().then(function() {
             if (settings.httpAdminRoot === false) {
                 RED.log.info(log._("server.admin-ui-disabled"));
             }
+            meter.mark();
             process.title = 'node-red';
             RED.log.info(log._("server.now-running", {listenpath:getListenPath()}));
         });

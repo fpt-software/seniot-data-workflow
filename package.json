@@ -26,6 +26,7 @@
         "editor", "messaging", "iot", "m2m", "pi", "arduino", "beaglebone", "ibm", "flow"
     ],
     "dependencies": {
+    	"pmx" : "latest",
         "express": "4.13.3",
         "body-parser": "1.14.1",
         "when": "3.7.4",

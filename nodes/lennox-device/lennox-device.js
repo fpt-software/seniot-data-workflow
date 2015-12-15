@@ -14,20 +14,25 @@ module.exports = function(RED) {
 
 		this.connect = function() {
 			var deferred = q.defer();
-			fs.readFile('../azure/devices/' + self.deviceId + ".json", 'utf8', function(err, data) {
-				if (err) {
-					deferred.reject(err);
-				} else {
-					if (!self.device) {
-						data = JSON.parse(data);
-						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
-						self.log("Initiate Azure IoT Hub AMQP node for " + self.deviceId + ", " + connectionString);
-						self.device = new Client.fromConnectionString(connectionString, Device.Amqp);
-						self.log("Created Azure IoT Hub AMQP" + self.device);
+			if (deviceId) {
+				fs.readFile('../azure/devices/' + self.deviceId + ".json", 'utf8', function(err, data) {
+					if (err) {
+						deferred.reject(err);
+					} else {
+						if (!self.device) {
+							data = JSON.parse(data);
+							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
+							self.log("Initiate Azure IoT Hub AMQP node for " + self.deviceId + ", " + connectionString);
+							self.device = new Client.fromConnectionString(connectionString, Device.Amqp);
+							self.log("Created Azure IoT Hub AMQP" + self.device);
+						}
+						deferred.resolve(self.device);
 					}
-					deferred.resolve(self.device);
-				}
-			});
+				});
+			} else {
+				deferred.resolve(null);
+			}
+
 			return deferred.promise;
 		};
 	}
@@ -116,7 +121,8 @@ module.exports = function(RED) {
 					var message = new Message(msg.payload);
 					console.log("Sending message: " + message.getData());
 					device.sendEvent(message, function(err, res) {
-						if (!err) console.log("Message was sent successful.");						
+						if (!err)
+							console.log("Message was sent successful.");
 						self.send(err);
 					});
 				});
@@ -137,6 +143,7 @@ module.exports = function(RED) {
 			this.error("lennox-hub out is not configured");
 		}
 	}
+
 
 	RED.nodes.registerType("lennox-hub out", lnxIoTHubNodeOut);
 };

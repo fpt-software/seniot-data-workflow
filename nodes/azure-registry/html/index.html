@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<!--
+Eventually by HTML5 UP
+html5up.net | @n33co
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Azure IoT Hub</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+		<header id="header">
+			<h1>Device Registration</h1>
+			<p>
+				A simple process for telling the Azure IoT Hub who am I, on behalf of a connected thing.
+				<br />
+				Gathering the secure connection information for the next simultaneous communication to the Hub.
+			</p>
+		</header>
+
+		<!-- Signup Form -->
+		<form id="signup-form" method="post" action="#">
+			<input type="text" name="DeviceId" id="deviceId" placeholder="Enter the Device ID" />
+			<input type="submit" value="Register" />
+		</form>
+				
+		<form id="signup-form" method="post" action="#">
+			<video autoplay></video>
+			<div>
+				<span style="
+				display: block;
+				position: absolute;
+				left: 135px;
+				top: 100px;
+				margin-left: 0;
+				margin-right: 0;
+				">Scan a barcode</span>
+			</div>
+		</form>
+		<form><span id="message"></span></form>
+				
+		<style>
+			video {
+				max-width: 365px;
+				height: 250px;
+				background: rgba(255,255,255,0.5);
+				border: 1px solid #ccc;
+			}
+			.grayscale {
+				+
+				filter: grayscale(1);
+			}
+			.sepia {
+				+
+				filter: sepia(1);
+			}
+			.blur {
+				+
+				filter: blur(3px);
+			}
+			...
+		</style>
+
+		<script>
+			var idx = 0;
+			var filters = ['grayscale', 'sepia', 'blur', 'brightness', 'contrast', 'hue-rotate', 'hue-rotate2', 'hue-rotate3', 'saturate', 'invert', ''];
+
+			function changeFilter(e) {
+				var el = e.target;
+				el.className = '';
+				var effect = filters[idx++ % filters.length];
+				// loop through filters.
+				if (effect) {
+					el.classList.add(effect);
+				}
+			}
+
+
+			document.querySelector('video').addEventListener('click', changeFilter, false);
+		</script>
+		<!-- Footer -->
+		<footer id="footer">
+			<ul class="icons">
+				<li>
+					<a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a>
+				</li>
+				<li>
+					<a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a>
+				</li>
+				<li>
+					<a href="#" class="icon fa-github"><span class="label">GitHub</span></a>
+				</li>
+				<li>
+					<a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a>
+				</li>
+			</ul>
+			<ul class="copyright">
+				<li>
+					&copy; FPT Software.
+				</li>
+				<li>
+					Credits: <a href="http://html5up.net">HTML5 UP</a>
+				</li>
+			</ul>
+		</footer>
+
+		<!-- Scripts -->
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

@@ -1,7 +1,7 @@
 {
-    "name"          : "node-red-node-seniot-lennox-device",
+    "name"          : "node-red-node-azure-https",
     "version"       : "0.0.1",
-    "description"   : "An azure-iot node for Node-RED",
+    "description"   : "A aws-iot node for Node-RED",
     "dependencies"  : {
         "azure-iot-device":"^1.0.0-preview.6",
         "amqp10": "^2.0.3",
@@ -11,18 +11,13 @@
 	    "colors-tmpl": "^1.0.0",
 	    "nopt": "^3.0.4",
 	    "prettyjson": "^1.1.3",
-	    "uuid": "^2.0.1",
-	    "q": "^1.4.1"
-    },
-    "repository" : {
-        "type":"git",
-        "url":"https://github.com/seniot/node-red-nodes/io/lennox-device/"
+	    "uuid": "^2.0.1"
     },
     "license": "Apache-2.0",
     "keywords": [ "node-red", "azure-iot" ],
     "node-red"      : {
         "nodes"     : {
-            "azure-iot": "lennox-device.js"
+            "azure-iot": "azure-https.js"
         }
     },
     "author": {

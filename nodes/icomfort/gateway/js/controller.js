@@ -8,10 +8,10 @@ function wsGateway() {
 	wsClient.onmessage = function(m) {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
-		if (msg.topic == "power") {
+		if (msg.type == "power") {
 			setPowerState(msg.data.powerState);
-		} else {
-
+		} else if (msg.type == "status") {
+			$("#statusView").html("<span>" + msg.data + "</span>");
 		}
 	};
 	wsClient.onopen = function() {
@@ -22,6 +22,7 @@ function wsGateway() {
 
 	wsClient.onclose = function() {
 		$("#power").attr("disabled", true).addClass("ui-state-disabled");
+		$("#statusView").empty();
 		console.log('Node-RED connection closed: ' + new Date().toUTCString());
 		connected = false;
 		wsClient = null;
@@ -29,6 +30,7 @@ function wsGateway() {
 	};
 	wsClient.onerror = function() {
 		$("#power").attr("disabled", true).addClass("ui-state-disabled");
+		$("#statusView").empty();
 		console.log("connection error");
 	};
 }
@@ -52,7 +54,7 @@ $(function() {
 		$(event.target).toggleClass("ui-btn-active");
 		powerOn = !powerOn;
 		wsClient.send(JSON.stringify({
-			topic : "power",
+			type : "power",
 			data : {
 				powerState : powerOn
 			}

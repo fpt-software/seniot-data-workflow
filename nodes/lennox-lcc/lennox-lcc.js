@@ -43,8 +43,8 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
-		RED.httpNode.use(this.url, express.static(__dirname + '/gateway'));
-		RED.httpNode.use(this.url, express.static(__dirname + '/iharmony'));
+		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
+		RED.httpNode.use("/lennox/iharmony", express.static(__dirname + '/iharmony'));
 		
 	}
 

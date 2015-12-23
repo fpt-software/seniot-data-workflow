@@ -21,7 +21,7 @@
 <script type="text/javascript">
 	RED.nodes.registerType('lennox-lcc', {
 		category : 'display-category',
-		color : "red",
+		color : "#7B999E",
 		defaults : {
 			name : {
 				value : ""
@@ -38,7 +38,7 @@
 		icon : "arrow-in.png",
 		align : "left",
 		label : function() {
-			return this.name;
+			return this.name || "Lennox LCC";
 		},
 		labelStyle : function() {
 			return this.name ? "node_label_italic" : "lennox-lcc";

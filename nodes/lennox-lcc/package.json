@@ -11,7 +11,7 @@
     "keywords": [ "node-red", "registration" ],
     "node-red"      : {
         "nodes"     : {
-            "lennox-reg": "lennox-lcc.js"
+            "lennox-lcc": "lennox-lcc.js"
         }
     },
     "author": {

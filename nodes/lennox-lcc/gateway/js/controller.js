@@ -5,7 +5,7 @@ var itemLookup = null;
 var statusMsg = false;
 var daiableWidgets = false;
 var connected = false;
-var wsUri = "ws://" + window.location.hostname + ":1880/ws/mobiui";
+var wsUri = "ws://" + window.location.hostname + ":1880/ws/gateway";
 var ws = null;
 function wsConn() {
 	ws = new WebSocket(wsUri);

@@ -1,4 +1,4 @@
-node-red-node-lennox-reg
+node-red-node-lennox-lcc
 ====================
 
 A Node-Red node to register LCC device to the IoT Hub.
@@ -8,7 +8,7 @@ Install
 
 Run the following command in the root directory of your Node-RED install
 
-    npm install node-red-node-lennox-reg
+    npm install node-red-node-lennox-lcc
 
 
 Usage

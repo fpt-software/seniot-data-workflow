@@ -1,7 +1,7 @@
 {
-    "name"          : "node-red-node-lennox-reg",
+    "name"          : "node-red-node-lennox-lcc",
     "version"       : "0.0.1",
-    "description"   : "A lennox registration node for Node-RED",
+    "description"   : "A lennox LCC simulator node for Node-RED",
     "dependencies"  : {
     	"node-pid-controller":"^0.1.2",
     	"express": "^4.12.0",
@@ -11,7 +11,7 @@
     "keywords": [ "node-red", "registration" ],
     "node-red"      : {
         "nodes"     : {
-            "lennox-reg": "lennox-reg.js"
+            "lennox-reg": "lennox-lcc.js"
         }
     },
     "author": {

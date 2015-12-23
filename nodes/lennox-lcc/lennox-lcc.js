@@ -14,8 +14,6 @@
  * limitations under the License.
  **/
 var express = require("express");
-var Controller = require('node-pid-controller');
-require('String.prototype.startsWith');
 
 module.exports = function(RED) {
 	"use strict";
@@ -26,7 +24,6 @@ module.exports = function(RED) {
 		this.name = n.name.trim();
 		this.payload = n.payload;
 		this.topic = n.topic;
-		this.url = "/lennox/reg";
 
 		nodes.push(this);
 
@@ -46,16 +43,14 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
-		if (this.url) {
-			RED.httpNode.use(this.url, express.static(__dirname + '/html'));
-		} else {
-			this.error("lennox-reg in is not configured");
-		}
+		RED.httpNode.use(this.url, express.static(__dirname + '/gateway'));
+		RED.httpNode.use(this.url, express.static(__dirname + '/iharmony'));
+		
 	}
 
-	RED.nodes.registerType("lennox-reg", lennoxReg);
+	RED.nodes.registerType("lennox-lcc", lennoxReg);
 
-	RED.httpAdmin.post("/lennox/reg/:id", RED.auth.needsPermission("inject.write"), function(req, res) {
+	RED.httpAdmin.post("/lennox/lcc/:id", RED.auth.needsPermission("inject.write"), function(req, res) {
 		var node = RED.nodes.getNode(req.params.id);
 		if (node != null) {
 			try {

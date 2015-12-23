@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="lennox-reg">
+<script type="text/x-red" data-template-name="lennox-lcc">
 	<div class="form-row">
 	<label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
 	<input type="text" id="node-input-name" placeholder="name">
@@ -13,15 +13,15 @@
 	</div>
 </script>
 
-<script type="text/x-red" data-help-name="lennox-reg">
+<script type="text/x-red" data-help-name="lennox-lcc">
 	Using this node you can display the status of the device provisioning process to the IoT Hub.<br/>
 	<p>This node is work with Lennox Device mangement system.</p>
 </script>
 
 <script type="text/javascript">
-	RED.nodes.registerType('lennox-reg', {
+	RED.nodes.registerType('lennox-lcc', {
 		category : 'display-category',
-		color : "darksalmon",
+		color : "red",
 		defaults : {
 			name : {
 				value : ""
@@ -41,14 +41,14 @@
 			return this.name;
 		},
 		labelStyle : function() {
-			return this.name ? "node_label_italic" : "lennox-reg";
+			return this.name ? "node_label_italic" : "lennox-lcc";
 		},
 		button : {
 			onclick : function() {
 				var label = (this.name || this.payload).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 				var node = this;
 				$.ajax({
-					url : "lennox/reg/" + this.id,
+					url : "lennox/lcc/" + this.id,
 					type : "POST",
 					success : function(resp) {
 						RED.notify(node._("inject.success", {

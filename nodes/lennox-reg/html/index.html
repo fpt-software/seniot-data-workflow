@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<title>Node-RED mobi ui</title>
+		<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
+		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="//code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.3/highcharts.js"></script>
+		<script src="js/controller.js"></script>
+		<link rel="stylesheet" href="css/main.css"/>
+	</head>
+	<body>
+		<!-- Home -->
+		<div data-role="page" id="controls-charts">
+			<div id="header1" data-role="header">
+				<h3 style="color:#FF6C01">Node-RED mobi ui</h3>
+				<a href="#" title="reload" class="ui-btn ui-shadow ui-corner-all ui-icon-refresh ui-btn-icon-notext ui-btn-inline" id="b1" >Reload</a>
+			</div>
+			<div id="c1" class="ui-content">
+				<div id="statusView" style=""></div>
+				<div class="ui-field-contain">
+					<label for="tsw-1">flip switch 1</label>
+					<select id="tsw-1" data-role="flipswitch" data-state="0" data-req="">
+						<option value="0">Off</option>
+						<option value="1">On</option>
+					</select>
+				</div>
+				<div class="ui-field-contain">
+					<label for="tsw-2">flip switch 2</label>
+					<select id="tsw-2" data-role="flipswitch" data-state="0" data-req="">
+						<option value="0">Off</option>
+						<option value="1">On</option>
+					</select>
+				</div>
+				<div class="ui-field-contain">
+					<label for="sld-1">slider 1</label>
+					<input id="sld-1" type="range" data-role="range" value="0" min="0" max="100" step="1" data-highlight="true" />
+				</div>
+				<div class="ui-field-contain">
+					<label for="val-1">value 1</label>
+					<input type="text" id="val-1" placeholder="" value="" readonly="readonly">
+				</div>
+				<div class="ui-field-contain">
+					<label for="txt-1">Message</label>
+					<a  href="#txt-1-pop" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline  ui-mini ui-icon-edit ui-btn-icon-left ui-btn-a" data-transition="pop">Edit</a>
+					<div id="txt-1-pop"  data-role="popup"  data-theme="a" class="ui-corner-all" style="padding:15px;">
+						<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+						<h4>Message</h4>
+						<textarea id="txt-1" cols="30" rows="60" style="width:100%; padding-top:10px;" maxlength=140></textarea>
+						<button   id="txt-1_save" data-ui-type="pop-save" type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-mini ui-icon-check">
+							Send
+						</button>
+					</div>
+				</div>
+				<div id="container" style="width: 100%; margin-left:-15px;"></div>
+			</div><!-- eof content -->
+		</div><!-- eof page -->
+	</body>
+</html>

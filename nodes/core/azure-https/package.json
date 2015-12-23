@@ -17,7 +17,7 @@
     "keywords": [ "node-red", "azure-iot" ],
     "node-red"      : {
         "nodes"     : {
-            "azure-iot": "azure-https.js"
+            "azure-https": "azure-https.js"
         }
     },
     "author": {

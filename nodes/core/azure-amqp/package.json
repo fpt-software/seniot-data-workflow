@@ -18,7 +18,7 @@
     "keywords": [ "node-red", "azure-iot" ],
     "node-red"      : {
         "nodes"     : {
-            "azure-iot": "azure-amqp.js"
+            "azure-amqp": "azure-amqp.js"
         }
     },
     "author": {

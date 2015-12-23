@@ -1,66 +1,65 @@
 @media only screen and (min-width: 521px) {
-				#header1 {
-					width: 507px !important;
-					margin: auto auto !important;
-					position: relative !important;
-					border: 1px solid #cccccc;
-				}
-				#c1 {
-					width: 475px !important;
-					min-height: 500px !important;
-					margin: auto auto !important;
-					position: relative !important;
-					border: 1px solid #cccccc;
-				}
-			}
-			.alert {
-				font-weight: bold;
-				color: #FF6C01;
-			}
-			.smallin .ui-input-text {
-				width: 200px !important;
-				color: red;
-			}
-			legend.h1lb {
-				padding: 10px 0 5px 0;
-			}
-			.statusView {
-				width: 100% !important;
-				margin: 0px;
-				position: relative !important;
-				height: 28px;
-				padding: 10px 0 0 0;
-				background-color: #E9E9E9;
-				font-weight: bold;
-				-webkit-border-radius: 0.7em !important;
-				border-radius: 0.7em;
-				display: none;
-				text-align: center;
-			}
-			.statusViewAlert {
-				width: 100% !important;
-				margin: 0px;
-				position: relative !important;
-				height: 28px;
-				padding: 10px 0 0 0;
-				background-color: #F8B584 !important;
-				font-weight: bold;
-				-webkit-border-radius: 0.7em !important;
-				border-radius: 0.7em;
-				display: none;
-				text-align: center;
-			}
-			.ui-flipswitch {"border-radius: 2em !important; -webkit-border-radius: 2em !important; -moz-border-radius: 2em !important;}
-				/* Active button */
-				.ui-page-theme-a .ui-btn.ui-btn-active,html .ui-bar-a .ui-btn.ui-btn-active,html .ui-body-a .ui-btn.ui-btn-active,html body .ui-group-theme-a .ui-btn.ui-btn-active,html head + body .ui-btn.ui-btn-a.ui-btn-active,
-				/* Active checkbox icon */
-				.ui-page-theme-a .ui-checkbox-on:after,html .ui-bar-a .ui-checkbox-on:after,html .ui-body-a .ui-checkbox-on:after,html body .ui-group-theme-a .ui-checkbox-on:after,.ui-btn.ui-checkbox-on.ui-btn-a:after,
-				/* Active flipswitch background */.ui-page-theme-a .ui-flipswitch-active,html .ui-bar-a .ui-flipswitch-active,html .ui-body-a .ui-flipswitch-active,html body .ui-group-theme-a .ui-flipswitch-active,
-				html body .ui-flipswitch.ui-bar-a.ui-flipswitch-active,
-				/* Active slider track */
-				.ui-page-theme-a .ui-slider-track .ui-btn-active,html .ui-bar-a .ui-slider-track .ui-btn-active,html .ui-body-a .ui-slider-track .ui-btn-active,html body .ui-group-theme-a .ui-slider-track .ui-btn-active,html body div.ui-slider-track.ui-body-a .ui-btn-active {
-				background-color: #FF6C01 !important;
-				border-color: #FF6C01 !important;
-				color: #fff/*{a-active-color}*/;
-				text-shadow: 0/*{a-active-shadow-x}*/1px/*{a-active-shadow-y}*/0/*{a-active-shadow-radius}*/#005599/*{a-active-shadow-color}*/;
-			}
+	#header1 {
+		width: 507px !important;
+		margin: auto auto !important;
+		position: relative !important;
+		border: 1px solid #cccccc;
+	}
+	#gateway {
+		width: 475px !important;
+		margin: auto auto !important;
+		position: relative !important;
+		border: 1px solid #cccccc;
+	}
+}
+#gateway {
+	background: white;
+}
+.alert {
+	font-weight: bold;
+	color: #FF6C01;
+}
+.power-off {
+	display: none;
+}
+.smallin .ui-input-text {
+	width: 200px !important;
+	color: red;
+}
+legend.h1lb {
+	padding: 10px 0 5px 0;
+}
+#statusView {
+	width: 100% !important;
+	margin: 0px;
+	position: relative !important;
+	height: 28px;
+	padding: 10px 0 0 0;
+	background-color: #000;
+	font-weight: bold;
+	-webkit-border-radius: 0.7em !important;
+	border-radius: 0.7em;
+	display: block;
+	text-align: center;
+}
+.ui-field-contain {
+	text-align: center;
+}
+.ui-btn-icon-notext.ui-btn-left {
+    top: 1.2em;
+    left: .5em;
+}
+.ui-flipswitch {"border-radius: 2em !important; -webkit-border-radius: 2em !important; -moz-border-radius: 2em !important;}
+	/* Active button */
+	.ui-page-theme-a .ui-btn.ui-btn-active,html .ui-bar-a .ui-btn.ui-btn-active,html .ui-body-a .ui-btn.ui-btn-active,html body .ui-group-theme-a .ui-btn.ui-btn-active,html head + body .ui-btn.ui-btn-a.ui-btn-active,
+	/* Active checkbox icon */
+	.ui-page-theme-a .ui-checkbox-on:after,html .ui-bar-a .ui-checkbox-on:after,html .ui-body-a .ui-checkbox-on:after,html body .ui-group-theme-a .ui-checkbox-on:after,.ui-btn.ui-checkbox-on.ui-btn-a:after,
+	/* Active flipswitch background */.ui-page-theme-a .ui-flipswitch-active,html .ui-bar-a .ui-flipswitch-active,html .ui-body-a .ui-flipswitch-active,html body .ui-group-theme-a .ui-flipswitch-active,
+	html body .ui-flipswitch.ui-bar-a.ui-flipswitch-active,
+	/* Active slider track */
+	.ui-page-theme-a .ui-slider-track .ui-btn-active,html .ui-bar-a .ui-slider-track .ui-btn-active,html .ui-body-a .ui-slider-track .ui-btn-active,html body .ui-group-theme-a .ui-slider-track .ui-btn-active,html body div.ui-slider-track.ui-body-a .ui-btn-active {
+	background-color: #FF6C01 !important;
+	border-color: #FF6C01 !important;
+	color: #fff/*{a-active-color}*/;
+	text-shadow: 0/*{a-active-shadow-x}*/1px/*{a-active-shadow-y}*/0/*{a-active-shadow-radius}*/#005599/*{a-active-shadow-color}*/;
+}

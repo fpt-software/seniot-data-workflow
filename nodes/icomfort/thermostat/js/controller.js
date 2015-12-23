@@ -42,10 +42,10 @@ function setPowerState(powerState) {
 	console.log(powerOn);
 	if (powerOn) {
 		$("#power").addClass("ui-btn-active");
-		$("#thermostat").removeClass("power-off");
+		$("#container").removeClass("power-off");
 	} else {
 		$("#power").removeClass("ui-btn-active");
-		$("#thermostat").addClass("power-off");
+		$("#container").addClass("power-off");
 	}
 }
 

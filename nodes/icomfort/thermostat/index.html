@@ -7,21 +7,42 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<title>Lennox LLC - Gateway</title>
 		<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="css/font-awesome.min.css"/>
 		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="//code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.3/highcharts.js"></script>
 		<script src="js/controller.js"></script>
 		<link rel="stylesheet" href="css/main.css"/>
 	</head>
 	<body>
 		<!-- Home -->
-		<div data-role="page" id="controls-charts">
-			<div id="header1" data-role="header">
-				<h3 style="color:#FF6C01"><img src="http://static.lennox.com/img/logo.png" height= "40px"></h3>
-				<a href="#" title="Power" disabled class="ui-state-disabled ui-btn ui-shadow ui-corner-all ui-icon-power ui-btn-icon-notext ui-btn-inline" id="power" >Power</a>
+		<div data-role="page" id="thermostat">
+			<div data-role="header">
+				<h3 style="color:#FF6C01"><img src="http://static.lennox.com/img/logo.png" height= "20px"></h3>
+				<a href="#" title="Power" disabled class="ui-state-disabled ui-btn ui-btn-small ui-shadow ui-corner-all ui-icon-power ui-btn-icon-notext ui-btn-inline" id="power" >Power</a>
 			</div>
-			<div id="thermostat" class="ui-content power-off">
-				<div class="thermostat-container">
+			<div id="container" class="ui-content">
+				<div class="row-fluid">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<div class="temp-label">indoor temperature</div>
+						<div class="temp-value">72</div>
+						<div class="humi-label">indoor humidity is 45%</div>
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+					</div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+					</div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+					</div>
 				</div>
 			</div><!-- eof content -->
 		</div><!-- eof page -->

@@ -48,7 +48,7 @@ module.exports = function(RED) {
 		
 	}
 
-	RED.nodes.registerType("lennox-lcc", lennoxReg);
+	RED.nodes.registerType("icomfort", lennoxReg);
 
 	RED.httpAdmin.post("/lennox/lcc/:id", RED.auth.needsPermission("inject.write"), function(req, res) {
 		var node = RED.nodes.getNode(req.params.id);

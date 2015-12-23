@@ -4,6 +4,7 @@ var wsUri = "ws://" + window.location.hostname + ":1880/ws/gateway";
 var wsClient = null;
 function wsGateway() {
 	wsClient = new WebSocket(wsUri);
+	$("#power").attr("disabled", true).addClass("ui-state-disabled");
 	wsClient.onmessage = function(m) {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
@@ -15,22 +16,19 @@ function wsGateway() {
 	};
 	wsClient.onopen = function() {
 		connected = true;
-		var obj = {
-			"id" : "init",
-			"v" : 1
-		};
-		getRequest = JSON.stringify(obj);
-		wsClient.send(getRequest);
+		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		console.log("sent init requeset");
 	};
 
 	wsClient.onclose = function() {
+		$("#power").attr("disabled", true).addClass("ui-state-disabled");
 		console.log('Node-RED connection closed: ' + new Date().toUTCString());
 		connected = false;
 		wsClient = null;
 		setTimeout(wsGateway, 10000);
 	};
 	wsClient.onerror = function() {
+		$("#power").attr("disabled", true).addClass("ui-state-disabled");
 		console.log("connection error");
 	};
 }

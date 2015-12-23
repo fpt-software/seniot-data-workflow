@@ -45,6 +45,24 @@ legend.h1lb {
 .ui-field-contain {
 	text-align: center;
 }
+#power.ui-btn-active {
+	text-shadow: 0 1px 0 #C5002B;
+	background-color: #D64768;
+    border-color: #D64768;
+    color: #fff;
+}
+#power>a:hover {
+    color: #C9002D;
+}
+#power>a:visited {
+    color: #C9002D;
+}
+#power.ui-btn:focus
+{
+    -webkit-box-shadow: 0 0 12px #C7002B;
+    -moz-box-shadow: 0 0 12px #C7002B;
+    box-shadow: 0 0 12px #C7002B;
+}
 .ui-btn-icon-notext.ui-btn-left {
     top: 1.2em;
     left: .5em;

@@ -1,5 +1,5 @@
 {
-    "name"          : "node-red-node-lennox-lcc",
+    "name"          : "node-red-node-icomfort",
     "version"       : "0.0.1",
     "description"   : "A lennox LCC simulator node for Node-RED",
     "dependencies"  : {
@@ -11,7 +11,7 @@
     "keywords": [ "node-red", "registration" ],
     "node-red"      : {
         "nodes"     : {
-            "lennox-lcc": "lennox-lcc.js"
+            "icomfort": "icomfort.js"
         }
     },
     "author": {

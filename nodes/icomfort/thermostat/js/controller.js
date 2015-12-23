@@ -5,7 +5,7 @@ var itemLookup = null;
 var statusMsg = false;
 var daiableWidgets = false;
 var connected = false;
-var wsUri = "ws://" + window.location.hostname + ":1880/ws/iharmony";
+var wsUri = "ws://" + window.location.hostname + ":1880/ws/thermostat";
 var ws = null;
 function wsConn() {
 	ws = new WebSocket(wsUri);

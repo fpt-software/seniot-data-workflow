@@ -44,8 +44,8 @@ module.exports = function(RED) {
 			this.send(msg);
 		});
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
-		RED.httpNode.use("/lennox/iharmony", express.static(__dirname + '/iharmony'));
-		
+		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
+		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 	}
 
 	RED.nodes.registerType("icomfort", lennoxReg);

@@ -11,43 +11,98 @@
 	}
 }
 #thermostat {
-	background-image: url('../images/thermostat.png');
+	background-image: url('../images/thermostat-half.png');
 	background-size: 475px 320px;
 	background-repeat: no-repeat;
 }
 #container {
+	opacity: 0.5;
+	background: black;
+    min-height: 223px;
 	margin: 10px 45px 45px 45px;
 	padding: 0;
 }
-#container .temp-label {
+#container > div {
+	color: white;
+	font-style: normal;
+	position: relative;
+}
+#container > div .label {
+	text-shadow: 0 0 0 #333;
+	color: gray;
+}
+#container .temp-label, #container .set-temp-label {
 	height: 26px;
-    text-align: right;
-    vertical-align: bottom;
-    bottom: 0;
-    position: relative;
-    line-height: 7em;
-    color: white;
-    font-style: normal;
-    font-size: .8em;
+	text-align: right;
+	vertical-align: bottom;
+	line-height: 7em;
+	font-size: .8em;
+}
+#container .set-temp-label {
+	text-align: center;
 }
 #container .temp-value {
 	height: 100px;
-    text-align: right;
+	text-align: right;
+	vertical-align: middle;
+	font-size: 7.5em;
+}
+#container .set-temp-cool {
+	height: 32px;
+    text-align: center;
     vertical-align: middle;
-    position: relative;
-    color: white;
-    font-style: normal;
-    font-size: 7.5em;
+    font-size: 2.5em;
+    line-height: 1.2em;
+    padding-top: 2px;
+}
+#container .set-temp-heat {
+	height: 36px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 2.5em;
+	line-height: 1.2em;
+}
+.container-box {
+	-webkit-box-shadow: 2px -1px 21px -4px rgba(1,1,1,0.75);
+	-moz-box-shadow: 2px -1px 21px -4px rgba(1,1,1,0.75);
+	box-shadow: 2px -1px 21px -4px rgba(1,1,1,0.75);
+}
+.set-cool-container-wrapper {
+	padding-top: 18px;
+}
+.set-heat-container-wrapper {
+	padding-top: 0;
+}
+.set-cool-container {
+	margin: 6px;
+	border-radius: 15px; 
+	-moz-border-radius: 15px; 
+	-webkit-border-radius: 15px; 
+	border: 2px solid #7C7B80;
+}
+.set-heat-container {
+	margin: 6px;
+	border-radius: 15px; 
+	-moz-border-radius: 15px; 
+	-webkit-border-radius: 15px; 
+	border: 2px solid #7C7B80;
+	padding-bottom: 4px;
 }
 #container .humi-label {
-    text-align: right;
-    vertical-align: bottom;
-    bottom: 0;
-    position: relative;
-    line-height: 4em;
-    color: white;
-    font-style: normal;
-    font-size: .8em;
+	text-align: right;
+	vertical-align: bottom;
+	line-height: 4em;
+	font-size: .8em;
+}
+#container .cool-notation, #container .heat-notation {
+	text-align: center;
+	vertical-align: bottom;
+	line-height: 1.6em;
+	font-size: .7em;
+}
+#container .heat-notation {
+	line-height: .6em;
+	font-size: .7em;
 }
 .alert {
 	font-weight: bold;
@@ -77,18 +132,18 @@ legend.h1lb {
 	color: white;
 }
 #thermostat .ui-header {
-    border-style: none;
-    position: relative;
+	border-style: none;
+	position: relative;
 }
 #thermostat .ui-header .ui-btn-icon-notext {
-    font-size: 8px;
-    padding: 0;
+	font-size: 8px;
+	padding: 0;
 }
 #thermostat .ui-bar-inherit {
-    background-color: transparent;
-    color: #333;
-    text-shadow: none;
-    font-weight: 700;
+	background-color: transparent;
+	color: #333;
+	text-shadow: none;
+	font-weight: 700;
 }
 .ui-field-contain {
 	text-align: center;

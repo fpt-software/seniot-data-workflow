@@ -1,4 +1,6 @@
 var powerOn = false;
+var fanIsOn = false;
+var heatOrCool = false;
 var connected = false;
 var wsUri = "ws://" + window.location.hostname + ":1880/ws/thermostat";
 var wsClient = null;
@@ -18,6 +20,14 @@ function wsGateway() {
 		connected = true;
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		console.log("sent init requeset");
+		$("#heat-cool-switch").on("click", function(event) {
+			$(".set-updown-container-wrapper").toggleClass("set-updown-container-wrapper-next");
+			heatOrCool = !heatOrCool;
+		});
+		$("#fan-switch").on("click", function(event) {
+			fanIsOn = !fanIsOn;
+			$("#fan-value").html(fanIsOn?"ON":"OFF");
+		});
 	};
 
 	wsClient.onclose = function() {

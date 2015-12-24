@@ -120,9 +120,16 @@ module.exports = function(RED) {
 					var message = new Message(msg.payload);
 					console.log("Sending message: " + message.getData());
 					device.sendEvent(message, function(err, res) {
-						if (!err)
-							console.log("Message was sent successful.");
-						self.send(err);
+						if (!err) {
+                        	self.send({
+                            	status: true 
+                            });
+                        } else {
+                        	self.send({
+                        		status: false,
+                        		err: err
+                        	});
+                        }
 					});
 				});
 			}, function(error) {

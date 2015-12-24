@@ -84,7 +84,7 @@ module.exports = function(RED) {
                     text : "common.status.connected"
                 });
                 self.log('Creating Azure IoTHub: HTTPS IN ' + self.azureIot.name);
-                setInterval(function () {
+                self.on("input", function (input) {
                     device.receive(function (err, msg, res) {
                         if (err) {
                             console.warn(err);
@@ -147,9 +147,16 @@ module.exports = function(RED) {
                     var message = new Message(msg.payload);
                     console.log("Sending message: " + message.getData());
                     device.sendEvent(message, function (err, res) {
-                        if (!err)
-                            console.log("Message was sent successful.");
-                        self.send(err);
+                        if (!err) {
+                        	self.send({
+                            	status: true 
+                            });
+                        } else {
+                        	self.send({
+                        		status: false,
+                        		err: err
+                        	});
+                        }
                     });
                 });
             }, function (error) {

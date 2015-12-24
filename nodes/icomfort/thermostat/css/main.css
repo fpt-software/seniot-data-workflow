@@ -22,15 +22,42 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
 }
 #thermostat {
-	background-image: url('../images/thermostat-full.png');
+	background-image: url('../images/thermostat.png');
 	background-size: 475px 320px;
 	background-repeat: no-repeat;
 }
+.power-off {
+    opacity: 0 !important;
+    background: transparent !important;
+}
+.partly-cloudy-day {
+	content: url("https://ssl.gstatic.com/onebox/weather/32/partly_cloudy.png");
+}
+.fog {
+	content: url("https://ssl.gstatic.com/onebox/weather/32/fog.png");
+}
+.rain {
+	content: url("https://ssl.gstatic.com/onebox/weather/32/rain.png");
+}
+.rain-cloudy {
+	content: url("https://ssl.gstatic.com/onebox/weather/32/rain_s_cloudy.png");
+}
+.thunderstorms {
+	content: url("https://ssl.gstatic.com/onebox/weather/32/thunderstorms.png");
+}
+.clear-day {
+	content: url("https://ssl.gstatic.com/onebox/weather/32/sunny.png");
+}
 #container {
+	-webkit-transition: all 1s ease-in-out;
+  	-moz-transition: all 1s ease-in-out;
+  	-o-transition: all 1s ease-in-out;
+  	transition: all 1s ease-in-out;
 	background: black;
     min-height: 223px;
     margin: 10px 45px 0 45px;
     padding: 0;
+    opacity: 1;
 }
 #container > div {
 	color: white;
@@ -51,10 +78,10 @@
 }
 
 #container a:visited {
-	color: #999999;
+	color: transparent;
 }
 #container a:hover{
-	color: #333333;
+	color: transparent;
 }
 /* Set Temperature */
 #container .temp-label, #container .set-temp-label {
@@ -227,7 +254,7 @@
 	padding-top: 0;
     width: 65px;
     margin-top: 23px;
-    margin-left: -7px;
+    margin-left: -15px;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
@@ -238,9 +265,9 @@
 	width: 45px;
 }
 .current-outdoor-icon-container {
-	border-radius: 15px; 
-	-moz-border-radius: 15px; 
-	-webkit-border-radius: 15px; 
+	border-radius: 10px; 
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px; 
 	border: 2px solid #7C7B80;
 	text-align: center;
 }
@@ -263,7 +290,7 @@
     padding: 0;
     text-align: center;
     margin-top: 10px;
-    margin-left: -15px;
+    margin-left: -20px;
 }
 #container .forecast-label-value {
     line-height: 0.1em;
@@ -271,7 +298,7 @@
     padding: 0;
     text-align: center;
     margin-top: 10px;
-    margin-left: -15px;
+    margin-left: -20px;
     font-weight: bold;
 }
 /* Back & Away Mode */
@@ -312,9 +339,6 @@
 .alert {
 	font-weight: bold;
 	color: #FF6C01;
-}
-.power-off {
-	opacity: 0.1;
 }
 .smallin .ui-input-text {
 	width: 200px !important;

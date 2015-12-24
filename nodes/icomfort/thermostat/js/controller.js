@@ -1,9 +1,18 @@
 var powerOn = false;
-var fanIsOn = false;
-var heatOrCool = false;
+var heatIsOn = true;
 var connected = false;
 var wsUri = "ws://" + window.location.hostname + ":1880/ws/thermostat";
 var wsClient = null;
+var data = {
+	fanStatus: "OFF",
+	indoorTemperature: 72,
+	indoorHumidity: 45,
+	setTempToCool: 72,
+	setTempToHeat: 68,
+	outdoorTemperature: 83,
+	outdoorHiTemperature: 85,
+	outdoorLoTemperature: 72
+};
 
 function initButtonEffect() {
 	// http://stackoverflow.com/a/11381730/989439
@@ -54,6 +63,7 @@ function initButtonEffect() {
 		});
 	});
 };
+
 function wsGateway() {
 	wsClient = new WebSocket(wsUri);
 	$("#power").attr("disabled", true).addClass("ui-state-disabled");
@@ -62,8 +72,10 @@ function wsGateway() {
 		msg = JSON.parse(m.data);
 		if (msg.type == "power") {
 			setPowerState(msg.data.powerState);
-		} else if (msg.type == "status") {
-			$("#statusView").html("<span>" + msg.data + "</span>");
+			updateModel();
+		} else if (msg.type == "setModel") {
+			data = msg.data;
+			updateModel();
 		}
 	};
 	wsClient.onopen = function() {
@@ -73,11 +85,29 @@ function wsGateway() {
 		console.log("sent init requeset");
 		$("#heat-cool-switch").on("click", function(event) {
 			$(".set-updown-container-wrapper").toggleClass("set-updown-container-wrapper-next");
-			heatOrCool = !heatOrCool;
+			heatIsOn = !heatIsOn;
 		});
 		$(".set-fan-container").on("click", function(event) {
-			fanIsOn = !fanIsOn;
-			$("#fan-value").html( fanIsOn ? "ON" : "OFF");
+			data.fanStatus = data.fanStatus =="ON" ? "OFF" : "ON";
+			$(".set-fan-value").html( data.fanStatus );
+		});
+		$(".control-rotate-up").on("click", function(event) {
+			if (heatIsOn) {
+				data.setTempToHeat++;
+			} else {
+				data.setTempToCool++;
+			}
+			updateModel();
+		});
+		$(".control-rotate-down").on("click", function(event) {
+			if (heatIsOn) {
+				data.setTempToHeat--;
+				if (data.setTempToHeat <0) data.setTempToHeat = 0;
+			} else {
+				data.setTempToCool--;
+				if (data.setTempToCool <0) data.setTempToCool = 0;
+			}
+			updateModel();
 		});
 	};
 
@@ -97,6 +127,15 @@ function wsGateway() {
 }
 
 wsGateway();
+
+String.prototype.toDash = function(){
+	return this.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();});
+};
+function updateModel(){
+	for(var propertyName in data) {
+	   $("#" + propertyName.toDash()).html(data[propertyName]);
+	}
+}
 
 function setPowerState(powerState) {
 	powerOn = powerState;

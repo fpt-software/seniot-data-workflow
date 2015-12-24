@@ -73,6 +73,9 @@
 .set-heat-container-wrapper {
 	padding-top: 0;
 }
+.set-updown-container-wrapper {
+	padding-top: 0;
+}
 .set-cool-container {
 	margin: 6px;
 	border-radius: 15px; 
@@ -81,6 +84,14 @@
 	border: 2px solid #7C7B80;
 }
 .set-heat-container {
+	margin: 6px;
+	border-radius: 15px; 
+	-moz-border-radius: 15px; 
+	-webkit-border-radius: 15px; 
+	border: 2px solid #7C7B80;
+	padding-bottom: 4px;
+}
+.set-updown-container {
 	margin: 6px;
 	border-radius: 15px; 
 	-moz-border-radius: 15px; 

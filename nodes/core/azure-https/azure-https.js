@@ -95,9 +95,6 @@ module.exports = function(RED) {
                             });
                         }
                     });
-                    device.complete(msg, function () {
-                        console.log('completed');
-                    });
                 }, self.interval);
             }, function (error) {
                 self.status({
@@ -108,7 +105,7 @@ module.exports = function(RED) {
                 this.error("azure-https is not registered.");
             });
         } else {
-            _node.status({
+            self.status({
                 fill : "red",
                 shape : "dot",
                 text : "common.status.disconnected"
@@ -126,9 +123,9 @@ module.exports = function(RED) {
 		RED.nodes.createNode(this, n);
 		this.myDevice = n.device;
 		this.azureIot = RED.nodes.getNode(this.myDevice);
-
+		var self = this;
+		
         if (this.azureIot) {
-            var self = this;
             self.azureIot.connect().then(function (device) {
                 self.status({
                     fill : "green",

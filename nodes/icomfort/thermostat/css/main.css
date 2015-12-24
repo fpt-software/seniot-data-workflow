@@ -119,8 +119,11 @@
 	color: transparent;
 }
 
-.set-updown-container a:visited, .set-updown-container a:hover{
+.set-updown-container a:visited {
 	color: #999999;
+}
+.set-updown-container a:hover{
+	color: #333333;
 }
 .control-rotate-up {
 	-ms-transform: rotate(-90deg); /* IE 9 */

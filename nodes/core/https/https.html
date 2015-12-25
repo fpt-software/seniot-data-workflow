@@ -86,6 +86,33 @@ SOFTWARE.
 	<label for="node-input-certificate"><i class="fa fa-globe"></i> Certificate</label>
 	<input type="text" id="node-input-certificate">
 	</div>
+	<div class="form-row">
+        <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="httpin.label.method"></span></label>
+        <select type="text" id="node-input-method" style="width:72%;">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+        <option value="use" data-i18n="httpin.setby"></option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> <span data-i18n="httpin.label.url"></span></label>
+        <input type="text" id="node-input-url" placeholder="https://">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ret"><i class="fa fa-arrow-left"></i> <span data-i18n="httpin.label.return"></span></label>
+        <select type="text" id="node-input-ret" style="width:72%;">
+        <option value="txt" data-i18n="httpin.utf8"></option>
+        <option value="bin" data-i18n="httpin.binary"></option>
+        <option value="obj" data-i18n="httpin.json"></option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
+    </div>
+    <div class="form-tips" id="tip-json" hidden><span data-i18n="httpin.tip.req"></span></div>
 </script>
 
 <script type="text/x-red" data-help-name="https request">
@@ -118,10 +145,20 @@ SOFTWARE.
 		category : 'function',
 		color : "gray",
 		defaults : {
+			name: {value:""},
 			certificate : {
 				type : "https-certificate",
 				required : true
-			}
+			},
+			method:{
+				value:"GET"
+			},
+            ret: {
+            	value:"txt"
+            },
+            url:{
+            	value:""
+            },
 		},
 		inputs : 1,
 		outputs : 1,

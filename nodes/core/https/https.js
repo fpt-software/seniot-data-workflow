@@ -25,26 +25,18 @@
 module.exports = function(RED) {
 	"use strict";
 	var request = require('request');
-
+	var fs = require('fs');
 	/**
 	 * Create https configuration node
 	 */
 	function httpTlsCertificateNode(n) {
 		RED.nodes.createNode(this, n);
 		this.certificateName = n.name;
-		this.doRequest = function(hostname, port, path, method) {
-			var options = {
-				url : 'https://api.some-server.com/',
-				agentOptions : {
-					// Or use `pfx` property replacing `cert` and `key` when using private key, certificate and CA certs in PFX or PKCS12 format:
-					// pfx: fs.readFileSync(pfxFilePath),
-					cert : "",
-					key : "",
-					passphrase: 'password',
-    				ca: "",
-					securityOptions : 'SSL_OP_NO_SSLv3'
-				}
-			};
+		this.agentOptions = {
+			cert : fs.readFileSync('../https/certs/' + n.certId + '-certificate.pem.crt'),
+			key : fs.readFileSync('../https/certs/' + n.certId + '-private.pem.key'),
+			ca : fs.readFileSync('../https/certs/root-CA.crt'),
+			securityOptions : 'SSL_OP_NO_SSLv3'
 		};
 	}
 
@@ -58,12 +50,23 @@ module.exports = function(RED) {
 		RED.nodes.createNode(this, n);
 		this.myCertificate = n.certificate;
 		this.certificate = RED.nodes.getNode(this.myCertificate);
+		this.method = n.method;
+		this.url = n.url;
 		var self = this;
 
 		if (this.certificate) {
 			self.on("input", function(msg) {
-				self.send({
-					payload : msg.payload
+				self.method = msg.method || self.method;
+				self.url = msg.url || self.url;
+				request({
+					url : self.url,
+					method : self.method,
+					agentOptions : self.certificate.agentOptions
+				}, function(error, response, body) {
+					self.send({
+						response : response,
+						payload : body
+					});
 				});
 			});
 		} else {

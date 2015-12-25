@@ -29,21 +29,9 @@ SOFTWARE.
         <input type="text" id="node-config-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-config-input-pfx">Certificate</label>
-        <select type="text" id="node-config-input-pfx"></select>
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-key">Private Key</label>
-        <select type="text" id="node-config-input-key"></select>
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-ca">Root CA</label>
-        <select type="text" id="node-config-input-ca"></select>
-    </div>
-    <div class="form-row">
-    	<label for="node-config-input-rejectUnauthorized" style="width: auto;">TLS Reject Unauthorized</label>
-    	<input type="checkbox" id="node-config-input-rejectUnauthorized" style="margin-left: 30px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
-    </div>
+	<label for="node-config-input-certId"><i class="fa fa-tag"></i> Certificate</label>
+	<select type="text" id="node-config-input-certId"></select>
+	</div>
 </script>
 <!-- MQTT Broker Configuration -->
 
@@ -55,20 +43,9 @@ SOFTWARE.
 				required : true,
 				value : ""
 			},
-			pfx : {
-				value : ""
-			},
-			key : {
-				value : ""
-			},
-			cert : {
-				value : ""
-			},
-			ca : {
-				value : ""
-			},
-			rejectUnauthorized : {
-				value : false
+			certId : {
+				value : "",
+				required : true
 			}
 		},
 		label : function() {
@@ -76,6 +53,25 @@ SOFTWARE.
 		},
 		oneditprepare : function() {
 			var that = this;
+			function fulfillOptions(certs) {
+				$("#node-config-input-certId").empty();
+				$.each(certs, function(index, value) {
+					if (value != "") {
+						if (that.certId == value) {
+							$("#node-config-input-certId").append('<option value="' + value + '" selected>' + value + '</option>');
+						} else {
+							$("#node-config-input-certId").append('<option value="' + value + '">' + value + '</option>');
+						}
+					}
+				});
+				$("#node-config-input-certId").change();
+			}
+
+			$.get("/https/certs", function(certs) {
+				fulfillOptions(certs);
+			}).fail(function() {
+				fulfillOptions(certs);
+			});
 		}
 	});
 </script>
@@ -99,14 +95,6 @@ SOFTWARE.
     <div class="form-row">
         <label for="node-input-url"><i class="fa fa-globe"></i> <span data-i18n="httpin.label.url"></span></label>
         <input type="text" id="node-input-url" placeholder="https://">
-    </div>
-    <div class="form-row">
-        <label for="node-input-ret"><i class="fa fa-arrow-left"></i> <span data-i18n="httpin.label.return"></span></label>
-        <select type="text" id="node-input-ret" style="width:72%;">
-        <option value="txt" data-i18n="httpin.utf8"></option>
-        <option value="bin" data-i18n="httpin.binary"></option>
-        <option value="obj" data-i18n="httpin.json"></option>
-        </select>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
@@ -145,7 +133,9 @@ SOFTWARE.
 		category : 'function',
 		color : "#FFAAAA",
 		defaults : {
-			name: {value:""},
+			name: {
+				value:""
+			},
 			certificate : {
 				type : "https-certificate",
 				required : true
@@ -153,12 +143,9 @@ SOFTWARE.
 			method:{
 				value:"GET"
 			},
-            ret: {
-            	value:"txt"
-            },
             url:{
             	value:""
-            },
+            }
 		},
 		inputs : 1,
 		outputs : 1,

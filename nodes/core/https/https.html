@@ -1,0 +1,141 @@
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015 FPT Software
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- Azure IoT Hub - Device configuration for HTTP protocol -->
+<script type="text/x-red" data-template-name="https-certificate">
+    <div class="form-row">
+        <label for="node-config-input-name">Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-pfx">Certificate</label>
+        <select type="text" id="node-config-input-pfx"></select>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-key">Private Key</label>
+        <select type="text" id="node-config-input-key"></select>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-ca">Root CA</label>
+        <select type="text" id="node-config-input-ca"></select>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-rejectUnauthorized">Reject Unauthorized</label>
+        <select type="text" id="node-config-input-rejectUnauthorized"></select>
+    </div>
+</script>
+
+
+
+<!-- MQTT Broker Configuration -->
+
+<script type="text/javascript">
+	RED.nodes.registerType('https-certificate', {
+		category : 'config',
+		defaults : {
+			name : {
+				value : "",
+				required : true
+			},
+			pfx : {
+				value : null
+			},
+			key : {
+				value : null
+			},
+			cert : {
+				value : null
+			},
+			ca : {
+				value : null
+			},
+			rejectUnauthorized : {
+				value : false
+			}
+		},
+		label : function() {
+			return this.name;
+		},
+		oneditprepare : function() {
+			var that = this;
+		}
+	});
+</script>
+
+<!-- Azure IoT Hub output node using HTTP protocol-->
+<script type="text/x-red" data-template-name="https request">
+	<div class="form-row">
+	<label for="node-input-certificate"><i class="fa fa-globe"></i> Certificate</label>
+	<input type="text" id="node-input-certificate">
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="https request">
+    <p>Provides a node for making http requests.</p>
+    <p>The URL and HTTP method can be configured in the node, if they are left blank they should be set in an incoming message on <code>msg.url</code> and <code>msg.method</code>:</p>
+    <ul>
+        <li><code>url</code>, if set, is used as the url of the request. Must start with http: or https:</li>
+        <li><code>method</code>, if set, is used as the HTTP method of the request.
+        Must be one of <code>GET</code>, <code>PUT</code>, <code>POST</code>, <code>PATCH</code> or <code>DELETE</code> (default: GET)</li>
+        <li><code>headers</code>, if set, should be an object containing field/value
+        pairs to be added as request headers</li>
+        <li><code>payload</code> is sent as the body of the request</li>
+    </ul>
+    <p>When configured within the node, the URL property can contain <a href="http://mustache.github.io/mustache.5.html" target="_new">mustache-style</a> tags. These allow the
+    url to be constructed using values of the incoming message. For example, if the url is set to
+    <code>example.com/{{{topic}}}</code>, it will have the value of <code>msg.topic</code> automatically inserted.
+    Using {{{...}}} prevents mustache from escaping characters like / &amp; etc.</p>
+    <p>
+    The output message contains the following properties:
+    </p><ul>
+        <li><code>payload</code> is the body of the response</li>
+        <li><code>statusCode</code> is the status code of the response, or the error code if the request could not be completed</li>
+        <li><code>headers</code> is an object containing the response headers</li>
+    </ul>
+    <p><b>Note</b>: If you need to configure a proxy please add <b>http_proxy=...</b> to your environment variables and restart Node-RED.</p>
+</script>
+
+<script type="text/javascript">
+	RED.nodes.registerType('https request', {
+		category : 'function',
+		color : "gray",
+		defaults : {
+			certificate : {
+				type : "https-certificate",
+				required : true
+			}
+		},
+		inputs : 1,
+		outputs : 1,
+		icon : "white-globe.png",
+		align : "right",
+		label : function() {
+			var dbNode = RED.nodes.node(this.device);
+			return this.name || ( dbNode ? dbNode.label() : "https");
+		},
+		labelStyle : function() {
+			return this.name ? "node_label_italic" : "";
+		}
+	}); 
+</script

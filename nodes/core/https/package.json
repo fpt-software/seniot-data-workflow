@@ -1,0 +1,22 @@
+{
+    "name"          : "node-red-node-https",
+    "version"       : "0.0.1",
+    "description"   : "A HTTPS node for Node-RED",
+    "dependencies"  : {
+	    "nopt": "^3.0.4",
+	    "prettyjson": "^1.1.3",
+	    "uuid": "^2.0.1"
+    },
+    "license": "Apache-2.0",
+    "keywords": [ "node-red", "https" ],
+    "node-red"      : {
+        "nodes"     : {
+            "https": "https.js"
+        }
+    },
+    "author": {
+        "name": "FPT-Software",
+        "email": "cuongdd1@fosft.com.vn",
+        "url": "http://fpt-software.vn"
+    }
+}

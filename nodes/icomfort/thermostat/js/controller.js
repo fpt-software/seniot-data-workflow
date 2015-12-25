@@ -74,6 +74,7 @@ function wsGateway() {
 		console.log('Node-RED connection closed: ' + new Date().toUTCString());
 		connected = false;
 		wsClient = null;
+		setPowerState(false);
 		setTimeout(wsGateway, 10000);
 	};
 	wsClient.onerror = function() {

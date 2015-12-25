@@ -24,7 +24,7 @@
 
 module.exports = function(RED) {
 	"use strict";
-	var https = require('https');
+	var request = require('request');
 
 	/**
 	 * Create https configuration node
@@ -34,18 +34,21 @@ module.exports = function(RED) {
 		this.certificateName = n.name;
 		this.doRequest = function(hostname, port, path, method) {
 			var options = {
-				hostname : hostname,
-				port : port,
-				path : path,
-				method : method,
-				key : fs.readFileSync(n.key),
-				cert : fs.readFileSync(n.cert)
+				url : 'https://api.some-server.com/',
+				agentOptions : {
+					// Or use `pfx` property replacing `cert` and `key` when using private key, certificate and CA certs in PFX or PKCS12 format:
+					// pfx: fs.readFileSync(pfxFilePath),
+					cert : "",
+					key : "",
+					passphrase: 'password',
+    				ca: "",
+					securityOptions : 'SSL_OP_NO_SSLv3'
+				}
 			};
-			options.agent = new https.Agent(options);
-			var req = https.request(options, function(res) {
-			});
 		};
 	}
+
+
 	RED.nodes.registerType("https-certificate", httpTlsCertificateNode);
 
 	/**
@@ -67,5 +70,7 @@ module.exports = function(RED) {
 			this.error("https in is not configured");
 		}
 	}
+
+
 	RED.nodes.registerType("https request", httpTlsRequestNode);
 };

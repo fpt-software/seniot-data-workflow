@@ -31,7 +31,6 @@ module.exports = function(RED) {
 	 */
 	function httpTlsCertificateNode(n) {
 		RED.nodes.createNode(this, n);
-		this.certificateName = n.name;
 		this.agentOptions = {
 			cert : fs.readFileSync('../https/certs/' + n.certId + '-certificate.pem.crt'),
 			key : fs.readFileSync('../https/certs/' + n.certId + '-private.pem.key'),

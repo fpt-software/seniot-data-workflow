@@ -1,15 +1,15 @@
 {
-    "name"          : "node-red-node-http-tls",
+    "name"          : "node-red-node-https",
     "version"       : "0.0.1",
     "description"   : "A HTTPS node for Node-RED",
     "dependencies"  : {
     	
     },
     "license": "Apache-2.0",
-    "keywords": [ "node-red", "http-tls" ],
+    "keywords": [ "node-red", "https" ],
     "node-red"      : {
         "nodes"     : {
-            "http-tls": "http-tls.js"
+            "https": "https.js"
         }
     },
     "author": {

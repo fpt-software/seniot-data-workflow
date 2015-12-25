@@ -34,7 +34,7 @@ module.exports = function(RED) {
 		this.agentOptions = {
 			cert : fs.readFileSync('../https/certs/' + n.certId + '-certificate.pem.crt'),
 			key : fs.readFileSync('../https/certs/' + n.certId + '-private.pem.key'),
-			ca : fs.readFileSync('../https/certs/' + n.certId + 'root-CA.crt'),
+			ca : fs.readFileSync('../https/certs/' + n.certId + '-root.ca.crt'),
 			securityOptions : 'SSL_OP_NO_SSLv3'
 		};
 	}

@@ -24,41 +24,48 @@
 
 module.exports = function(RED) {
 	"use strict";
-	var https = require('https');
+	//var https = require('https');
 
 	/**
-	 * Create HTTPS configuration node
+	 * Create http-tls configuration node
 	 */
-	function httpsCertificateNode(n) {
+	function httpTlsCertificateNode(n) {
 		RED.nodes.createNode(this, n);
 		this.certificateName = n.name;
-		this.pfx = n.pfx;
+		/**this.doRequest = function(hostname, port, path, method) {
+			var options = {
+				hostname : hostname,
+				port : port,
+				path : path,
+				method : method,
+				key : fs.readFileSync(n.key),
+				cert : fs.readFileSync(n.cert)
+			};
+			options.agent = new https.Agent(options);
+			var req = https.request(options, function(res) {
+			});
+		};*/
 	}
-
-
-	RED.nodes.registerType("https-certificate", httpsCertificateNode);
+	RED.nodes.registerType("http-tls-certificate", httpTlsCertificateNode);
 
 	/**
-	 * Create HTTPS request node
+	 * Create http-tls request node
 	 */
-	function httpsRequestNode(n) {
+	function httpTlsRequestNode(n) {
 		RED.nodes.createNode(this, n);
 		this.myCertificate = n.certificate;
 		this.certificate = RED.nodes.getNode(this.myCertificate);
 		var self = this;
 
 		if (this.certificate) {
-			self.on("input", function(input) {
+			self.on("input", function(msg) {
 				self.send({
-					payload : JSON.parse(msg.getData())
+					payload : msg.payload
 				});
 			});
 		} else {
-			this.error("https in is not configured");
+			this.error("http-tls in is not configured");
 		}
 	}
-
-
-	RED.nodes.registerType("https request", httpsRequestNode);
-
+	RED.nodes.registerType("http-tls request", httpTlsRequestNode);
 };

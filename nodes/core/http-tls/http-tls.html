@@ -23,7 +23,7 @@ SOFTWARE.
 -->
 
 <!-- Azure IoT Hub - Device configuration for HTTP protocol -->
-<script type="text/x-red" data-template-name="https-certificate">
+<script type="text/x-red" data-template-name="http-tls-certificate">
     <div class="form-row">
         <label for="node-config-input-name">Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
@@ -51,7 +51,7 @@ SOFTWARE.
 <!-- MQTT Broker Configuration -->
 
 <script type="text/javascript">
-	RED.nodes.registerType('https-certificate', {
+	RED.nodes.registerType('http-tls-certificate', {
 		category : 'config',
 		defaults : {
 			name : {
@@ -59,16 +59,16 @@ SOFTWARE.
 				required : true
 			},
 			pfx : {
-				value : null
+				value : ""
 			},
 			key : {
-				value : null
+				value : ""
 			},
 			cert : {
-				value : null
+				value : ""
 			},
 			ca : {
-				value : null
+				value : ""
 			},
 			rejectUnauthorized : {
 				value : false
@@ -84,18 +84,18 @@ SOFTWARE.
 </script>
 
 <!-- Azure IoT Hub output node using HTTP protocol-->
-<script type="text/x-red" data-template-name="https request">
+<script type="text/x-red" data-template-name="http-tls request">
 	<div class="form-row">
 	<label for="node-input-certificate"><i class="fa fa-globe"></i> Certificate</label>
 	<input type="text" id="node-input-certificate">
 	</div>
 </script>
 
-<script type="text/x-red" data-help-name="https request">
+<script type="text/x-red" data-help-name="http-tls request">
     <p>Provides a node for making http requests.</p>
-    <p>The URL and HTTP method can be configured in the node, if they are left blank they should be set in an incoming message on <code>msg.url</code> and <code>msg.method</code>:</p>
+    <!--p>The URL and HTTP method can be configured in the node, if they are left blank they should be set in an incoming message on <code>msg.url</code> and <code>msg.method</code>:</p>
     <ul>
-        <li><code>url</code>, if set, is used as the url of the request. Must start with http: or https:</li>
+        <li><code>url</code>, if set, is used as the url of the request. Must start with http: or http-tls:</li>
         <li><code>method</code>, if set, is used as the HTTP method of the request.
         Must be one of <code>GET</code>, <code>PUT</code>, <code>POST</code>, <code>PATCH</code> or <code>DELETE</code> (default: GET)</li>
         <li><code>headers</code>, if set, should be an object containing field/value
@@ -113,16 +113,16 @@ SOFTWARE.
         <li><code>statusCode</code> is the status code of the response, or the error code if the request could not be completed</li>
         <li><code>headers</code> is an object containing the response headers</li>
     </ul>
-    <p><b>Note</b>: If you need to configure a proxy please add <b>http_proxy=...</b> to your environment variables and restart Node-RED.</p>
+    <p><b>Note</b>: If you need to configure a proxy please add <b>http_proxy=...</b> to your environment variables and restart Node-RED.</p-->
 </script>
 
 <script type="text/javascript">
-	RED.nodes.registerType('https request', {
+	RED.nodes.registerType('http-tls request', {
 		category : 'function',
 		color : "gray",
 		defaults : {
 			certificate : {
-				type : "https-certificate",
+				type : "http-tls-certificate",
 				required : true
 			}
 		},
@@ -131,8 +131,8 @@ SOFTWARE.
 		icon : "white-globe.png",
 		align : "right",
 		label : function() {
-			var dbNode = RED.nodes.node(this.device);
-			return this.name || ( dbNode ? dbNode.label() : "https");
+			var dbNode = RED.nodes.node(this.certificate);
+			return this.name || ( dbNode ? dbNode.label() : "http-tls");
 		},
 		labelStyle : function() {
 			return this.name ? "node_label_italic" : "";

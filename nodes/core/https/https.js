@@ -39,7 +39,6 @@ module.exports = function(RED) {
 		};
 	}
 
-
 	RED.nodes.registerType("https-certificate", httpTlsCertificateNode);
 
 	/**

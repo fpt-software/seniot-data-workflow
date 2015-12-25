@@ -4,14 +4,14 @@ var connected = false;
 var wsUri = "ws://" + window.location.hostname + ":1880/ws/thermostat";
 var wsClient = null;
 var data = {
-	fanStatus: "OFF",
-	indoorTemperature: 72,
-	indoorHumidity: 45,
-	setTempToCool: 72,
-	setTempToHeat: 68,
-	outdoorTemperature: 83,
-	outdoorHiTemperature: 85,
-	outdoorLoTemperature: 72
+	fanStatus : "OFF",
+	indoorTemperature : 72,
+	indoorHumidity : 45,
+	setTempToCool : 72,
+	setTempToHeat : 68,
+	outdoorTemperature : 83,
+	outdoorHiTemperature : 85,
+	outdoorLoTemperature : 72
 };
 
 function wsGateway() {
@@ -32,38 +32,12 @@ function wsGateway() {
 		initButtonEffect();
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		console.log("sent init requeset");
-		$("#heat-cool-switch").on("click", function(event) {
-			$(".set-updown-container-wrapper").toggleClass("set-updown-container-wrapper-next");
-			heatIsOn = !heatIsOn;
-		});
-		$(".set-fan-container").on("click", function(event) {
-			data.fanStatus = data.fanStatus =="ON" ? "OFF" : "ON";
-			$(".set-fan-value").html( data.fanStatus );
-		});
-		$(".control-rotate-up").on("click", function(event) {
-			if (heatIsOn) {
-				data.setTempToHeat++;
-			} else {
-				data.setTempToCool++;
-			}
-			updateModel();
-		});
-		$(".control-rotate-down").on("click", function(event) {
-			if (heatIsOn) {
-				data.setTempToHeat--;
-				if (data.setTempToHeat <0) data.setTempToHeat = 0;
-			} else {
-				data.setTempToCool--;
-				if (data.setTempToCool <0) data.setTempToCool = 0;
-			}
-			updateModel();
-		});
 		setInterval(function() {
 			if (connected) {
 				wsClient.send(JSON.stringify({
 					type : "update",
 					data : data
-				}));	
+				}));
 			}
 		}, 1000);
 	};
@@ -86,12 +60,14 @@ function wsGateway() {
 
 wsGateway();
 
-String.prototype.toDash = function(){
-	return this.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();});
+String.prototype.toDash = function() {
+	return this.replace(/([A-Z])/g, function($1) {
+		return "-" + $1.toLowerCase();
+	});
 };
-function updateModel(){
-	for(var propertyName in data) {
-	   $("#" + propertyName.toDash()).html(data[propertyName]);
+function updateModel() {
+	for (var propertyName in data) {
+		$("#" + propertyName.toDash()).html(data[propertyName]);
 	}
 }
 
@@ -117,6 +93,34 @@ $(function() {
 				powerState : powerOn
 			}
 		}));
+	});
+	$("#heat-cool-switch").on("click", function(event) {
+		$(".set-updown-container-wrapper").toggleClass("set-updown-container-wrapper-next");
+		heatIsOn = !heatIsOn;
+	});
+	$(".set-fan-container").on("click", function(event) {
+		data.fanStatus = data.fanStatus == "ON" ? "OFF" : "ON";
+		$(".set-fan-value").html(data.fanStatus);
+	});
+	$(".control-rotate-up").on("click", function(event) {
+		if (heatIsOn) {
+			data.setTempToHeat++;
+		} else {
+			data.setTempToCool++;
+		}
+		updateModel();
+	});
+	$(".control-rotate-down").on("click", function(event) {
+		if (heatIsOn) {
+			data.setTempToHeat--;
+			if (data.setTempToHeat < 0)
+				data.setTempToHeat = 0;
+		} else {
+			data.setTempToCool--;
+			if (data.setTempToCool < 0)
+				data.setTempToCool = 0;
+		}
+		updateModel();
 	});
 });
 

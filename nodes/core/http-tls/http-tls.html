@@ -45,9 +45,6 @@ SOFTWARE.
         <select type="text" id="node-config-input-rejectUnauthorized"></select>
     </div>
 </script>
-
-
-
 <!-- MQTT Broker Configuration -->
 
 <script type="text/javascript">
@@ -71,7 +68,7 @@ SOFTWARE.
 				value : ""
 			},
 			rejectUnauthorized : {
-				value : false
+				value : null
 			}
 		},
 		label : function() {
@@ -93,7 +90,7 @@ SOFTWARE.
 
 <script type="text/x-red" data-help-name="http-tls request">
     <p>Provides a node for making http requests.</p>
-    <!--p>The URL and HTTP method can be configured in the node, if they are left blank they should be set in an incoming message on <code>msg.url</code> and <code>msg.method</code>:</p>
+    <p>The URL and HTTP method can be configured in the node, if they are left blank they should be set in an incoming message on <code>msg.url</code> and <code>msg.method</code>:</p>
     <ul>
         <li><code>url</code>, if set, is used as the url of the request. Must start with http: or http-tls:</li>
         <li><code>method</code>, if set, is used as the HTTP method of the request.
@@ -113,7 +110,7 @@ SOFTWARE.
         <li><code>statusCode</code> is the status code of the response, or the error code if the request could not be completed</li>
         <li><code>headers</code> is an object containing the response headers</li>
     </ul>
-    <p><b>Note</b>: If you need to configure a proxy please add <b>http_proxy=...</b> to your environment variables and restart Node-RED.</p-->
+    <p><b>Note</b>: If you need to configure a proxy please add <b>http_proxy=...</b> to your environment variables and restart Node-RED.</p>
 </script>
 
 <script type="text/javascript">
@@ -138,4 +135,4 @@ SOFTWARE.
 			return this.name ? "node_label_italic" : "";
 		}
 	}); 
-</script
+</script>

@@ -24,7 +24,7 @@
 
 module.exports = function(RED) {
 	"use strict";
-	//var https = require('https');
+	var https = require('https');
 
 	/**
 	 * Create http-tls configuration node
@@ -32,7 +32,7 @@ module.exports = function(RED) {
 	function httpTlsCertificateNode(n) {
 		RED.nodes.createNode(this, n);
 		this.certificateName = n.name;
-		/**this.doRequest = function(hostname, port, path, method) {
+		this.doRequest = function(hostname, port, path, method) {
 			var options = {
 				hostname : hostname,
 				port : port,
@@ -44,7 +44,7 @@ module.exports = function(RED) {
 			options.agent = new https.Agent(options);
 			var req = https.request(options, function(res) {
 			});
-		};*/
+		};
 	}
 	RED.nodes.registerType("http-tls-certificate", httpTlsCertificateNode);
 

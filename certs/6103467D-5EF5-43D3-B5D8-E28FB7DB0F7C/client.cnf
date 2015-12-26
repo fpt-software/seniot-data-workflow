@@ -1,0 +1,26 @@
+[ req ]
+default_bits           = 4096
+days                   = 9999
+distinguished_name     = req_distinguished_name
+attributes             = req_attributes
+prompt                 = no
+x509_extensions        = v3_ca
+
+[ req_distinguished_name ]
+C                      = US
+ST                     = TX
+L                      = Dallas
+O                      = Lennox International Inc
+OU                     = LBAS
+CN                     = 6103467D-5EF5-43D3-B5D8-E28FB7DB0F7C
+emailAddress           = support@lennox.com
+
+[ req_attributes ]
+challengePassword      = fptlennox
+
+[ v3_ca ]
+authorityInfoAccess = @issuer_info
+
+[ issuer_info ]
+OCSP;URI.0 = https://ocsp.lennox.com/
+caIssuers;URI.0 = https://lennox.com/ca.cert

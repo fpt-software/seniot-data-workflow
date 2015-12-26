@@ -24,6 +24,8 @@ SOFTWARE.
 
 module.exports = function(RED) {
 	"use strict";
+	var fs = require('fs');
+	var q = require('q');
 	var Device = require('azure-iot-device');
 	var Client = Device.Client;
 	var Message = Device.Message;

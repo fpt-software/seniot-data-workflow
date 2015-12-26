@@ -8,9 +8,7 @@ function wsGateway() {
 	wsClient.onmessage = function(m) {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
-		if (msg.type == "power") {
-			setPowerState(msg.data.powerState);
-		} else if (msg.type == "status") {
+		if (msg.type == "setStatus") {
 			$("#statusView").html("<span>" + msg.data + "</span>");
 		}
 	};
@@ -53,11 +51,14 @@ $(function() {
 	$(document).on("vclick", "#power", function(event) {
 		$(event.target).toggleClass("ui-btn-active");
 		powerOn = !powerOn;
-		wsClient.send(JSON.stringify({
-			type : "power",
-			data : {
-				powerState : powerOn
-			}
-		}));
+		if (powerOn) {
+			wsClient.send(JSON.stringify({
+				type : "powerUp",
+				data : {
+					powerState : powerOn
+				}
+			}));
+		}
+		setPowerState(powerOn);
 	});
 });

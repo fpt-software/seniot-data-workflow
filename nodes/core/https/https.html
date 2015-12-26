@@ -74,7 +74,7 @@ SOFTWARE.
 				$("#node-config-input-certId").change();
 			}
 
-			$.get("/https/certs", function(certs) {
+			$.get("/device/uuids", function(certs) {
 				fulfillOptions(certs);
 			}).fail(function() {
 				fulfillOptions(certs);

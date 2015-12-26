@@ -69,7 +69,7 @@ SOFTWARE.
 			}
 
 
-			$.get("/azure/devices", function(certs) {
+			$.get("/device/uuids", function(certs) {
 				fulfillOptions(certs);
 			}).fail(function() {
 				var certs = [];

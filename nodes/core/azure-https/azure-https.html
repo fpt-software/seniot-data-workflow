@@ -24,16 +24,15 @@ SOFTWARE.
 
 <!-- Azure IoT Hub - Device configuration for HTTP protocol -->
 <script type="text/x-red" data-template-name="azure-https-device">
-    <div class="form-row">
-        <label for="node-config-input-name">Name</label>
-        <input type="text" id="node-config-input-name" placeholder="Name">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-deviceId">Device</label>
-        <select type="text" id="node-config-input-deviceId"></select>
-    </div>
+	<div class="form-row">
+	<label for="node-config-input-name">Name</label>
+	<input type="text" id="node-config-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+	<label for="node-config-input-deviceId">Device</label>
+	<select type="text" id="node-config-input-deviceId"></select>
+	</div>
 </script>
-
 
 <!-- MQTT Broker Configuration -->
 
@@ -68,6 +67,7 @@ SOFTWARE.
 				});
 				$("#node-config-input-deviceId").change();
 			}
+
 
 			$.get("/azure/devices", function(certs) {
 				fulfillOptions(certs);
@@ -114,7 +114,7 @@ SOFTWARE.
 			return this.name ? "node_label_italic" : "";
 		}
 	}); 
-</script
+</script>
 
 <!-- Azure IoT Hub In HTTP Node -->
 <script type="text/x-red" data-template-name="azure-https in">
@@ -136,7 +136,7 @@ SOFTWARE.
 		color : "#fff",
 		defaults : {
 			device : {
-			    type: "azure-https-device",
+				type : "azure-https-device",
 				required : true
 			}
 		},
@@ -150,10 +150,6 @@ SOFTWARE.
 		},
 		labelStyle : function() {
 			return this.name ? "node_label_italic" : "";
-		},
-		button : {
-			onclick : function() {
-			}
 		}
 	}); 
 </script>

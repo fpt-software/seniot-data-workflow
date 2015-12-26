@@ -50,9 +50,9 @@ module.exports = function(RED) {
                         if (!self.device) {
                             data = JSON.parse(data);
                             var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
-                            self.log("Initiate Azure IoT Hub AMQP node for " + self.deviceId + ", " + connectionString);
+                            self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
                             self.device = new Client.fromConnectionString(connectionString);
-                            self.log("Created Azure IoT Hub AMQP" + self.device);
+                            self.log("Created Azure IoT Hub HTTPS" + self.device);
                         }
                         deferred.resolve(self.device);
                     }

@@ -52,6 +52,7 @@ module.exports = function(RED) {
                             var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
                             self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
                             self.device = new Client.fromConnectionString(connectionString);
+                            console.log(self.device);
                         }
                         deferred.resolve(self.device);
                     }

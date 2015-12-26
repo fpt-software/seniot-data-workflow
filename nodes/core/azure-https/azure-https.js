@@ -43,7 +43,7 @@ module.exports = function(RED) {
         this.connect = function () {
             var deferred = q.defer();
             if (deviceId) {
-                fs.readFile('../azure/devices/' + self.deviceId + ".json", 'utf8', function (err, data) {
+                fs.readFile('./storage/' + self.deviceId + "/device.json", 'utf8', function (err, data) {
                     if (err) {
                         deferred.reject(err);
                     } else {

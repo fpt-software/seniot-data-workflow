@@ -48,9 +48,9 @@ limitations under the License.
 			var that = this;
 			function fulfillOptions(certs) {
 				$("#node-config-input-deviceId").empty();
-				$.each(certs, function(index, value) {
+				$.each(data, function(index, value) {
 					if (value != "") {
-						if (that.certId == value) {
+						if (that.deviceId == value) {
 							$("#node-config-input-deviceId").append('<option value="' + value + '" selected>' + value + '</option>');
 						} else {
 							$("#node-config-input-deviceId").append('<option value="' + value + '">' + value + '</option>');
@@ -60,11 +60,11 @@ limitations under the License.
 				$("#node-config-input-deviceId").change();
 			}
 
-			$.get("/device/uuids", function(certs) {
-				fulfillOptions(certs);
+			$.get("/device/uuids", function(data) {
+				fulfillOptions(data);
 			}).fail(function() {				
-				var certs = [];
-				fulfillOptions(certs);
+				var data = [];
+				fulfillOptions(data);
 			});
 		}
 	});

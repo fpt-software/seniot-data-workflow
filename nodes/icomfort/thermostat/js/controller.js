@@ -73,7 +73,6 @@ function updateModel() {
 
 function setPowerState(powerState) {
 	powerOn = powerState;
-	console.log(powerOn);
 	if (powerOn) {
 		$("#power").addClass("ui-btn-active");
 		$("#container").removeClass("power-off");

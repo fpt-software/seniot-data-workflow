@@ -42,7 +42,7 @@ module.exports = function(RED) {
 
         this.connect = function () {
             var deferred = q.defer();
-            if (deviceId) {
+            if (self.deviceId) {
                 fs.readFile('./storage/' + self.deviceId + "/device.json", 'utf8', function (err, data) {
                     if (err) {
                         deferred.reject(err);
@@ -52,7 +52,6 @@ module.exports = function(RED) {
                             var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
                             self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
                             self.device = new Client.fromConnectionString(connectionString);
-                            self.log("Created Azure IoT Hub HTTPS" + self.device);
                         }
                         deferred.resolve(self.device);
                     }
@@ -164,7 +163,7 @@ module.exports = function(RED) {
                     shape : "dot",
                     text : "common.status.disconnected"
                 });
-                this.error("azure-amqp is not registered.");
+                this.error("azure-https is not registered.");
             });
         } else {
             self.status({
@@ -172,7 +171,7 @@ module.exports = function(RED) {
                 shape : "dot",
                 text : "common.status.disconnected"
             });
-            this.error("azure-amqp out is not configured");
+            this.error("azure-https out is not configured");
         }
 	}
 

@@ -15,7 +15,15 @@ function wsGateway() {
 	wsClient.onopen = function() {
 		connected = true;
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
-		console.log("sent init requeset");
+		if (powerOn) {
+			wsClient.send(JSON.stringify({
+				type : "powerUp",
+				data : {
+					powerState : powerOn
+				}
+			}));
+		}
+		setPowerState(powerOn);
 	};
 
 	wsClient.onclose = function() {
@@ -37,7 +45,6 @@ wsGateway();
 
 function setPowerState(powerState) {
 	powerOn = powerState;
-	console.log(powerOn);
 	if (powerOn) {
 		$("#power").addClass("ui-btn-active");
 		$("#gateway").removeClass("power-off");

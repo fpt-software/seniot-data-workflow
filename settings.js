@@ -107,9 +107,9 @@ module.exports = {
     // this setting.
     //
     https: {
-        key: fs.readFileSync('https/certs/server-key.pem'),
-        cert: fs.readFileSync('https/certs/server-crt.pem'),
-        ca: fs.readFileSync('https/certs/ca-crt.pem')
+        key: fs.readFileSync('./https/certs/server-key.pem'),
+        cert: fs.readFileSync('./https/certs/server-crt.pem'),
+        ca: fs.readFileSync('./https/certs/ca-crt.pem')
     },
 
     // The following property can be used to configure cross-origin resource sharing
@@ -174,4 +174,4 @@ module.exports = {
             metrics: false
         }
     }
-}
+};

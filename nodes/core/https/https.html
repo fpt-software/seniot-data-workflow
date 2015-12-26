@@ -29,9 +29,13 @@ SOFTWARE.
         <input type="text" id="node-config-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-	<label for="node-config-input-certId"><i class="fa fa-tag"></i> Certificate</label>
+	<label for="node-config-input-certId"><i class="fa fa-certificate"></i> Certificate</label>
 	<select type="text" id="node-config-input-certId"></select>
 	</div>
+	 <div class="form-row">
+		<label for="node-config-input-rejectUnauthorized" style="width: auto"><i class="fa fa-warning"></i> TLS Reject Unauthorized Certificate</label>
+		<input type="checkbox" id="node-config-input-rejectUnauthorized" style="margin-left: 30px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
+     </div>
 </script>
 <!-- MQTT Broker Configuration -->
 
@@ -46,6 +50,9 @@ SOFTWARE.
 			certId : {
 				value : "",
 				required : true
+			},
+			rejectUnauthorized : {
+				value : false
 			}
 		},
 		label : function() {

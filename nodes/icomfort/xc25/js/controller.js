@@ -1,6 +1,6 @@
 var powerOn = false;
 var connected = false;
-var wsUri = "ws://" + window.location.hostname + ":1880/ws/xc25";
+var wsUri = "wss://" + window.location.hostname + ":1880/ws/xc25";
 var wsClient = null;
 function wsGateway() {
 	wsClient = new WebSocket(wsUri);

@@ -32,9 +32,9 @@ module.exports = function(RED) {
 	function httpTlsCertificateNode(n) {
 		RED.nodes.createNode(this, n);
 		this.agentOptions = {
-			cert : fs.readFileSync('../https/certs/' + n.certId + '-certificate.pem.crt'),
-			key : fs.readFileSync('../https/certs/' + n.certId + '-private.pem.key'),
-			ca : fs.readFileSync('../https/certs/' + n.certId + '-root.ca.crt'),
+			cert : fs.readFileSync('../https/certs/' + n.certId + '/client.crt.pem'),
+			key : fs.readFileSync('../https/certs/' + n.certId + '/client.key.pem'),
+			ca : fs.readFileSync('../https/certs/ca-crt.pem'),
 			securityOptions : 'SSL_OP_NO_SSLv3'
 		};
 	}
@@ -62,7 +62,8 @@ module.exports = function(RED) {
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
 					self.send({
-						response : response,
+						error: error,
+						statusCode: response? response.statusCode : 0,
 						payload : body
 					});
 				});

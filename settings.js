@@ -16,7 +16,7 @@
 
 // The `https` setting requires the `fs` module. Uncomment the following
 // to make it available:
-//var fs = require("fs");
+var fs = require("fs");
 
 module.exports = {
     // the tcp port that the Node-RED web server is listening on
@@ -106,10 +106,11 @@ module.exports = {
     // See the comment at the top of this file on how to load the `fs` module used by
     // this setting.
     //
-    //https: {
-    //    key: fs.readFileSync('privatekey.pem'),
-    //    cert: fs.readFileSync('certificate.pem')
-    //},
+    https: {
+        key: fs.readFileSync('https/certs/server-key.pem'),
+        cert: fs.readFileSync('https/certs/server-crt.pem'),
+        ca: fs.readFileSync('https/certs/ca-crt.pem')
+    },
 
     // The following property can be used to configure cross-origin resource sharing
     // in the HTTP nodes.

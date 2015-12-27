@@ -32,7 +32,7 @@ function wsGateway() {
 		initButtonEffect();
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		console.log("sent init requeset");
-		setInterval(function() {
+		setTimeout(function() {
 			if (connected) {
 				wsClient.send(JSON.stringify({
 					type : "update",

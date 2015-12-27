@@ -24,7 +24,7 @@ ST                     = TX
 L                      = Dallas
 O                      = Lennox International Inc
 OU                     = LBAS
-CN                     = Lennox LBAS
+CN                     = lcc.eastus.cloudapp.azure.com
 emailAddress           = support@lennox.com
 
 [ req_attributes ]

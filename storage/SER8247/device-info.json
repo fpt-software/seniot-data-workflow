@@ -1,0 +1,21 @@
+{
+    "DeviceProperties": {
+      "DeviceID": "6103467D-5EF5-43D3-B5D8-E28FB7DB0F7C",
+      "HubEnabledState": false,
+      "CreatedTime": "2015-12-19T22:33:44.608054Z",
+      "DeviceState": "normal",
+      "UpdatedTime": null,
+      "Manufacturer": "Lennox International Inc.",
+      "ModelNumber": "LCC-367",
+      "SerialNumber": "SER8247",
+      "FirmwareVersion": "2.06",
+      "Platform": "Linux-64",
+      "Processor": "QCA9533-AL3A",
+      "InstalledRAM": "32 MB",
+      "Latitude": 47.593307,
+      "Longitude": -122.332165
+    },
+    "Version": "1.0",
+    "ObjectType": "DeviceInfo",
+    "Name" : "Linux Control Center"
+ }

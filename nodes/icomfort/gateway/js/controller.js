@@ -1,5 +1,6 @@
 var powerOn = false;
 var connected = false;
+var nextStep = "UNKNOWN";
 var wsUri = "wss://" + window.location.hostname + ":1880/ws/gateway";
 var wsClient = null;
 function wsGateway() {
@@ -10,6 +11,7 @@ function wsGateway() {
 		msg = JSON.parse(m.data);
 		if (msg.type == "setStatus") {
 			$("#statusView").html("<span>" + msg.data + "</span>");
+			nextStep = msg.next;
 		}
 	};
 	wsClient.onopen = function() {

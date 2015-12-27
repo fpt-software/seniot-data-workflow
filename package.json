@@ -63,7 +63,7 @@
         "amqp10": "^2.0.3",
 	    "azure-iot-common": "^1.0.0-preview.6",
 	    "azure-iothub": "^1.0.0-preview.6",
-	    "request" : "^2.67.0"
+	    "request" : "^2.67.0",
 	    "q": "^1.4.1"
     },
     "optionalDependencies": {

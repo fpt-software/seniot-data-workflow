@@ -43,7 +43,8 @@ module.exports = function(RED) {
         this.connect = function () {
             var deferred = q.defer();
             if (self.deviceId) {
-                fs.readFile(context.global.config.safeStorage + '/' + self.deviceId + "/device.json", 'utf8', function (err, data) {
+            	var contextGlobal = RED.settings.get('functionGlobalContext');
+                fs.readFile(contextGlobal.safeStorage + '/' + self.deviceId + "/device.json", 'utf8', function (err, data) {
                     if (err) {
                         deferred.reject(err);
                     } else {

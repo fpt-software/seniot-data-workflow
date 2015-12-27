@@ -86,6 +86,6 @@ var persistentSettings = {
         globalSettings = null;
         storage = null;
     }
-}
+};
 
 module.exports = persistentSettings;

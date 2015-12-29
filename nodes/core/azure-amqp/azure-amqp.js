@@ -20,7 +20,7 @@ module.exports = function(RED) {
 					if (err) {
 						deferred.reject(err);
 					} else {
-						if (!self.device) {
+						if (!self.device && data && data!="") {
 							data = JSON.parse(data);
 							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
 							self.log("Initiate Azure IoT Hub AMQP node for " + self.deviceId + ", " + connectionString);

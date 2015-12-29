@@ -58,13 +58,13 @@ module.exports = function(RED) {
 			self.on("input", function(msg) {
 				self.method = msg.method || self.method;
 				self.url = msg.url || self.url;
-				console.log("httpTlsRequestNode", self.url, self.method, self.certificate.agentOptions);
+				console.log("httpTlsRequestNode", self.url, self.method);
 				request({
 					url : self.url,
 					method : self.method,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
-					console.log("httpTlsRequestNode ERROR", error);
+					console.log("httpTlsRequestNode BODY", body);
 					self.send({
 						error: error,
 						response: response,

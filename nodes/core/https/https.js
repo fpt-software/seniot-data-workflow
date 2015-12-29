@@ -64,6 +64,7 @@ module.exports = function(RED) {
 					method : self.method,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
+					console.log("httpTlsRequestNode ERROR", error, response, body);
 					self.send({
 						error: error,
 						statusCode: response? response.statusCode : 0,

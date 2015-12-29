@@ -58,6 +58,7 @@ module.exports = function(RED) {
 			self.on("input", function(msg) {
 				self.method = msg.method || self.method;
 				self.url = msg.url || self.url;
+				console.log("httpTlsRequestNode", self.url, self.method);
 				request({
 					url : self.url,
 					method : self.method,

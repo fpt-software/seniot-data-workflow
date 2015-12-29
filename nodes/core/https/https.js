@@ -26,6 +26,7 @@ module.exports = function(RED) {
 	"use strict";
 	var request = require('request');
 	var fs = require('fs');
+	var q = require('q');
 	/**
 	 * Create https configuration node
 	 */
@@ -52,6 +53,7 @@ module.exports = function(RED) {
 		this.certificate = RED.nodes.getNode(this.myCertificate);
 		this.method = n.method;
 		this.url = n.url;
+		var deferred = q.defer();
 		var self = this;
 
 		if (this.certificate) {
@@ -65,12 +67,15 @@ module.exports = function(RED) {
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
 					console.log("httpTlsRequestNode BODY", body);
-					self.send({
+					deferred.resolve({
 						error: error,
 						response: response,
 						payload : body
 					});
 				});
+			});
+			deferred.promise.then(function(msg) {
+				self.send(msg);
 			});
 		} else {
 			this.error("https in is not configured");

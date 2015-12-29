@@ -68,8 +68,6 @@ module.exports = function(RED) {
 				}, function(error, response, body) {
 					console.log("httpTlsRequestNode BODY", body);
 					deferred.resolve({
-						error: error,
-						response: response,
 						payload : body
 					});
 				});

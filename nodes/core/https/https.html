@@ -36,6 +36,10 @@ SOFTWARE.
 		<label for="node-config-input-rejectUnauthorized" style="width: auto"><i class="fa fa-warning"></i> TLS Reject Unauthorized Certificate</label>
 		<input type="checkbox" id="node-config-input-rejectUnauthorized" style="margin-left: 30px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
     </div>
+    <div class="form-row">
+		<label for="node-config-input-disabled" style="width: auto"><i class="fa fa-warning"></i> Disable TLS Certificate</label>
+		<input type="checkbox" id="node-config-input-disabled" style="margin-left: 30px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
+    </div>
 </script>
 <!-- MQTT Broker Configuration -->
 
@@ -51,6 +55,9 @@ SOFTWARE.
 				value : ""
 			},
 			rejectUnauthorized : {
+				value : false
+			},
+			disabled : {
 				value : false
 			}
 		},

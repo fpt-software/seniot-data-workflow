@@ -32,7 +32,7 @@ module.exports = function(RED) {
 	function httpTlsCertificateNode(n) {
 		var contextGlobal = RED.settings.get('functionGlobalContext');
 		RED.nodes.createNode(this, n);
-		this.agentOptions = {
+		this.agentOptions = n.disabled ? null : {
 			cert : fs.readFileSync(contextGlobal.safeStorage + '/' + n.certId + '/client-crt.pem'),
 			key : fs.readFileSync(contextGlobal.safeStorage + '/' + n.certId + '/client-key.pem'),
 			ca : fs.readFileSync(contextGlobal.certStorage + '/ca-crt.pem'),

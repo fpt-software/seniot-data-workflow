@@ -40,7 +40,7 @@ module.exports = function(RED) {
 		this.deviceId = n.deviceId;
 		var self = this;
 
-        this.connect = function (options) {
+        this.connect = function () {
             var deferred = q.defer();
             if (self.deviceId) {
             	var contextGlobal = RED.settings.get('functionGlobalContext');
@@ -50,13 +50,12 @@ module.exports = function(RED) {
                     } else {
                         if (!self.device && data && data!="") {
                             data = JSON.parse(data);
-                            options = data;
+                            var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
+		                    self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
+		                    self.device = new Client.fromConnectionString(connectionString);
+		                    deferred.resolve(self.device);
                         }
                     }
-                    var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
-                    self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
-                    self.device = new Client.fromConnectionString(connectionString);
-                    deferred.resolve(self.device);
                 });
             } else {
                 deferred.resolve(null);

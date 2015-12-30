@@ -87,7 +87,7 @@ module.exports = function(RED) {
 		var self = this;
         
         if (this.azureIot) {
-            self.azureIot.connect(msg.options).then(function (device) {
+            self.azureIot.connect().then(function (device) {
                 self.status({
                     fill : "green",
                     shape : "dot",
@@ -136,7 +136,7 @@ module.exports = function(RED) {
 		var self = this;
 		
         if (this.azureIot) {
-            self.azureIot.connect(msg.options).then(function (device) {
+            self.azureIot.connect().then(function (device) {
                 self.status({
                     fill : "green",
                     shape : "dot",
@@ -144,6 +144,12 @@ module.exports = function(RED) {
                 });
                 console.log('Creating Azure IoTHub: HTTPS OUT ' + self.azureIot.name);
                 self.on("input", function (msg) {
+                	if (msg.options) {
+                		var options = msg.options;
+						var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
+			            self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
+			            device = new Client.fromConnectionString(connectionString);
+                	}
                     if (!Buffer.isBuffer(msg.payload)) {
                         if (typeof msg.payload === "object") {
                             msg.payload = JSON.stringify(msg.payload);

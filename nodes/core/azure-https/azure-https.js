@@ -140,6 +140,29 @@ module.exports = function(RED) {
 						shape : "dot",
 						text : "common.status.connected"
 					});
+					self.on("input", function(msg) {
+						if (!Buffer.isBuffer(msg.payload)) {
+							if ( typeof msg.payload === "object") {
+								msg.payload = JSON.stringify(msg.payload);
+							} else if ( typeof msg.payload !== "string") {
+								msg.payload = "" + msg.payload;
+							}
+						}
+						var message = new Message(msg.payload);
+						console.log("Sending message: " + message.getData());
+						self.azureIot.device.sendEvent(message, function(err, res) {
+							if (!err) {
+								self.send({
+									status : true
+								});
+							} else {
+								self.send({
+									status : false,
+									err : err
+								});
+							}
+						});
+					});
 				} else {
 					self.status({
 						fill : "red",
@@ -149,29 +172,7 @@ module.exports = function(RED) {
 					this.error("azure-https in is not set.");
 				}
 			});
-			self.on("input", function(msg) {
-				if (!Buffer.isBuffer(msg.payload)) {
-					if ( typeof msg.payload === "object") {
-						msg.payload = JSON.stringify(msg.payload);
-					} else if ( typeof msg.payload !== "string") {
-						msg.payload = "" + msg.payload;
-					}
-				}
-				var message = new Message(msg.payload);
-				console.log("Sending message: " + message.getData());
-				self.azureIot.device.sendEvent(message, function(err, res) {
-					if (!err) {
-						self.send({
-							status : true
-						});
-					} else {
-						self.send({
-							status : false,
-							err : err
-						});
-					}
-				});
-			});
+
 			self.azureIot.connect().then(function(device) {
 				self.status({
 					fill : "green",

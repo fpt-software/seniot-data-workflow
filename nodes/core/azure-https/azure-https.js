@@ -60,7 +60,6 @@ module.exports = function(RED) {
             } else {
                 deferred.resolve(null);
             }
-            
             return deferred.promise;
         };
 	}

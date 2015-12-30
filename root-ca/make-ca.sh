@@ -10,7 +10,7 @@ cat ca.cnf | \
    	sed -e s=ROOT_CERT_DIR=${CA_NAME}=g > $TMP_FILE;
 cat $TMP_FILE > ${ROOTCA_CNF}
 
-mkdir ${CA_NAME}/newcerts ${CA_NAME}/private
+mkdir ${CA_NAME}/newcerts ${CA_NAME}/private ${CA_NAME}/crl
 touch ${CA_NAME}/index.txt
 echo 1000 > ${CA_NAME}/serial
 

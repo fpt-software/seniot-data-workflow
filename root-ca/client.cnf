@@ -9,7 +9,7 @@ default_ca = CA_default
 # Directory and file locations.
 dir               = ./ROOT_CERT_DIR
 certs             = $dir
-crl_dir           = $dir
+crl_dir           = $dir/crl
 new_certs_dir     = $dir/newcerts
 database          = $dir/index.txt
 serial            = $dir/serial
@@ -21,7 +21,7 @@ certificate       = $dir/ca-crt.pem
 
 # For certificate revocation lists.
 crlnumber         = $dir/crlnumber
-crl               = $dir/ca-crl.pem
+crl               = $dir/crl/ca-crl.pem
 crl_extensions    = crl_ext
 default_crl_days  = 30
 

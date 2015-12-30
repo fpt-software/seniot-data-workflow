@@ -60,11 +60,12 @@ module.exports = function(RED) {
 			self.on("input", function(msg) {
 				self.method = msg.method || self.method;
 				self.url = msg.url || self.url;
+				self.body = msg.method == "POST" ? msg.body : null;
 				console.log("httpTlsRequestNode", self.url, self.method);
 				request({
 					url : self.url,
 					method : self.method,
-					body : msg.payload,
+					body : self.body,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
 					console.log("httpTlsRequestNode BODY", body);

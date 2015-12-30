@@ -64,6 +64,7 @@ module.exports = function(RED) {
 				request({
 					url : self.url,
 					method : self.method,
+					data : msg.payload,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
 					console.log("httpTlsRequestNode BODY", body);

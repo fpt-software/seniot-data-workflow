@@ -60,8 +60,8 @@ module.exports = function(RED) {
 			self.on("input", function(msg) {
 				self.method = msg.method || self.method;
 				self.url = msg.url || self.url;
-				self.body = (self.method == "POST") ? msg.payload : null;
-				console.log(n.name, "REQUEST", self.url, self.method, msg.payload);
+				self.body = (self.method == "POST" || self.method == "PUT") ? msg.payload : null;
+				console.log(n.name, "REQUEST", self.url, self.method, self.body);
 				request({
 					url : self.url,
 					method : self.method,

@@ -50,12 +50,12 @@ module.exports = function(RED) {
                     } else {
                         if (!self.device && data && data!="") {
                             data = JSON.parse(data);
+                            var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
+		                    self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
+		                    self.device = new Client.fromConnectionString(connectionString);
+		                    deferred.resolve(self.device);
                         }
                     }
-                    var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
-                    self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
-                    self.device = new Client.fromConnectionString(connectionString);
-                    deferred.resolve(self.device);
                 });
             } else {
                 deferred.resolve(null);

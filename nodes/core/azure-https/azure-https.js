@@ -60,7 +60,7 @@ module.exports = function(RED) {
 			} else {
 				deferred.resolve(null);
 			}
-			RED.httpNode.post("/azure/https/init", function(req, res) {
+			RED.httpNode.get("/azure/https/init", function(req, res) {
 				console.log("HELLO", req);
 				var options = req.body;
 				var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';

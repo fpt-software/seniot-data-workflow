@@ -61,18 +61,10 @@ module.exports = function(RED) {
 			} else {
 				deferred.resolve(null);
 			}
-			RED.httpNode.post("/azure/https/init", function(req, res) {
-				if (req.body) {
-					var options = req.body;
-					var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
-					self.log("Re-Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
-					self.device = new Client.fromConnectionString(connectionString);
-					res.end(connectionString);	
-				}
-			});
 			return deferred.promise;
 		};
 	}
+
 
 	RED.nodes.registerType("azure-https-device", azureIoTHubHttpNode);
 
@@ -136,6 +128,50 @@ module.exports = function(RED) {
 		var self = this;
 
 		if (this.azureIot) {
+			RED.httpNode.post("/azure/https/init", function(req, res) {
+				if (req.body) {
+					var options = req.body;
+					var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
+					self.log("Re-Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
+					self.azureIot.device = new Client.fromConnectionString(connectionString);
+					res.end(connectionString);
+					self.status({
+						fill : "green",
+						shape : "dot",
+						text : "common.status.connected"
+					});
+				} else {
+					self.status({
+						fill : "red",
+						shape : "dot",
+						text : "common.status.disconnected"
+					});
+					this.error("azure-https in is not set.");
+				}
+			});
+			self.on("input", function(msg) {
+				if (!Buffer.isBuffer(msg.payload)) {
+					if ( typeof msg.payload === "object") {
+						msg.payload = JSON.stringify(msg.payload);
+					} else if ( typeof msg.payload !== "string") {
+						msg.payload = "" + msg.payload;
+					}
+				}
+				var message = new Message(msg.payload);
+				console.log("Sending message: " + message.getData());
+				self.azureIot.device.sendEvent(message, function(err, res) {
+					if (!err) {
+						self.send({
+							status : true
+						});
+					} else {
+						self.send({
+							status : false,
+							err : err
+						});
+					}
+				});
+			});
 			self.azureIot.connect().then(function(device) {
 				self.status({
 					fill : "green",
@@ -143,35 +179,6 @@ module.exports = function(RED) {
 					text : "common.status.connected"
 				});
 				console.log('Creating Azure IoTHub: HTTPS OUT ' + self.azureIot.name);
-				self.on("input", function(msg) {
-					if (msg.options) {
-						var options = msg.options;
-						var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
-						self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
-						device = new Client.fromConnectionString(connectionString);
-					}
-					if (!Buffer.isBuffer(msg.payload)) {
-						if ( typeof msg.payload === "object") {
-							msg.payload = JSON.stringify(msg.payload);
-						} else if ( typeof msg.payload !== "string") {
-							msg.payload = "" + msg.payload;
-						}
-					}
-					var message = new Message(msg.payload);
-					console.log("Sending message: " + message.getData());
-					device.sendEvent(message, function(err, res) {
-						if (!err) {
-							self.send({
-								status : true
-							});
-						} else {
-							self.send({
-								status : false,
-								err : err
-							});
-						}
-					});
-				});
 			}, function(error) {
 				self.status({
 					fill : "red",

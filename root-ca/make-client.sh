@@ -21,5 +21,5 @@ cat $TMP_FILE > ${CLIENT_CNF}
 openssl genrsa -passout "pass:${PASSWORD}" -out ${CLIENT_KEY} 2048
 openssl req -new -config ${CLIENT_CNF} -extensions usr_cert -key ${CLIENT_KEY} -out ${CLIENT_CSR}
 openssl ca -batch -config ${CLIENT_CNF} -passin "pass:${CA_PASSWORD}" -extensions usr_cert -notext -md sha256 -in ${CLIENT_CSR} -out ${CLIENT_CRT}
-openssl verify -CAfile ${CA_NAME}/certs/ca.cert.pem ${CLIENT_CRT}
-openssl pkcs12 -passout "pass:${PASSWORD}" -export -out ${CLIENT_ID}/client.pfx -inkey ${CLIENT_KEY} -in ${CLIENT_CRT} -certfile ${CA_NAME}/certs/ca.cert.pem
+openssl verify -CAfile ${CA_NAME}/ca-crt.pem ${CLIENT_CRT}
+openssl pkcs12 -passout "pass:${PASSWORD}" -export -out ${CLIENT_ID}/client.pfx -inkey ${CLIENT_KEY} -in ${CLIENT_CRT} -certfile ${CA_NAME}/ca-crt.pem

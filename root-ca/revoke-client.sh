@@ -1,8 +1,12 @@
 # Revoke Client Certificate
 CLIENT_ID=$1
+PASSWORD=$2
+CA_NAME=$3
+CA_PASSWORD=$4
 
-CLIENT_CRT=clients/${CLIENT_ID}/client-crt.pem
+CLIENT_CRT=${CLIENT_ID}/client-crt.pem
+ROOTCA_CNF=${CA_NAME}/ca.cnf
 
-openssl ca -config openssl-in.cnf -revoke ${CLIENT_CRT}
-openssl ca -config openssl-in.cnf -gencrl -out intermediate/crl/intermediate.crl.pem
-openssl crl -in intermediate/crl/intermediate.crl.pem -noout -text
+openssl ca -batch -config ${ROOTCA_CNF} -passin "pass:${CA_PASSWORD}" -revoke ${CLIENT_CRT}
+openssl ca -batch -config ${ROOTCA_CNF} -passin "pass:${CA_PASSWORD}" -gencrl -out ${CA_NAME}/ca-crl.pem
+openssl crl -in ${CA_NAME}/ca-crl.pem -noout -text

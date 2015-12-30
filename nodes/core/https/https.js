@@ -68,7 +68,7 @@ module.exports = function(RED) {
 					body : self.body,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
-					console.log(n.name, "RESULT", body);
+					console.log(n.name, "RESULT", error, body);
 					deferred.resolve({
 						payload : body,
 						error : error

@@ -151,6 +151,7 @@ module.exports = function(RED) {
 						var message = new Message(msg.payload);
 						console.log("Sending message: " + message.getData());
 						self.azureIot.device.sendEvent(message, function(err, res) {
+							console.log("HELLO", err);
 							if (!err) {
 								self.send({
 									status : true

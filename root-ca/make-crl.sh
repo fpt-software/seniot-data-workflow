@@ -1,2 +1,8 @@
-openssl ca -config openssl-in.cnf -passin "pass:cuongquay" -gencrl -out intermediate/crl/intermediate.crl.pem
-openssl crl -in intermediate/crl/intermediate.crl.pem -noout -text
+CA_NAME=$1
+CA_PASSWORD=$2
+
+ROOTCA_CRL=${CA_NAME}/ca-crl.pem
+ROOTCA_CNF=${CA_NAME}/ca.cnf
+
+openssl ca -batch -config ${ROOTCA_CNF} -passin "pass:${CA_PASSWORD}" -gencrl -out ${ROOTCA_CRL}
+openssl crl -in ${ROOTCA_CRL} -noout -text

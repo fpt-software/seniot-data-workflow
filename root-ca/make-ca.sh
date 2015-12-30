@@ -13,6 +13,7 @@ cat $TMP_FILE > ${ROOTCA_CNF}
 mkdir ${CA_NAME}/newcerts ${CA_NAME}/private ${CA_NAME}/crl
 touch ${CA_NAME}/index.txt
 echo 1000 > ${CA_NAME}/serial
+echo 1000 > ${CA_NAME}/crlnumber
 
 openssl genrsa -passout "pass:${PASSWORD}" -aes256 -out ${CA_NAME}/ca-key.pem 4096
 openssl req -config ${CA_NAME}/ca.cnf -passin "pass:${PASSWORD}" -key ${CA_NAME}/ca-key.pem -new -x509 -days 7300 -sha256 -extensions v3_ca -out ${CA_NAME}/ca-crt.pem

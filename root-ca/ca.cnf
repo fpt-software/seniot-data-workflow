@@ -71,11 +71,11 @@ x509_extensions     = v3_ca
 
 [ req_distinguished_name ]
 # See <https://en.wikipedia.org/wiki/Certificate_signing_request>.
-countryName                     = VN
-stateOrProvinceName             = Hanoi
-localityName                    = Hanoi
-0.organizationName              = FPT Software Ltd
-organizationalUnitName          = FSOFT
+countryName                     = US
+stateOrProvinceName             = TX
+localityName                    = Richardson
+0.organizationName              = FPT Software USA
+organizationalUnitName          = FUSA
 commonName                      = YOUR_COMMON_NAME
 emailAddress                    = support@fsoft.com.vn
 

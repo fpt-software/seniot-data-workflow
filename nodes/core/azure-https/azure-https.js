@@ -40,7 +40,7 @@ module.exports = function(RED) {
 		this.deviceId = n.deviceId;
 		var self = this;
 
-        this.connect = function (options) {
+        this.connect = function () {
             var deferred = q.defer();
             if (self.deviceId) {
             	var contextGlobal = RED.settings.get('functionGlobalContext');
@@ -128,7 +128,7 @@ module.exports = function(RED) {
 		var self = this;
 		
         if (this.azureIot) {
-            self.azureIot.connect(msg.options).then(function (device) {
+            self.azureIot.connect().then(function (device) {
                 self.status({
                     fill : "green",
                     shape : "dot",

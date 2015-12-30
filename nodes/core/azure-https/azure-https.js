@@ -40,7 +40,7 @@ module.exports = function(RED) {
 		this.deviceId = n.deviceId;
 		var self = this;
 
-        this.connect = function () {
+        this.connect = function (options) {
             var deferred = q.defer();
             if (self.deviceId) {
             	var contextGlobal = RED.settings.get('functionGlobalContext');
@@ -50,13 +50,13 @@ module.exports = function(RED) {
                     } else {
                         if (!self.device && data && data!="") {
                             data = JSON.parse(data);
-                            var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
-                            self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
-                            self.device = new Client.fromConnectionString(connectionString);
-                            console.log(self.device);
+                            options = data;
                         }
-                        deferred.resolve(self.device);
                     }
+                    var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
+                    self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
+                    self.device = new Client.fromConnectionString(connectionString);
+                    deferred.resolve(self.device);
                 });
             } else {
                 deferred.resolve(null);
@@ -64,6 +64,13 @@ module.exports = function(RED) {
             
             return deferred.promise;
         };
+        
+        RED.httpNode.post("/azure/https", function(req, res) {
+			var options = req.body; console.log(req.body);
+			var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
+            self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
+            self.device = new Client.fromConnectionString(connectionString);
+		});
 	}
 
 
@@ -80,7 +87,7 @@ module.exports = function(RED) {
 		var self = this;
         
         if (this.azureIot) {
-            self.azureIot.connect().then(function (device) {
+            self.azureIot.connect(msg.options).then(function (device) {
                 self.status({
                     fill : "green",
                     shape : "dot",
@@ -129,7 +136,7 @@ module.exports = function(RED) {
 		var self = this;
 		
         if (this.azureIot) {
-            self.azureIot.connect().then(function (device) {
+            self.azureIot.connect(msg.options).then(function (device) {
                 self.status({
                     fill : "green",
                     shape : "dot",
@@ -178,5 +185,4 @@ module.exports = function(RED) {
 	}
 
 	RED.nodes.registerType("azure-https out", azureIoTHubHttpNodeOut);
-
 };

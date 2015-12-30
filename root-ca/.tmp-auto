@@ -77,7 +77,7 @@ stateOrProvinceName             = Hanoi
 localityName                    = Hanoi
 0.organizationName              = FPT Software Ltd
 organizationalUnitName          = FSOFT
-commonName                      = 6103467D-5EF5-43D3-B5D8-E28FB7DB0F7D
+commonName                      = B103467D-5EF5-43D3-B5D8-E28FB7DB0F7E
 emailAddress                    = support@fsoft.com.vn
 
 [ req_attributes ]

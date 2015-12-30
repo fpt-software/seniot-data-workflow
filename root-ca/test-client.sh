@@ -1,1 +1,1 @@
-./make-client.sh FsoftCA "fptsoftware" 6103467D-5EF5-43D3-B5D8-E28FB7DB0F7D "fptlennox"
+./make-client.sh FSOFTCA "fptsoftware" B103467D-5EF5-43D3-B5D8-E28FB7DB0F7E "fptlennox"

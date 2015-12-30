@@ -1,4 +1,19 @@
-# create Root CA
-openssl genrsa -aes256 -out private/ca.key.pem 4096
-openssl req -config openssl.cnf -passin "pass:cuongquay" -key private/ca.key.pem -new -x509 -days 7300 -sha256 -extensions v3_ca -out certs/ca.cert.pem
-openssl x509 -noout -text -in certs/ca.cert.pem
+CA_NAME=$1
+PASSWORD=$2
+
+mkdir -p ${CA_NAME}/
+ROOTCA_CNF=${CA_NAME}/ca.cnf
+TMP_FILE="./.tmp-auto"
+
+cat ca.cnf | \
+   	sed -e s=YOUR_COMMON_NAME=${CA_NAME}=g| \
+   	sed -e s=ROOT_CERT_DIR=${CA_NAME}=g > $TMP_FILE;
+cat $TMP_FILE > ${ROOTCA_CNF}
+
+mkdir ${CA_NAME}/certs ${CA_NAME}/crl ${CA_NAME}/newcerts ${CA_NAME}/private
+touch ${CA_NAME}/index.txt
+echo 1000 > ${CA_NAME}/serial
+
+openssl genrsa -passout "pass:${PASSWORD}" -aes256 -out ${CA_NAME}/private/ca.key.pem 4096
+openssl req -config ${CA_NAME}/ca.cnf -passin "pass:${PASSWORD}" -key ${CA_NAME}/private/ca.key.pem -new -x509 -days 7300 -sha256 -extensions v3_ca -out ${CA_NAME}/certs/ca.cert.pem
+openssl x509 -noout -text -in ${CA_NAME}/certs/ca.cert.pem

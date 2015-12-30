@@ -1,19 +1,24 @@
 # Create Client Certificate
-CLIENT_ID=$1
-CLIENT_CSR=clients/${CLIENT_ID}/client-csr.pem
-CLIENT_CRT=clients/${CLIENT_ID}/client-crt.pem
-CLIENT_KEY=clients/${CLIENT_ID}/client-key.pem
-CLIENT_CNF=clients/${CLIENT_ID}/client.cnf
+CA_NAME=$1
+CA_PASSWORD=$2
+CLIENT_ID=$3
+PASSWORD=$4
+
+CLIENT_CSR=${CLIENT_ID}/client-csr.pem
+CLIENT_CRT=${CLIENT_ID}/client-crt.pem
+CLIENT_KEY=${CLIENT_ID}/client-key.pem
+CLIENT_CNF=${CLIENT_ID}/client.cnf
+
 TMP_FILE="./.tmp-auto"
 
-mkdir -p clients/${CLIENT_ID}
-openssl genrsa -out ${CLIENT_KEY} 2048
+mkdir -p ${CLIENT_ID}
 
 cat client.cnf | \
-   	sed -e s=AUTO_CLIENT_ID=${CLIENT_ID}=g| \
-   	sed -e s=YOUR_CLIENT_ID=${CLIENT_ID}=g > $TMP_FILE;
+   	sed -e s=YOUR_COMMON_NAME=${CLIENT_ID}=g| \
+   	sed -e s=ROOT_CERT_DIR=${CA_NAME}=g > $TMP_FILE;
 cat $TMP_FILE > ${CLIENT_CNF}
 
+openssl genrsa -passout "pass:${PASSWORD}" -out ${CLIENT_KEY} 2048
 openssl req -new -config ${CLIENT_CNF} -extensions usr_cert -key ${CLIENT_KEY} -out ${CLIENT_CSR}
-openssl ca -batch -config ${CLIENT_CNF} -passin "pass:cuongquay" -extensions usr_cert -notext -md sha256 -in ${CLIENT_CSR} -out ${CLIENT_CRT}
-openssl verify -CAfile intermediate/certs/ca-chain.cert.pem ${CLIENT_CRT}
+openssl ca -batch -config ${CLIENT_CNF} -passin "pass:${CA_PASSWORD}" -extensions usr_cert -notext -md sha256 -in ${CLIENT_CSR} -out ${CLIENT_CRT}
+openssl verify -CAfile ${CA_NAME}/certs/ca.cert.pem ${CLIENT_CRT}

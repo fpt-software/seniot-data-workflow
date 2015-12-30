@@ -7,7 +7,7 @@ default_ca = CA_default
 
 [ CA_default ]
 # Directory and file locations.
-dir               = ./FsoftCA
+dir               = ./FSOFTCA
 certs             = $dir/certs
 crl_dir           = $dir/crl
 new_certs_dir     = $dir/newcerts
@@ -77,7 +77,7 @@ stateOrProvinceName             = Hanoi
 localityName                    = Hanoi
 0.organizationName              = FPT Software Ltd
 organizationalUnitName          = FSOFT
-commonName                      = B103467D-5EF5-43D3-B5D8-E28FB7DB0F7E
+commonName                      = B103467D-5EF5-43D3-B5D8-E28FB7DB0F7F
 emailAddress                    = support@fsoft.com.vn
 
 [ req_attributes ]

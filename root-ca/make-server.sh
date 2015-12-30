@@ -13,6 +13,7 @@ cat ca.cnf | \
    	sed -e s=YOUR_COMMON_NAME=${SERVER_NAME}=g| \
    	sed -e s=ROOT_CERT_DIR=${SERVER_NAME}=g > $TMP_FILE;
 cat $TMP_FILE > ${SERVER_CNF}
+echo ${SERVER_PASSWORD} > ${SERVER_NAME}/server-crt.pass
 
 openssl genrsa -passout "pass:${SERVER_PASSWORD}" -aes256 -out ${SERVER_NAME}/server-key.pem 2048
 openssl req -config ${SERVER_CNF} -passin "pass:${SERVER_PASSWORD}" -key ${SERVER_NAME}/server-key.pem -new -sha256 -out ${SERVER_NAME}/server-csr.pem

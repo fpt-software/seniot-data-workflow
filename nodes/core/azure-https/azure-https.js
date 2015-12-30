@@ -128,6 +128,31 @@ module.exports = function(RED) {
 		var self = this;
 
 		if (this.azureIot) {
+			self.on("input", function(msg) {
+				console.log("HIIIIII");
+				if (!Buffer.isBuffer(msg.payload)) {
+					if ( typeof msg.payload === "object") {
+						msg.payload = JSON.stringify(msg.payload);
+					} else if ( typeof msg.payload !== "string") {
+						msg.payload = "" + msg.payload;
+					}
+				}
+				var message = new Message(msg.payload);
+				console.log("Sending message: " + message.getData());
+				self.azureIot.device.sendEvent(message, function(err, res) {
+					console.log("HELLO", err);
+					if (!err) {
+						self.send({
+							status : true
+						});
+					} else {
+						self.send({
+							status : false,
+							err : err
+						});
+					}
+				});
+			});
 			RED.httpNode.post("/azure/https/init", function(req, res) {
 				if (req.body) {
 					var options = req.body;
@@ -139,30 +164,6 @@ module.exports = function(RED) {
 						fill : "green",
 						shape : "dot",
 						text : "common.status.connected"
-					});
-					self.on("input", function(msg) {
-						if (!Buffer.isBuffer(msg.payload)) {
-							if ( typeof msg.payload === "object") {
-								msg.payload = JSON.stringify(msg.payload);
-							} else if ( typeof msg.payload !== "string") {
-								msg.payload = "" + msg.payload;
-							}
-						}
-						var message = new Message(msg.payload);
-						console.log("Sending message: " + message.getData());
-						self.azureIot.device.sendEvent(message, function(err, res) {
-							console.log("HELLO", err);
-							if (!err) {
-								self.send({
-									status : true
-								});
-							} else {
-								self.send({
-									status : false,
-									err : err
-								});
-							}
-						});
 					});
 				} else {
 					self.status({

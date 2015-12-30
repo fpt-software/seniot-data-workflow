@@ -65,7 +65,8 @@ module.exports = function(RED) {
         };
         
         RED.httpNode.post("/azure/https/init", function(req, res) {
-			var options = req.body; console.log(req);
+			console.log("HELLO", req);
+			var options = req.body;
 			var connectionString = 'HostName=' + options.HostName + ';DeviceId=' + options.DeviceId + ';SharedAccessKeyName=' + options.SharedAccessKeyName + ';SharedAccessKey=' + options.PrimaryKey + '';
             self.log("Re-Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
             self.device = new Client.fromConnectionString(connectionString);

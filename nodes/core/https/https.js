@@ -61,14 +61,14 @@ module.exports = function(RED) {
 				self.method = msg.method || self.method;
 				self.url = msg.url || self.url;
 				self.body = msg.method == "POST" ? msg.payload : null;
-				console.log("httpTlsRequestNode", self.url, self.method);
+				console.log(n.name + " ", self.url, self.method);
 				request({
 					url : self.url,
 					method : self.method,
 					body : self.body,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
-					console.log("httpTlsRequestNode BODY", body);
+					console.log(n.name + " BODY", body);
 					deferred.resolve({
 						payload : body,
 						error : error

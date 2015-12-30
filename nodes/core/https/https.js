@@ -65,7 +65,7 @@ module.exports = function(RED) {
 				request({
 					url : self.url,
 					method : self.method,
-					body : self.body,
+					json : self.body,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
 					console.log(n.name, "RESULT", error, body);

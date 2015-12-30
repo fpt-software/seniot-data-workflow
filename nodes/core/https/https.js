@@ -61,14 +61,14 @@ module.exports = function(RED) {
 				self.method = msg.method || self.method;
 				self.url = msg.url || self.url;
 				self.body = msg.method == "POST" ? msg.payload : null;
-				console.log(n.name + " ", self.url, self.method);
+				console.log(n.name, "REQUEST", self.url, self.method, self.body || "");
 				request({
 					url : self.url,
 					method : self.method,
 					body : self.body,
 					agentOptions : self.certificate.agentOptions
 				}, function(error, response, body) {
-					console.log(n.name + " BODY", body);
+					console.log(n.name, "RESULT", body);
 					deferred.resolve({
 						payload : body,
 						error : error

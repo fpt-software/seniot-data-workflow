@@ -190,6 +190,7 @@ module.exports = function(RED) {
 			} else {
 				connectToAzureAndSend(msg);
 			}
+			console.log("INPUT", msg);
 		});
 		if (this.azureIot) {
 			connectToAzureAndSend();

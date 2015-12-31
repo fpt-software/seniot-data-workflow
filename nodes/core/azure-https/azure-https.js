@@ -46,7 +46,6 @@ module.exports = function(RED) {
             	var contextGlobal = RED.settings.get('functionGlobalContext');
             	console.log("FILE", contextGlobal.safeStorage + '/' + self.deviceId + "/device.json");
                 fs.readFile(contextGlobal.safeStorage + '/' + self.deviceId + "/device.json", 'utf8', function (err, data) {
-                	console.log("FILE", err, data);
                     if (err) {
                         deferred.reject(err);
                     } else {
@@ -111,7 +110,7 @@ module.exports = function(RED) {
                     shape : "dot",
                     text : "common.status.disconnected"
                 });
-                this.error("azure-https is not registered.");
+                self.error("azure-https is not registered.");
             });
         } else {
             self.status({
@@ -119,7 +118,7 @@ module.exports = function(RED) {
                 shape : "dot",
                 text : "common.status.disconnected"
             });
-            this.error("azure-https in is not configured");
+            self.error("azure-https in is not configured");
         }
 	}
 
@@ -171,7 +170,7 @@ module.exports = function(RED) {
                     shape : "dot",
                     text : "common.status.disconnected"
                 });
-                this.error("azure-https is not registered.");
+                self.error("azure-https is not registered.");
             });
         } else {
             self.status({
@@ -179,7 +178,7 @@ module.exports = function(RED) {
                 shape : "dot",
                 text : "common.status.disconnected"
             });
-            this.error("azure-https out is not configured");
+            self.error("azure-https out is not configured");
         }
 	}
 

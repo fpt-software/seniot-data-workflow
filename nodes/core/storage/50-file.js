@@ -18,6 +18,7 @@ module.exports = function(RED) {
 	"use strict";
 	var fs = require("fs-extra");
 	var os = require("os");
+	var q = require('q');
 
 	function FileNode(n) {
 		RED.nodes.createNode(this, n);

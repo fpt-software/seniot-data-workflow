@@ -37,10 +37,11 @@ module.exports = function(RED) {
 			cert : fs.readFileSync(contextGlobal.safeStorage + '/' + n.certId + '/client-crt.pem'),
 			key : fs.readFileSync(contextGlobal.safeStorage + '/' + n.certId + '/client-key.pem'),
 			ca : fs.readFileSync(contextGlobal.certStorage + '/ca-crt.pem'),
-			rejectUnauthorized: n.rejectUnauthorized,
+			rejectUnauthorized : n.rejectUnauthorized,
 			securityOptions : 'SSL_OP_NO_SSLv3'
 		};
 	}
+
 
 	RED.nodes.registerType("https-certificate", httpTlsCertificateNode);
 

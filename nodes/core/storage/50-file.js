@@ -36,6 +36,7 @@ module.exports = function(RED) {
 					text : "external"
 				});
 			}
+			
 			if (filename === "") {
 				node.warn(RED._("file.errors.nofilename"));
 			} else if (msg.hasOwnProperty("payload") && ( typeof msg.payload !== "undefined")) {
@@ -138,7 +139,7 @@ module.exports = function(RED) {
 
 	function FileInNode(n) {
 		RED.nodes.createNode(this, n);
-
+		var deferred = q.defer();
 		this.filename = n.filename;
 		this.format = n.format;
 		var node = this;
@@ -148,6 +149,7 @@ module.exports = function(RED) {
 		}
 		this.on("input", function(msg) {
 			var filename = node.filename || msg.filename || "";
+			console.log("FILE", filename, options);
 			if (!node.filename) {
 				node.status({
 					fill : "grey",
@@ -161,6 +163,7 @@ module.exports = function(RED) {
 				msg.filename = filename;
 				fs.readFile(filename, options, function(err, data) {
 					if (err) {
+						console.log("ERROR", err);
 						node.error(err, msg);
 						msg.error = err;
 						delete msg.payload;
@@ -168,9 +171,12 @@ module.exports = function(RED) {
 						msg.payload = data;
 						delete msg.error;
 					}
-					node.send(msg);
+					deferred.resolve(msg);
 				});
 			}
+			deferred.promise.then(function(msg) {
+				node.send(msg);
+			});
 		});
 	}
 

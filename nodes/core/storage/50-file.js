@@ -43,7 +43,6 @@ module.exports = function(RED) {
 			} else if (msg.hasOwnProperty("payload") && ( typeof msg.payload !== "undefined")) {
 				var data = msg.payload;
 				if (( typeof data === "object") && (!Buffer.isBuffer(data))) {
-					console.log("HELLO", data);
 					data = JSON.stringify(data);
 				}
 				if ( typeof data === "boolean") {
@@ -56,7 +55,7 @@ module.exports = function(RED) {
 					data += os.EOL;
 				}
 				if (this.overwriteFile === "true") {
-					// using "binary" not {encoding:"binary"} to be 0.8 compatible for a while
+					console.log("HELLO", data, filename);
 					fs.writeFile(filename, data, "utf8", function(err) {
 						console.log("FILE WRITE", err);
 						if (err) {

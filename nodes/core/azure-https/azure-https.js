@@ -177,7 +177,6 @@ module.exports = function(RED) {
 			});
 		}
 
-
 		self.on("input", function(msg) {
 			if (!Buffer.isBuffer(msg.payload)) {
 				if ( typeof msg.payload === "object") {
@@ -186,8 +185,8 @@ module.exports = function(RED) {
 					msg.payload = "" + msg.payload;
 				}
 			}
-			if (device) {
-				sendAzureMsg(device, msg);
+			if (this.azureIot.device) {
+				sendAzureMsg(this.azureIot.device, msg);
 			} else {
 				connectToAzureAndSend(msg);
 			}

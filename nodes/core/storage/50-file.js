@@ -43,6 +43,7 @@ module.exports = function(RED) {
 			} else if (msg.hasOwnProperty("payload") && ( typeof msg.payload !== "undefined")) {
 				var data = msg.payload;
 				if (( typeof data === "object") && (!Buffer.isBuffer(data))) {
+					console.log("HELLO", data);
 					data = JSON.stringify(data);
 				}
 				if ( typeof data === "boolean") {

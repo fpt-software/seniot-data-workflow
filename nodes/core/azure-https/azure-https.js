@@ -46,6 +46,7 @@ module.exports = function(RED) {
             	var contextGlobal = RED.settings.get('functionGlobalContext');
             	console.log("FILE", contextGlobal.safeStorage + '/' + self.deviceId + "/device.json");
                 fs.readFile(contextGlobal.safeStorage + '/' + self.deviceId + "/device.json", 'utf8', function (err, data) {
+                	console.log("FILE", err, data);
                     if (err) {
                         deferred.reject(err);
                     } else {

@@ -56,7 +56,7 @@ module.exports = function(RED) {
 				}
 				if (this.overwriteFile === "true") {
 					// using "binary" not {encoding:"binary"} to be 0.8 compatible for a while
-					fs.writeFile(filename, data, "binary", function(err) {
+					fs.writeFile(filename, data, "utf8", function(err) {
 						//fs.writeFile(filename, data, {encoding:"binary"}, function (err) {
 						if (err) {
 							if ((err.code === "ENOENT") && node.createDir) {
@@ -66,7 +66,7 @@ module.exports = function(RED) {
 											error : err.toString()
 										}), msg);
 									} else {
-										fs.writeFile(filename, data, "binary", function(err) {
+										fs.writeFile(filename, data, "utf8", function(err) {
 											if (err) {
 												node.error(RED._("file.errors.writefail", {
 													error : err.toString()

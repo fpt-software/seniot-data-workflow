@@ -49,17 +49,23 @@ module.exports = function(RED) {
                     if (err) {
                         deferred.reject(err);
                     } else {
-                        if (!self.device && data && data!="") {
+                        if (data && data!="") {
                             data = JSON.parse(data);
                             var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 		                    self.log("Initiate Azure IoT Hub HTTPS node for " + self.deviceId + ", " + connectionString);
 		                    self.device = new Client.fromConnectionString(connectionString);
 		                    deferred.resolve(self.device);
+                        } else {
+                        	deferred.reject({
+                        		error: "File is empty"
+                        	});
                         }
                     }
                 });
             } else {
-                deferred.resolve(null);
+                deferred.reject({
+                    error: "DeviceID is invalid"
+                });
             }
             return deferred.promise;
         };

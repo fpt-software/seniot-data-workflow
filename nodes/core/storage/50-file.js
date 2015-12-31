@@ -162,18 +162,9 @@ module.exports = function(RED) {
 				node.warn(RED._("file.errors.nofilename"));
 			} else {
 				msg.filename = filename;
-				fs.readFile(filename, options, function(err, data) {
-					if (err) {
-						console.log("ERROR", err);
-						node.error(err, msg);
-						msg.error = err;
-						delete msg.payload;
-					} else {
-						msg.payload = data;
-						delete msg.error;
-					}
-					deferred.resolve(msg);
-				});
+				var data = fs.readFileSync(filename, "utf8");
+				msg.payload = data;
+				deferred.resolve(msg);
 			}
 			deferred.promise.then(function(msg) {
 				node.send(msg);

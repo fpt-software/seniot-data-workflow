@@ -37,7 +37,7 @@ module.exports = function(RED) {
 					text : "external"
 				});
 			}
-			
+			console.log("FILE OUT", filename);
 			if (filename === "") {
 				node.warn(RED._("file.errors.nofilename"));
 			} else if (msg.hasOwnProperty("payload") && ( typeof msg.payload !== "undefined")) {

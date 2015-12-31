@@ -61,7 +61,7 @@ module.exports = function(RED) {
 				self.method = msg.method || self.method;
 				self.url = msg.url || self.url;
 				self.body = (self.method == "POST" || self.method == "PUT") ? msg.payload : null;
-				console.log(n.name, "REQUEST", self.url, self.method, self.body);
+				console.log(n.name, "REQUEST", self.url, self.method, self.body || "");
 				request({
 					url : self.url,
 					method : self.method,

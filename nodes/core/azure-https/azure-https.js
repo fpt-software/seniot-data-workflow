@@ -79,6 +79,7 @@ module.exports = function(RED) {
 	 */
 	function azureIoTHubHttpNodeIn(n) {
 		RED.nodes.createNode(this, n);
+		this.deviceId = n.deviceId;
 		var node = this;
 
 		node.on("input", function(input) {
@@ -140,6 +141,7 @@ module.exports = function(RED) {
 	 */
 	function azureIoTHubHttpNodeOut(n) {
 		RED.nodes.createNode(this, n);
+		this.deviceId = n.deviceId;
 		var node = this;
 
 		node.on("input", function(input) {

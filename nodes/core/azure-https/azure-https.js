@@ -117,7 +117,7 @@ module.exports = function(RED) {
 								text : "httpin.status.requesting"
 							});
 							data = JSON.parse(data);
-							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
+							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
 							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
 							var device = new Client.fromConnectionString(connectionString);
 							var message = new Device.Message(msg);

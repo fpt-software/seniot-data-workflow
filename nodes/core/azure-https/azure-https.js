@@ -122,6 +122,7 @@ module.exports = function(RED) {
 							var device = new Client.fromConnectionString(connectionString);
 							var message = new Device.Message(msg);
 							device.sendEvent(message, function(err, res) {
+								console.log("SENT", err, res);
 								node.send({
 									payload : "HELLO"
 								});

@@ -32,49 +32,6 @@ module.exports = function(RED) {
 	var Http = Device.Http;
 
 	/**
-	 * Create Azure-IoT-Hub HTTP node
-	 */
-	function azureIoTHubHttpNode(n) {
-		RED.nodes.createNode(this, n);
-		this.deviceName = n.name;
-		this.deviceId = n.deviceId;
-		var node = this;
-
-		this.connect = function() {
-			var deferred = q.defer();
-			if (node.deviceId) {
-				var contextGlobal = RED.settings.get('functionGlobalContext');
-				console.log("FILE", contextGlobal.safeStorage + '/' + node.deviceId + "/device.json");
-				fs.readFile(contextGlobal.safeStorage + '/' + node.deviceId + "/device.json", 'utf8', function(err, data) {
-					if (err) {
-						deferred.reject(err);
-					} else {
-						if (data && data != "") {
-							data = JSON.parse(data);
-							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
-							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
-							node.device = new Client.fromConnectionString(connectionString);
-							deferred.resolve(node.device);
-						} else {
-							deferred.reject({
-								error : "File is empty"
-							});
-						}
-					}
-				});
-			} else {
-				deferred.reject({
-					error : "DeviceID is invalid"
-				});
-			}
-			return deferred.promise;
-		};
-	}
-
-
-	RED.nodes.registerType("azure-https-device", azureIoTHubHttpNode);
-
-	/**
 	 * Create Azure-IoT-Hub HTTP Input (cloud-to-device) node
 	 */
 	function azureIoTHubHttpNodeIn(n) {
@@ -105,13 +62,10 @@ module.exports = function(RED) {
 							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
 							var device = new Client.fromConnectionString(connectionString);
 							device.receive(function(err, msg, res) {
-								if (err) {
-									console.warn(err);
-								} else if (res.statusCode !== 204) {
-									node.send({
-										payload : JSON.parse(msg.getData())
-									});
-								}
+								node.send({
+									error : err,
+									payload : JSON.parse(msg.getData())
+								});
 								node.status({});
 							});
 						} else {
@@ -167,20 +121,10 @@ module.exports = function(RED) {
 							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
 							var device = new Client.fromConnectionString(connectionString);
 							device.sendEvent(message, function(err, res) {
-								if (!err) {
-									deferred.resolve({
-										payload : {
-											status : true
-										}
-									});
-								} else {
-									deferred.resolve({
-										payload : {
-											status : false,
-											err : err
-										}
-									});
-								}
+								node.send({
+									err : err,
+									payload : res
+								});
 								node.status({});
 							});
 						} else {

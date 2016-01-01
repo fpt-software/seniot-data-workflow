@@ -123,8 +123,7 @@ module.exports = function(RED) {
 							var message = new Device.Message(msg);
 							device.sendEvent(message, function(err, res) {
 								node.send({
-									err : err,
-									payload : res
+									payload : "HELLO"
 								});
 								node.status({});
 							});

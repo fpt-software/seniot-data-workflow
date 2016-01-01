@@ -1,1 +1,6 @@
-{"HostName":"LennoxLBAS.azure-devices.net","DeviceId":"6103467D-5EF5-43D3-B5D8-E28FB7DB0F7C","SharedAccessKeyName":"device","PrimaryKey":"iK9kR7frcuT77Dm1tx/IEA=="}
+{
+	"HostName": "LennoxLBAS.azure-devices.net",
+	"DeviceId": "6103467D-5EF5-43D3-B5D8-E28FB7DB0F7C",
+	"SharedAccessKeyName": "device",
+	"PrimaryKey": "iK9kR7frcuT77Dm1tx/IEA=="
+}

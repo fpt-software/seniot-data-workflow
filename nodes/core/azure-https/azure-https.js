@@ -87,7 +87,11 @@ module.exports = function(RED) {
 				console.log("FILE", contextGlobal.safeStorage + '/' + node.deviceId + "/device.json");
 				fs.readFile(contextGlobal.safeStorage + '/' + node.deviceId + "/device.json", 'utf8', function(err, data) {
 					if (err) {
-						deferred.reject(err);
+						node.status({
+							fill : "red",
+							shape : "dot",
+							text : "Read configuration file error."
+						});
 					} else {
 						if (data && data != "") {
 							node.status({
@@ -144,7 +148,11 @@ module.exports = function(RED) {
 				console.log("FILE", contextGlobal.safeStorage + '/' + node.deviceId + "/device.json");
 				fs.readFile(contextGlobal.safeStorage + '/' + node.deviceId + "/device.json", 'utf8', function(err, data) {
 					if (err) {
-						deferred.reject(err);
+						node.status({
+							fill : "red",
+							shape : "dot",
+							text : "Read configuration file error."
+						});
 					} else {
 						if (data && data != "") {
 							node.status({

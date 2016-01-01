@@ -16,6 +16,7 @@
 
 module.exports = function(RED) {
     "use strict";
+    var fs = require('fs');
     var http = require("follow-redirects").http;
     var https = require("follow-redirects").https;
     var urllib = require("url");

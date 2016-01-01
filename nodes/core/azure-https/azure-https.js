@@ -124,7 +124,7 @@ module.exports = function(RED) {
 							device.sendEvent(message, function(err, res) {
 								console.log("SENT", err, res);
 								node.send({
-									payload : "HELLO"
+									error : err
 								});
 								node.status({});
 							});

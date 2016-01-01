@@ -125,6 +125,18 @@
         <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
     </div>
     <div class="form-tips" id="tip-json" hidden><span data-i18n="httpin.tip.req"></span></div>
+    <div class="form-row">
+	<label for="node-input-certId"><i class="fa fa-certificate"></i> Certificate</label>
+	<select type="text" id="node-input-certId"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-rejectUnauthorized" style="width: auto"><i class="fa fa-warning"></i> TLS Reject Unauthorized Certificate</label>
+		<input type="checkbox" id="node-input-rejectUnauthorized" style="margin-left: 30px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
+    </div>
+    <div class="form-row">
+		<label for="node-input-tlsClientAuthentication" style="width: auto"><i class="fa fa-warning"></i> TLS Enable Client Authentication</label>
+		<input type="checkbox" id="node-input-tlsClientAuthentication" style="margin-left: 30px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="http request">
@@ -230,8 +242,9 @@
             method:{value:"GET"},
             ret: {value:"txt"},
             url:{value:""},
-            //user -> credentials
-            //pass -> credentials
+            certId : {value: ""},
+            rejectUnauthorized: {value: false},
+            tlsClientAuthentication: {value: false}
         },
         credentials: {
             user: {type:"text"},

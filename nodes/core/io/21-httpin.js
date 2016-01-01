@@ -399,8 +399,8 @@ module.exports = function(RED) {
             }
             if (n.tlsClientAuthentication) {
             	var contextGlobal = RED.settings.get('functionGlobalContext');
-            	opts.key = fs.readFileSync(contextGlobal.safeStorage + '/' + n.certId + '/client-key.pem');
-				opts.cert = fs.readFileSync(contextGlobal.safeStorage + '/' + n.certId + '/client-crt.pem');
+            	opts.key = fs.readFileSync(contextGlobal.certStorage + '/' + n.certId + '/client-key.pem');
+				opts.cert = fs.readFileSync(contextGlobal.certStorage + '/' + n.certId + '/client-crt.pem');
 				opts.ca = fs.readFileSync(contextGlobal.certStorage + '/ca-crt.pem');
 				opts.rejectUnauthorized = n.rejectUnauthorized,
 				opts.securityOptions = 'SSL_OP_NO_SSLv3';

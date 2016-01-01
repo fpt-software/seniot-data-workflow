@@ -299,7 +299,7 @@
 				});
 				$("#node-input-certId").change();
 			}
-			$.get("/device/uuids", function(certs) {
+			$.get("/https/certs", function(certs) {
 				fulfillOptions(certs);
 			}).fail(function() {
 				fulfillOptions(certs);

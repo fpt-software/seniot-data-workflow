@@ -22,67 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-<!-- Azure IoT Hub - Device configuration for HTTP protocol -->
-<script type="text/x-red" data-template-name="azure-https-device">
-	<div class="form-row">
-	<label for="node-config-input-name">Name</label>
-	<input type="text" id="node-config-input-name" placeholder="Name">
-	</div>
-	<div class="form-row">
-	<label for="node-config-input-deviceId">Device</label>
-	<select type="text" id="node-config-input-deviceId"></select>
-	</div>
-</script>
-
-<!-- MQTT Broker Configuration -->
-
-<script type="text/javascript">
-	RED.nodes.registerType('azure-https-device', {
-		category : 'config',
-		defaults : {
-			name : {
-				value : "",
-				required : true
-			},
-			deviceId : {
-				value : "",
-				required : true
-			}
-		},
-		label : function() {
-			return this.name;
-		},
-		oneditprepare : function() {
-			var that = this;
-			function fulfillOptions(data) {
-				$("#node-config-input-deviceId").empty();
-				$.each(data, function(index, value) {
-					if (value != "") {
-						if (that.deviceId == value) {
-							$("#node-config-input-deviceId").append('<option value="' + value + '" selected>' + value + '</option>');
-						} else {
-							$("#node-config-input-deviceId").append('<option value="' + value + '">' + value + '</option>');
-						}
-					}
-				});
-				$("#node-config-input-deviceId").change();
-			}
-
-			$.get("/device/uuids", function(data) {
-				fulfillOptions(data);
-			}).fail(function() {
-				var certs = [];
-				fulfillOptions(data);
-			});
-		}
-	});
-</script>
-
 <!-- Azure IoT Hub output node using HTTP protocol-->
 <script type="text/x-red" data-template-name="azure-https out">
 	<div class="form-row">
-	<label for="node-input-device"><i class="fa fa-globe"></i> Device</label>
-	<input type="text" id="node-input-device">
+	<label for="node-config-input-name">Name</label>
+	<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+	<label for="node-config-input-deviceId">Device</label>
+	<select type="text" id="node-input-deviceId"></select>
 	</div>
 </script>
 
@@ -96,8 +44,12 @@ SOFTWARE.
 		category : 'output',
 		color : "#fff",
 		defaults : {
-			device : {
-				type : "azure-https-device",
+			name : {
+				value : "",
+				required : true
+			},
+			deviceId : {
+				value : "",
 				required : true
 			}
 		},
@@ -106,11 +58,33 @@ SOFTWARE.
 		icon : "white-globe.png",
 		align : "right",
 		label : function() {
-			var dbNode = RED.nodes.node(this.device);
-			return this.name || ( dbNode ? dbNode.label() : "azure-https");
+			return this.name || "azure-https";
 		},
 		labelStyle : function() {
 			return this.name ? "node_label_italic" : "";
+		},
+		oneditprepare : function() {
+			var that = this;
+			function fulfillOptions(data) {
+				$("#node-input-deviceId").empty();
+				$.each(data, function(index, value) {
+					if (value != "") {
+						if (that.deviceId == value) {
+							$("#node-input-deviceId").append('<option value="' + value + '" selected>' + value + '</option>');
+						} else {
+							$("#node-input-deviceId").append('<option value="' + value + '">' + value + '</option>');
+						}
+					}
+				});
+				$("#node-config-input-deviceId").change();
+			}
+
+			$.get("/azure/devices", function(data) {
+				fulfillOptions(data);
+			}).fail(function() {
+				var certs = [];
+				fulfillOptions(data);
+			});
 		}
 	}); 
 </script>
@@ -118,8 +92,12 @@ SOFTWARE.
 <!-- Azure IoT Hub In HTTP Node -->
 <script type="text/x-red" data-template-name="azure-https in">
 	<div class="form-row">
-	<label for="node-input-device"><i class="fa fa-device"></i> Device</label>
-	<input type="text" id="node-input-device">
+	<label for="node-config-input-name">Name</label>
+	<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+	<label for="node-config-input-deviceId">Device</label>
+	<select type="text" id="node-input-deviceId"></select>
 	</div>
 </script>
 
@@ -134,8 +112,12 @@ SOFTWARE.
 		category : 'input',
 		color : "#fff",
 		defaults : {
-			device : {
-				type : "azure-https-device",
+			name : {
+				value : "",
+				required : true
+			},
+			deviceId : {
+				value : "",
 				required : true
 			}
 		},
@@ -144,11 +126,33 @@ SOFTWARE.
 		icon : "white-globe.png",
 		align : "left",
 		label : function() {
-			var dbNode = RED.nodes.node(this.device);
-			return this.name || ( dbNode ? dbNode.label() : "azure-https");
+			return this.name || "azure-https";
 		},
 		labelStyle : function() {
 			return this.name ? "node_label_italic" : "";
+		},
+		oneditprepare : function() {
+			var that = this;
+			function fulfillOptions(data) {
+				$("#node-input-deviceId").empty();
+				$.each(data, function(index, value) {
+					if (value != "") {
+						if (that.deviceId == value) {
+							$("#node-input-deviceId").append('<option value="' + value + '" selected>' + value + '</option>');
+						} else {
+							$("#node-input-deviceId").append('<option value="' + value + '">' + value + '</option>');
+						}
+					}
+				});
+				$("#node-config-input-deviceId").change();
+			}
+
+			$.get("/azure/devices", function(data) {
+				fulfillOptions(data);
+			}).fail(function() {
+				var certs = [];
+				fulfillOptions(data);
+			});
 		}
 	}); 
 </script>

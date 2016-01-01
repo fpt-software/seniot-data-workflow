@@ -40,7 +40,7 @@ module.exports = function(RED) {
         var checkUTF = false;
 
         if (req.headers['content-type']) {
-            var parsedType = typer.parse(req.headers['content-type'])
+            var parsedType = typer.parse(req.headers['content-type']);
             if (parsedType.type === "text") {
                 isText = true;
             } else if (parsedType.subtype === "xml" || parsedType.suffix === "xml") {
@@ -58,9 +58,8 @@ module.exports = function(RED) {
         }, function (err, buf) {
             if (err) { return next(err); }
             if (!isText && checkUTF && isUtf8(buf)) {
-                buf = buf.toString()
+                buf = buf.toString();
             }
-
             req.body = buf;
             next();
         });
@@ -110,7 +109,7 @@ module.exports = function(RED) {
                     } else {
                         return result;
                     }
-                }
+                };
             } else {
                 wrapper[f] = req[f];
             }
@@ -156,7 +155,7 @@ module.exports = function(RED) {
                 } else {
                     return result;
                 }
-            }
+            };
         });
         return wrapper;
     }
@@ -192,7 +191,7 @@ module.exports = function(RED) {
                 }
             };
 
-            var corsHandler = function(req,res,next) { next(); }
+            var corsHandler = function(req,res,next) { next(); };
 
             if (RED.settings.httpNodeCors && !corsSetup) {
                 corsHandler = cors(RED.settings.httpNodeCors);
@@ -200,7 +199,7 @@ module.exports = function(RED) {
                 corsSetup = true;
             }
 
-            var httpMiddleware = function(req,res,next) { next(); }
+            var httpMiddleware = function(req,res,next) { next(); };
 
             if (RED.settings.httpNodeMiddleware) {
                 if (typeof RED.settings.httpNodeMiddleware === "function") {
@@ -208,7 +207,7 @@ module.exports = function(RED) {
                 }
             }
 
-            var metricsHandler = function(req,res,next) { next(); }
+            var metricsHandler = function(req,res,next) { next(); };
 
             if (this.metric()) {
                 metricsHandler = function(req, res, next) {

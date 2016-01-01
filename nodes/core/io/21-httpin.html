@@ -129,6 +129,7 @@
 	<label for="node-input-certId"><i class="fa fa-certificate"></i> Certificate</label>
 	<select type="text" id="node-input-certId"></select>
 	</div>
+	<hr/>
 	<div class="form-row">
 		<label for="node-input-rejectUnauthorized" style="width: auto"><i class="fa fa-warning"></i> TLS Reject Unauthorized Certificate</label>
 		<input type="checkbox" id="node-input-rejectUnauthorized" style="margin-left: 30px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
@@ -199,6 +200,7 @@
             return this.name?"node_label_italic":"";
         },
         oneditprepare: function() {
+        	var that = this;
             var root = RED.settings.httpNodeRoot;
             if (root.slice(-1) == "/") {
                 root = root.slice(0,-1);
@@ -212,8 +214,26 @@
             if(!RED.nodes.getType("swagger-doc")){
                 $('.row-swagger-doc').hide();
             }
-        }
+            function fulfillOptions(certs) {
+				$("#node-config-input-certId").empty();
+				$.each(certs, function(index, value) {
+					if (value != "") {
+						if (that.certId == value) {
+							$("#node-config-input-certId").append('<option value="' + value + '" selected>' + value + '</option>');
+						} else {
+							$("#node-config-input-certId").append('<option value="' + value + '">' + value + '</option>');
+						}
+					}
+				});
+				$("#node-config-input-certId").change();
+			}
 
+			$.get("/device/uuids", function(certs) {
+				fulfillOptions(certs);
+			}).fail(function() {
+				fulfillOptions(certs);
+			});
+        }
     });
 
     RED.nodes.registerType('http response',{

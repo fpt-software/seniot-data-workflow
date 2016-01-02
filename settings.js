@@ -20,7 +20,7 @@ var fs = require("fs");
 
 module.exports = {
 	// the tcp port that the Node-RED web server is listening on
-	uiPort : 443,
+	uiPort : 1880,
 
 	// By default, the Node-RED UI accepts connections on all IPv4 interfaces.
 	// The following property can be used to listen on a specific interface. For
@@ -61,11 +61,11 @@ module.exports = {
 	// By default, the Node-RED UI is available at http://localhost:1880/
 	// The following property can be used to specifiy a different root path.
 	// If set to false, this is disabled.
-	//httpAdminRoot: '/admin',
+	httpAdminRoot: '/admin',
 
 	// You can protect the user interface with a userid and password by using the following property.
 	// The password must be an md5 hash  eg.. 5f4dcc3b5aa765d61d8327deb882cf99 ('password')
-	//httpAdminAuth: {user:"user",pass:"5f4dcc3b5aa765d61d8327deb882cf99"},
+	httpAdminAuth: { user:"user", pass: "5f4dcc3b5aa765d61d8327deb882cf99" },
 
 	// Some nodes, such as HTTP In, can be used to listen for incoming http requests.
 	// By default, these are served relative to '/'. The following property
@@ -106,11 +106,11 @@ module.exports = {
 	// See the comment at the top of this file on how to load the `fs` module used by
 	// this setting.
 	//
-	https : {
-		key : fs.readFileSync('./certs/server-key.pem'),
-		cert : fs.readFileSync('./certs/server-crt.pem'),
-		ca : fs.readFileSync('./certs/ca-crt.pem')
-	},
+	//https : {
+	//	key : fs.readFileSync('./certs/server-key.pem'),
+	//	cert : fs.readFileSync('./certs/server-crt.pem'),
+	//	ca : fs.readFileSync('./certs/ca-crt.pem')
+	//},
 
 	// The following property can be used to configure cross-origin resource sharing
 	// in the HTTP nodes.

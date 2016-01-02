@@ -19,6 +19,7 @@ var https = require('https');
 var util = require("util");
 var express = require("express");
 var crypto = require("crypto");
+var basicAuth = require('basic-auth');
 var nopt = require("nopt");
 var path = require("path");
 var fs = require("fs-extra");
@@ -191,11 +192,24 @@ try {
 
 if (settings.httpAdminRoot !== false && settings.httpAdminAuth) {
     RED.log.warn(log._("server.httpadminauth-deprecated"));
-    app.use(settings.httpAdminRoot,
-        express.basicAuth(function(user, pass) {
-            return user === settings.httpAdminAuth.user && crypto.createHash('md5').update(pass,'utf8').digest('hex') === settings.httpAdminAuth.pass;
-        })
-    );
+    app.use(settings.httpAdminRoot, function (req, res, next) {
+	  function unauthorized(res) {
+	    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+	    return res.send(401);
+	  };
+
+	  var user = basicAuth(req);
+	
+	  if (!user || !user.name || !user.pass) {
+	    return unauthorized(res);
+	  };
+	
+	  if (user.name === settings.httpAdminAuth.user && crypto.createHash('md5').update(user.pass,'utf8').digest('hex') === settings.httpAdminAuth.pass) {
+	    return next();
+	  } else {
+	    return unauthorized(res);
+	  };
+	});
 }
 
 if (settings.httpNodeRoot !== false && settings.httpNodeAuth) {

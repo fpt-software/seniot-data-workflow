@@ -67,11 +67,13 @@ module.exports = function(RED) {
 									shape : "dot",
 									text : "httpin.status.success"
 								});
-								if (!err && msg.getData().length) {
-									node.send({
-										error : err,
-										payload : JSON.parse(msg.getData())
-									});
+								if (!err) {
+									if (msg.getData().length) {
+										node.send({
+											error : err,
+											payload : JSON.parse(msg.getData())
+										});
+									}
 									device.complete(msg, function(error) {
 										node.status({
 											fill : "red",

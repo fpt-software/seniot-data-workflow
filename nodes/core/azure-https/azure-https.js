@@ -63,10 +63,12 @@ module.exports = function(RED) {
 							var device = new Client.fromConnectionString(connectionString);
 							device.receive(function(err, msg, res) {
 								console.log(err, msg);
-								node.send({
-									error : err,
-									payload : JSON.parse(msg)
-								});
+								if (!err && msg != "") {
+									node.send({
+										error : err,
+										payload : JSON.parse(msg)
+									});	
+								}
 								node.status({});
 							});
 						} else {

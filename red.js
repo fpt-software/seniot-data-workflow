@@ -195,7 +195,7 @@ if (settings.httpAdminRoot !== false && settings.httpAdminAuth) {
     app.use(settings.httpAdminRoot, function (req, res, next) {
 	  function unauthorized(res) {
 	    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-	    return res.send(401);
+	    return res.sendStatus(401);
 	  };
 
 	  var user = basicAuth(req);

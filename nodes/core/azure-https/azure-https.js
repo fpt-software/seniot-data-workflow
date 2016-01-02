@@ -70,20 +70,21 @@ module.exports = function(RED) {
 									text : "httpin.status.success"
 								});
 								if (!err) {
+									console.log(msg);
 									if (msg.getData().length) {
 										node.send({
 											error : err,
 											payload : JSON.parse(msg.getData())
 										});
-									}
-									node.device.complete(msg, function(error) {
-										node.device = null;
-										node.status({
-											fill : "red",
-											shape : "dot",
-											text : "Notifying completed fail."
+										node.device.complete(msg, function(error) {
+											node.device = null;
+											node.status({
+												fill : "red",
+												shape : "dot",
+												text : "Notifying completed fail."
+											});
 										});
-									});
+									}
 								} else {
 									node.device.reject(msg, function(error) {
 										node.device = null;

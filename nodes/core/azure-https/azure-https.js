@@ -82,7 +82,7 @@ module.exports = function(RED) {
 										node.status({});
 									}
 								} else {
-									console.log(msg);
+									console.log(err, msg);
 									node.status({
 										fill : "red",
 										shape : "dot",

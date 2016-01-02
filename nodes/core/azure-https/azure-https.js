@@ -63,7 +63,7 @@ module.exports = function(RED) {
 							var device = new Client.fromConnectionString(connectionString);
 							device.receive(function(err, msg, res) {
 								console.log(err, msg);
-								if (!err && msg.getData() != "") {
+								if (!err && msg.getData().length) {
 									node.send({
 										error : err,
 										payload : JSON.parse(msg.getData())

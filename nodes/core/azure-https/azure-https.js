@@ -62,7 +62,6 @@ module.exports = function(RED) {
 							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
 							var device = new Client.fromConnectionString(connectionString);
 							device.receive(function(err, msg, res) {
-								console.log(err, msg);
 								if (!err && msg.getData().length) {
 									node.send({
 										error : err,

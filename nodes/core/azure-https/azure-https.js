@@ -64,11 +64,6 @@ module.exports = function(RED) {
 								node.device = new Client.fromConnectionString(connectionString);
 							}
 							node.device.receive(function(err, msg, res) {
-								node.status({
-									fill : "green",
-									shape : "dot",
-									text : "httpin.status.success"
-								});
 								if (!err) {
 									console.log(msg);
 									if (msg.getData().length) {
@@ -84,6 +79,7 @@ module.exports = function(RED) {
 												text : "Notifying completed fail."
 											});
 										});
+										node.status({});
 									}
 								} else {
 									node.device.reject(msg, function(error) {

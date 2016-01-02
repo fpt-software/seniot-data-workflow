@@ -71,7 +71,7 @@ module.exports = function(RED) {
 										node.status({
 											fill : "red",
 											shape : "dot",
-											text : "Send completed fail."
+											text : "Notifying completed fail."
 										});
 									});
 								} else {
@@ -79,7 +79,7 @@ module.exports = function(RED) {
 										node.status({
 											fill : "red",
 											shape : "dot",
-											text : "Send rejected fail."
+											text : "Notifying rejected fail."
 										});
 									});
 								}

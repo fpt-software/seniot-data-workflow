@@ -65,7 +65,6 @@ module.exports = function(RED) {
 							}
 							node.device.receive(function(err, msg, res) {
 								if (!err) {
-									console.log(msg);
 									if (msg.getData().length) {
 										node.send({
 											error : err,
@@ -83,6 +82,7 @@ module.exports = function(RED) {
 										node.status({});
 									}
 								} else {
+									console.log(msg);
 									node.status({
 										fill : "red",
 										shape : "dot",

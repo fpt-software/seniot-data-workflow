@@ -1,7 +1,7 @@
 var powerOn = false;
 var heatIsOn = true;
 var connected = false;
-var wsUri = "wss://" + window.location.hostname + "/admin/ws/thermostat";
+var wsUri = "wss://" + window.location.hostname + "/ws/thermostat";
 var wsClient = null;
 var data = {
 	fanStatus : "OFF",

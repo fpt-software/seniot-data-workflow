@@ -62,11 +62,16 @@ module.exports = function(RED) {
 							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
 							var device = new Client.fromConnectionString(connectionString);
 							device.receive(function(err, msg, res) {
+								node.status({
+									fill : "green",
+									shape : "dot",
+									text : "httpin.status.success"
+								});
 								if (!err && msg.getData().length) {
 									node.send({
 										error : err,
 										payload : JSON.parse(msg.getData())
-									});	
+									});
 									device.complete(msg, function(error) {
 										node.status({
 											fill : "red",
@@ -83,7 +88,6 @@ module.exports = function(RED) {
 										});
 									});
 								}
-								node.status({});
 							});
 						} else {
 							node.status({

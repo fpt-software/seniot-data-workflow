@@ -276,7 +276,8 @@
             "deprecated-call":"Deprecated call to __method__"
         },
         "status": {
-            "requesting": "requesting"
+            "requesting": "requesting",
+            "receiving": "receiving"
         }
     },
     "websocket": {

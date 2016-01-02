@@ -1,7 +1,7 @@
 {
 	"DeviceProperties": {
 		"DeviceID": "6103467D-5EF5-43D3-B5D8-E28FB7DB0F7C",
-		"HubEnabledState": 1,
+		"HubEnabledState": true,
 		"CreatedTime": "2015-12-19T22:33:44.608054Z",
 		"DeviceState": "normal",
 		"UpdatedTime": "",

@@ -83,13 +83,10 @@ module.exports = function(RED) {
 										node.status({});
 									}
 								} else {
-									node.device.reject(msg, function(error) {
-										node.device = null;
-										node.status({
-											fill : "red",
-											shape : "dot",
-											text : "Notifying rejected fail."
-										});
+									node.status({
+										fill : "red",
+										shape : "dot",
+										text : "Notifying receive error."
 									});
 								}
 							});

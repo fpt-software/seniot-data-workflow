@@ -79,6 +79,7 @@ module.exports = function(RED) {
 												text : "Notifying completed fail."
 											});
 										});
+									} else {
 										node.status({});
 									}
 								} else {

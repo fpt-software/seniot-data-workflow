@@ -75,6 +75,7 @@ module.exports = function(RED) {
 										});
 									}
 									device.complete(msg, function(error) {
+										console.log(error);
 										node.status({
 											fill : "red",
 											shape : "dot",

@@ -86,7 +86,7 @@ module.exports = function(RED) {
 									node.status({
 										fill : "red",
 										shape : "dot",
-										text : "Notifying receive error."
+										text : err.statusMessage
 									});
 								}
 							});

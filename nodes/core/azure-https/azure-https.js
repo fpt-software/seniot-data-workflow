@@ -58,9 +58,11 @@ module.exports = function(RED) {
 								text : "httpin.status.receiving"
 							});
 							data = JSON.parse(data);
-							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
-							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
-							var device = new Client.fromConnectionString(connectionString);
+							if (!node.device) {
+								var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
+								node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
+								node.device = new Client.fromConnectionString(connectionString);
+							}
 							device.receive(function(err, msg, res) {
 								node.status({
 									fill : "green",
@@ -75,7 +77,7 @@ module.exports = function(RED) {
 										});
 									}
 									device.complete(msg, function(error) {
-										console.log(error);
+										node.device = null;
 										node.status({
 											fill : "red",
 											shape : "dot",
@@ -84,7 +86,7 @@ module.exports = function(RED) {
 									});
 								} else {
 									device.reject(msg, function(error) {
-										console.log(error);
+										node.device = null;
 										node.status({
 											fill : "red",
 											shape : "dot",

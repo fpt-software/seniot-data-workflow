@@ -14,13 +14,18 @@
 }
 #gateway {
 	background: white;
+	-webkit-transition: all 1s ease-in-out;
+  	-moz-transition: all 1s ease-in-out;
+  	-o-transition: all 1s ease-in-out;
+  	transition: all 1s ease-in-out;
+  	opacity: 1;
 }
 .alert {
 	font-weight: bold;
 	color: #FF6C01;
 }
 .power-off {
-	display: none;
+	opacity: 0.1;
 }
 .smallin .ui-input-text {
 	width: 200px !important;

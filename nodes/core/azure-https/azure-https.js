@@ -83,6 +83,7 @@ module.exports = function(RED) {
 									});
 								} else {
 									device.reject(msg, function(error) {
+										console.log(error);
 										node.status({
 											fill : "red",
 											shape : "dot",

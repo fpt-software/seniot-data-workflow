@@ -76,7 +76,7 @@ module.exports = {
 	// To password protect the node-defined HTTP endpoints, the following property
 	// can be used.
 	// The password must be an md5 hash  eg.. 5f4dcc3b5aa765d61d8327deb882cf99 ('password')
-	//httpNodeAuth: {user:"user",pass:"5f4dcc3b5aa765d61d8327deb882cf99"},
+	//httpNodeAuth: {user: "lbas", pass:"5c5fd67650dfc0a0e4d3a868035f6c26"},
 
 	// When httpAdminRoot is used to move the UI to a different root path, the
 	// following property can be used to identify a directory of static content

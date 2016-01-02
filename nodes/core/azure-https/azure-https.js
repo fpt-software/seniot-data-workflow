@@ -67,6 +67,21 @@ module.exports = function(RED) {
 										error : err,
 										payload : JSON.parse(msg.getData())
 									});	
+									device.complete(msg, function(error) {
+										node.status({
+											fill : "red",
+											shape : "dot",
+											text : "Send completed fail."
+										});
+									});
+								} else {
+									device.reject(msg, function(error) {
+										node.status({
+											fill : "red",
+											shape : "dot",
+											text : "Send rejected fail."
+										});
+									});
 								}
 								node.status({});
 							});

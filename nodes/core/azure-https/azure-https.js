@@ -71,12 +71,16 @@ module.exports = function(RED) {
 											payload : JSON.parse(msg.getData())
 										});
 										node.device.complete(msg, function(error) {
-											node.device = null;
-											node.status({
-												fill : "red",
-												shape : "dot",
-												text : "Notifying completed fail."
-											});
+											if (error) {
+												node.status({
+													fill : "red",
+													shape : "dot",
+													text : "Notifying completed fail."
+												});
+												node.device = null;	
+											} else {
+												node.status({});		
+											}
 										});
 									} else {
 										node.status({});

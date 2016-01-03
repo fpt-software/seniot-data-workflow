@@ -89,8 +89,9 @@ module.exports = function(RED) {
 									node.status({
 										fill : "red",
 										shape : "dot",
-										text : err.statusMessage
+										text : err.Error
 									});
+									console.log(err);
 									node.device = null;
 								}
 							});

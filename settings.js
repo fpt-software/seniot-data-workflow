@@ -147,7 +147,8 @@ module.exports = {
 	functionGlobalContext : {
 		certStorage : "./certs",
 		safeStorage : "./storage",
-		os:require('os')
+		os:require('os'),
+		fs:require("fs")
 		// bonescript:require('bonescript'),
 		// jfive:require("johnny-five"),
 		// j5board:require("johnny-five").Board({repl:false})

@@ -60,14 +60,12 @@ $(function() {
 	$(document).on("vclick", "#power", function(event) {
 		$(event.target).toggleClass("ui-btn-active");
 		powerOn = !powerOn;
-		if (powerOn) {
-			wsClient.send(JSON.stringify({
-				type : "powerUp",
-				data : {
-					powerState : powerOn
-				}
-			}));
-		}
+		wsClient.send(JSON.stringify({
+			type : powerOn ? "powerUp" : "powerOff",
+			data : {
+				powerState : powerOn
+			}
+		}));
 		setPowerState(powerOn);
 	});
 });

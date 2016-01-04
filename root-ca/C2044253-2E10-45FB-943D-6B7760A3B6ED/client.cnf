@@ -77,7 +77,7 @@ stateOrProvinceName             = Hanoi
 localityName                    = Hanoi
 0.organizationName              = FPT Software Ltd
 organizationalUnitName          = FSOFT
-commonName                      = lennox-client-id-test
+commonName                      = C2044253-2E10-45FB-943D-6B7760A3B6ED
 emailAddress                    = support@fsoft.com.vn
 
 [ req_attributes ]

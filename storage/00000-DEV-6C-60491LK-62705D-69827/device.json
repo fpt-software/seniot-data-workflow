@@ -1,6 +1,6 @@
 {
 	"HostName": "contoso.azure-devices.net",
-	"DeviceId": "6103467D-5EF5-43D3-B5D8-E28FB7DB0F7C",
+	"DeviceId": "00000-DEV-6C-60491LK-62705D-69827",
 	"SharedAccessKeyName": "device",
 	"PrimaryKey": "iK9kR7fRc0T77Dm1tx/IEA=="
 }

@@ -61,6 +61,8 @@ module.exports = function(RED) {
 					res.send({
 						msg : data.toString().replace("\r\n", "\n").split('\n')
 					});
+				}).on('error', function(error) {
+					res.sendStatus(500, error.toString());
 				});
 			} catch(err) {
 				res.sendStatus(500);

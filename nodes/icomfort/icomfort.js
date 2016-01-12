@@ -57,19 +57,19 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
-					res.end({
+					res.send({
 						msg : data.toString().replace("\r\n", "\n").split('\n')
-					});
+					}).end();
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).end({
+					res.status(500).send({
 						error : error.toString()
 					});
-				});
+				}).end();
 			} catch(ex) {
-				res.status(500).end({
+				res.status(500).send({
 					error : ex.toString()
-				});
+				}).end();
 			}
 		});
 		RED.httpNode.get("/lennox/certs/:id", function(req, res) {
@@ -83,17 +83,17 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
-					res.end({
+					res.send({
 						msg : data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n')
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).end({
+					res.status(500).send({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).end({
+				res.status(500).send({
 					error : ex.toString()
 				});
 			}
@@ -109,17 +109,17 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
-					res.end({
+					res.send({
 						msg : data.toString().replace("\r\n", "\n").split('\n')
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).end({
+					res.status(500).send({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).end({
+				res.status(500).send({
 					error : ex.toString()
 				});
 			}
@@ -139,12 +139,12 @@ module.exports = function(RED) {
 					res.status(200);
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).end({
+					res.status(500).send({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).end({
+				res.status(500).send({
 					error : ex.toString()
 				});
 			}

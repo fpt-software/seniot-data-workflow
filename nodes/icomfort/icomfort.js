@@ -47,8 +47,7 @@ module.exports = function(RED) {
 			cachePassword : true,
 			prompt : 'Hi! Password is needed!',
 			spawnOptions : {
-				cwd : "/var/www/seniot-data-workflow/root-ca/",
-				env: process.env
+				cwd : RED.settings.get('functionGlobalContext').certificateAuthority
 			}
 		};
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));

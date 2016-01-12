@@ -59,7 +59,7 @@ module.exports = function(RED) {
 				var child = sudo(['ls', '-d', './*/'], spawnOptions);
 				child.stdout.on('data', function(data) {
 					res.send({
-						msg : data.toString().replace("\r\n", "\n").replace("./", "").replace("/", "").split('\n')
+						msg : data.toString().replace("\r\n", "\n").replace(".\/", "").replace("\/", "").split('\n')
 					});
 				});
 			} catch(err) {
@@ -72,7 +72,7 @@ module.exports = function(RED) {
 				var child = sudo(['ls', '', './' + certificateId], spawnOptions);
 				child.stdout.on('data', function(data) {
 					res.send({
-						msg : data.toString().replace("\r\n", "\n").replace("./" + certificateId + ":", "").split('\n')
+						msg : data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n')
 					});
 				});
 			} catch(err) {

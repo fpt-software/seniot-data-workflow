@@ -56,7 +56,7 @@ module.exports = function(RED) {
 				    	cwd: "/var/www/seniot-data-workflow/root-ca/"
 				    }
 				};
-				var child = sudo([ 'ls', './' + certificateId ], options);
+				var child = sudo([ 'ls', '', './' + certificateId ], options);
 				child.stdout.on('data', function (data) {
 					res.send({
 						msg: data.split('\n')

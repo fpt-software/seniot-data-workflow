@@ -57,17 +57,17 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
-					res.send({
+					res.end({
 						msg : data.toString().replace("\r\n", "\n").split('\n')
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send({
+					res.status(500).end({
 						error : error.toString()
 					});
 				});
 			} catch(ex) {
-				res.status(500).send({
+				res.status(500).end({
 					error : ex.toString()
 				});
 			}
@@ -83,17 +83,17 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
-					res.send({
+					res.end({
 						msg : data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n')
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send({
+					res.status(500).end({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).send({
+				res.status(500).end({
 					error : ex.toString()
 				});
 			}
@@ -109,17 +109,17 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
-					res.send({
+					res.end({
 						msg : data.toString().replace("\r\n", "\n").split('\n')
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send({
+					res.status(500).end({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).send({
+				res.status(500).end({
 					error : ex.toString()
 				});
 			}
@@ -139,12 +139,12 @@ module.exports = function(RED) {
 					res.status(200);
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send({
+					res.status(500).end({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).send({
+				res.status(500).end({
 					error : ex.toString()
 				});
 			}

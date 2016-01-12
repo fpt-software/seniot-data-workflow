@@ -62,12 +62,12 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send('error', {
+					res.status(500).send({
 						error : error.toString()
 					});
 				});
 			} catch(ex) {
-				res.status(500).send('error', {
+				res.status(500).send({
 					error : ex.toString()
 				});
 			}
@@ -88,12 +88,12 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send('error', {
+					res.status(500).send({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).send('error', {
+				res.status(500).send({
 					error : ex.toString()
 				});
 			}
@@ -114,12 +114,12 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send('error', {
+					res.status(500).send({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).send('error', {
+				res.status(500).send({
 					error : ex.toString()
 				});
 			}
@@ -139,12 +139,12 @@ module.exports = function(RED) {
 					res.status(200);
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send('error', {
+					res.status(500).send({
 						error : error.toString()
 					});
 				});
 			} catch(err) {
-				res.status(500).send('error', {
+				res.status(500).send({
 					error : ex.toString()
 				});
 			}

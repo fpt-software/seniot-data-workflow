@@ -43,22 +43,23 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
-
+		
+		var spawnOptions = {
+			cachePassword : true,
+			prompt : 'Hi! Password is needed!',
+			spawnOptions : {
+				cwd : RED.settings.get('functionGlobalContext').certificateAuthority
+			}
+		};
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 		RED.httpNode.get("/lennox/certs", function(req, res) {
 			try {
-				var child = sudo(['ls', '-d', './*/'], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-					}
-				});
+				var child = sudo(['ls', '-d', './*/'], spawnOptions);
 				child.stdout.on('data', function(data) {
 					res.send({
-						msg : data.toString().replace("\r\n", "\n").replace(".\/", "").replace("\/", "").split('\n')
+						msg : data.toString().replace("\r\n", "\n").split('\n')
 					});
 				});
 			} catch(err) {
@@ -68,13 +69,7 @@ module.exports = function(RED) {
 		RED.httpNode.get("/lennox/certs/:id", function(req, res) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['ls', '', './' + certificateId], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-					}
-				});
+				var child = sudo(['ls', '', './' + certificateId], spawnOptions);
 				child.stdout.on('data', function(data) {
 					res.send({
 						msg : data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n')
@@ -87,13 +82,7 @@ module.exports = function(RED) {
 		RED.httpNode.post("/lennox/certs/:id", function(req, res) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['ls', '', './' + certificateId], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-					}
-				});
+				var child = sudo(['ls', '', './' + certificateId], spawnOptions);
 				child.stdout.on('data', function(data) {
 					res.send({
 						msg : data.toString().replace("\r\n", "\n").split('\n')
@@ -106,13 +95,7 @@ module.exports = function(RED) {
 		RED.httpNode.delete("/lennox/certs/:id", function(req, res) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['ls', '-l', './'], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-					}
-				});
+				var child = sudo(['ls', '-l', './'], spawnOptions);
 				child.stdout.on('data', function(data) {
 					console.log(data.toString());
 				});

@@ -43,7 +43,7 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
-
+		var certificateAuthorityLocation = RED.settings.get('functionGlobalContext').certificateAuthority;
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
@@ -53,7 +53,7 @@ module.exports = function(RED) {
 					cachePassword : true,
 					prompt : 'Hi! Password is needed!',
 					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
+						cwd : certificateAuthorityLocation
 					}
 				});
 				child.stdout.on('data', function(data) {
@@ -74,11 +74,11 @@ module.exports = function(RED) {
 		RED.httpNode.get("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['ls', '', './' + certificateId], {
+				var child = sudo(['ls', '', '.' + certificateId], {
 					cachePassword : true,
 					prompt : 'Hi! Password is needed!',
 					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
+						cwd : certificateAuthorityLocation
 					}
 				});
 				child.stdout.on('data', function(data) {

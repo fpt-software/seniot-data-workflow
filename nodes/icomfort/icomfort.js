@@ -43,7 +43,7 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
-		var spawnOption = {
+		var sudoOptions = {
 			cachePassword : true,
 			prompt : 'Hi! Password is needed!',
 			spawnOptions : {
@@ -55,7 +55,7 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 		RED.httpNode.get("/lennox/certs", function(req, res, next) {
 			try {
-				var child = sudo(['ls', '-d', './*/'], spawnOption);
+				var child = sudo(['ls', '-d', './*/'], sudoOptions);
 				child.stdout.on('data', function(data) {
 					var result = data.toString().replace("\r\n", "\n").split('\n');
 					res.send({
@@ -74,7 +74,7 @@ module.exports = function(RED) {
 		RED.httpNode.get("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['ls', '', '.' + certificateId], spawnOption);
+				var child = sudo(['ls', '', '.' + certificateId], sudoOptions);
 				child.stdout.on('data', function(data) {
 					var result = data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n');
 					res.send({

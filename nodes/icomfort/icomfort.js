@@ -43,22 +43,23 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
+		var contextGlobal = RED.settings.get('functionGlobalContext');
+		var spawnOptions = {
+			cachePassword : true,
+			prompt : 'Hi! Password is needed!',
+			spawnOptions : {
+				cwd : contextGlobal.certificateAuthority
+			}
+		};
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 		RED.httpNode.get("/lennox/certs", function(req, res) {
 			try {
-				var options = {
-				    cachePassword: true,
-				    prompt: 'Hi! Password is needed!',
-				    spawnOptions: {
-				    	cwd: "/var/www/seniot-data-workflow/root-ca/"
-				    }
-				};
-				var child = sudo([ 'ls', '-d', './'], options);
-				child.stdout.on('data', function (data) {
+				var child = sudo(['ls', '-d', './*/'], spawnOptions);
+				child.stdout.on('data', function(data) {
 					res.send({
-						msg: data.toString().replace("\r\n", "\n").split('\n')
+						msg : data.toString().replace("\r\n", "\n").replace("./", "").replace("/", "").split('\n')
 					});
 				});
 			} catch(err) {
@@ -68,17 +69,10 @@ module.exports = function(RED) {
 		RED.httpNode.get("/lennox/certs/:id", function(req, res) {
 			var certificateId = req.params.id;
 			try {
-				var options = {
-				    cachePassword: true,
-				    prompt: 'Hi! Password is needed!',
-				    spawnOptions: {
-				    	cwd: "/var/www/seniot-data-workflow/root-ca/"
-				    }
-				};
-				var child = sudo([ 'ls', '', './' + certificateId ], options);
-				child.stdout.on('data', function (data) {
+				var child = sudo(['ls', '', './' + certificateId], spawnOptions);
+				child.stdout.on('data', function(data) {
 					res.send({
-						msg: data.toString().replace("\r\n", "\n").split('\n')
+						msg : data.toString().replace("\r\n", "\n").replace("./" + certificateId + ":", "").split('\n')
 					});
 				});
 			} catch(err) {
@@ -88,7 +82,12 @@ module.exports = function(RED) {
 		RED.httpNode.post("/lennox/certs/:id", function(req, res) {
 			var certificateId = req.params.id;
 			try {
-				res.sendStatus(200);
+				var child = sudo(['ls', '', './' + certificateId], spawnOptions);
+				child.stdout.on('data', function(data) {
+					res.send({
+						msg : data.toString().replace("\r\n", "\n").split('\n')
+					});
+				});
 			} catch(err) {
 				res.sendStatus(500);
 			}
@@ -96,16 +95,9 @@ module.exports = function(RED) {
 		RED.httpNode.delete("/lennox/certs/:id", function(req, res) {
 			var certificateId = req.params.id;
 			try {
-				var options = {
-				    cachePassword: true,
-				    prompt: 'Hi! Password is needed!',
-				    spawnOptions: {
-				    	cwd: "/var/www/seniot-data-workflow/root-ca/"
-				    }
-				};
-				var child = sudo([ 'ls', '-l', './' ], options);
-				child.stdout.on('data', function (data) {
-				    console.log(data.toString());
+				var child = sudo(['ls', '-l', './'], options);
+				child.stdout.on('data', function(data) {
+					console.log(data.toString());
 				});
 				res.sendStatus(200);
 			} catch(err) {
@@ -113,6 +105,7 @@ module.exports = function(RED) {
 			}
 		});
 	}
+
 
 	RED.nodes.registerType("icomfort", lennoxReg);
 

@@ -57,16 +57,13 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
-					console.log(data);
+					var result = data.toString().replace("\r\n", "\n").split('\n');
 					res.send({
-						msg : data.toString().replace("\r\n", "\n").split('\n')
+						msg : result
 					});
 				});
 				child.stderr.on('data', function(error) {
-					console.log(error);
-					res.status(500).send({
-						error : error.toString()
-					});
+					next(error);
 				});
 			} catch(ex) {
 				res.status(500).send({
@@ -85,65 +82,13 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
+					var result = data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n');
 					res.send({
-						msg : data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n')
+						msg : result
 					});
 				});
 				child.stderr.on('data', function(error) {
-					res.status(500).send({
-						error : error.toString()
-					});
-				});
-			} catch(err) {
-				res.status(500).send({
-					error : ex.toString()
-				});
-			}
-		});
-		RED.httpNode.post("/lennox/certs/:id", function(req, res) {
-			var certificateId = req.params.id;
-			try {
-				var child = sudo(['ls', '', './' + certificateId], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-					}
-				});
-				child.stdout.on('data', function(data) {
-					res.send({
-						msg : data.toString().replace("\r\n", "\n").split('\n')
-					});
-				});
-				child.stderr.on('data', function(error) {
-					res.status(500).send({
-						error : error.toString()
-					});
-				});
-			} catch(err) {
-				res.status(500).send({
-					error : ex.toString()
-				});
-			}
-		});
-		RED.httpNode.delete("/lennox/certs/:id", function(req, res) {
-			var certificateId = req.params.id;
-			try {
-				var child = sudo(['ls', '-l', './'], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-					}
-				});
-				child.stdout.on('data', function(data) {
-					console.log(data.toString());
-					res.status(200);
-				});
-				child.stderr.on('data', function(error) {
-					res.status(500).send({
-						error : error.toString()
-					});
+					next(error);
 				});
 			} catch(err) {
 				res.status(500).send({

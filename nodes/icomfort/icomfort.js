@@ -56,11 +56,10 @@ module.exports = function(RED) {
 				    	cwd: "/var/www/seniot-data-workflow/root-ca/"
 				    }
 				};
-				var child = sudo([ 'ls', '-l', './' ], options);
+				var child = sudo([ 'ls', './' + certificateId ], options);
 				child.stdout.on('data', function (data) {
-				    console.log(data.toString());
 					res.send({
-						msg: data.toString()
+						msg: data.split('\n')
 					});
 				});
 			} catch(err) {

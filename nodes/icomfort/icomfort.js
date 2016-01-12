@@ -43,12 +43,12 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
-		var contextGlobal = RED.settings.get('functionGlobalContext');
+		
 		var spawnOptions = {
 			cachePassword : true,
 			prompt : 'Hi! Password is needed!',
 			spawnOptions : {
-				cwd : contextGlobal.certificateAuthority
+				cwd : RED.settings.get('functionGlobalContext').certificateAuthority
 			}
 		};
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
@@ -95,7 +95,7 @@ module.exports = function(RED) {
 		RED.httpNode.delete("/lennox/certs/:id", function(req, res) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['ls', '-l', './'], options);
+				var child = sudo(['ls', '-l', './'], spawnOptions);
 				child.stdout.on('data', function(data) {
 					console.log(data.toString());
 				});

@@ -63,10 +63,10 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function (error) {
-					res.status(500).send('error', { error: error });
+					res.status(500).send('error', { error: error.toString() });
 				});
-			} catch(err) {
-				res.sendStatus(500);
+			} catch(ex) {
+				res.sendStatus(500).send('error', { error: ex.toString() });
 			}
 		});
 		RED.httpNode.get("/lennox/certs/:id", function(req, res) {
@@ -79,10 +79,10 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function (error) {
-					res.status(500).send('error', { error: error });
+					res.status(500).send('error', { error: error.toString() });
 				});
 			} catch(err) {
-				res.status(500);
+				res.sendStatus(500).send('error', { error: ex.toString() });
 			}
 		});
 		RED.httpNode.post("/lennox/certs/:id", function(req, res) {
@@ -94,8 +94,11 @@ module.exports = function(RED) {
 						msg : data.toString().replace("\r\n", "\n").split('\n')
 					});
 				});
+				child.stderr.on('data', function (error) {
+					res.status(500).send('error', { error: error.toString() });
+				});
 			} catch(err) {
-				res.sendStatus(500);
+				res.sendStatus(500).send('error', { error: ex.toString() });
 			}
 		});
 		RED.httpNode.delete("/lennox/certs/:id", function(req, res) {
@@ -104,10 +107,13 @@ module.exports = function(RED) {
 				var child = sudo(['ls', '-l', './'], spawnOptions);
 				child.stdout.on('data', function(data) {
 					console.log(data.toString());
+					res.sendStatus(200);
 				});
-				res.sendStatus(200);
+				child.stderr.on('data', function (error) {
+					res.status(500).send('error', { error: error.toString() });
+				});
 			} catch(err) {
-				res.sendStatus(500);
+				res.sendStatus(500).send('error', { error: ex.toString() });
 			}
 		});
 	}

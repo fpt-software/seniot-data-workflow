@@ -1,10 +1,10 @@
 var powerOn = false;
-var heatIsOn = true;
 var connected = false;
 var wsUri = "wss://" + window.location.hostname + "/ws/thermostat";
 var wsClient = null;
 var data = {
 	fanStatus : "OFF",
+	heatIsOn : true,
 	indoorTemperature : 72,
 	indoorHumidity : 45,
 	setTempToCool : 72,
@@ -20,9 +20,7 @@ function wsGateway() {
 	wsClient.onmessage = function(m) {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
-		if (msg.type == "power") {
-			setPowerState(msg.data.powerState);
-		} else if (msg.type == "set") {
+		if (msg.type == "update") {
 			data = msg.data;
 			updateModel();
 		}
@@ -31,19 +29,17 @@ function wsGateway() {
 		connected = true;
 		initButtonEffect();
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
+		$("#power").addClass("ui-btn-active");
+		$("#container").removeClass("power-off");
 		console.log("sent init requeset");
-		setTimeout(function() {
-			if (connected) {
-				wsClient.send(JSON.stringify({
-					type : "update",
-					data : data
-				}));
-			}
-		}, 1000);
+		telemetryData();
+		updateModel();
 	};
 
 	wsClient.onclose = function() {
 		$("#power").attr("disabled", true).addClass("ui-state-disabled");
+		$("#power").removeClass("ui-btn-active");
+		$("#container").addClass("power-off");
 		$("#statusView").empty();
 		console.log('Node-RED connection closed: ' + new Date().toUTCString());
 		connected = false;
@@ -71,6 +67,17 @@ function updateModel() {
 	}
 }
 
+function telemetryData() {
+	setTimeout(function() {
+		if (connected) {
+			wsClient.send(JSON.stringify({
+				type : "telemetry",
+				data : data
+			}));
+		}
+	}, 100);
+}
+
 function setPowerState(powerState) {
 	powerOn = powerState;
 	if (powerOn) {
@@ -86,31 +93,29 @@ $(function() {
 	$(document).on("vclick", "#power", function(event) {
 		$(event.target).toggleClass("ui-btn-active");
 		powerOn = !powerOn;
-		wsClient.send(JSON.stringify({
-			type : "power",
-			data : {
-				powerState : powerOn
-			}
-		}));
+		setPowerState(powerOn);
 	});
 	$("#heat-cool-switch").on("click", function(event) {
 		$(".set-updown-container-wrapper").toggleClass("set-updown-container-wrapper-next");
-		heatIsOn = !heatIsOn;
+		data.heatIsOn = !data.heatIsOn;
+		telemetryData();
 	});
 	$(".set-fan-container").on("click", function(event) {
 		data.fanStatus = data.fanStatus == "ON" ? "OFF" : "ON";
 		$(".set-fan-value").html(data.fanStatus);
+		telemetryData();
 	});
 	$(".control-rotate-up").on("click", function(event) {
-		if (heatIsOn) {
+		if (data.heatIsOn) {
 			data.setTempToHeat++;
 		} else {
 			data.setTempToCool++;
 		}
+		telemetryData();
 		updateModel();
 	});
 	$(".control-rotate-down").on("click", function(event) {
-		if (heatIsOn) {
+		if (data.heatIsOn) {
 			data.setTempToHeat--;
 			if (data.setTempToHeat < 0)
 				data.setTempToHeat = 0;
@@ -119,6 +124,7 @@ $(function() {
 			if (data.setTempToCool < 0)
 				data.setTempToCool = 0;
 		}
+		telemetryData();
 		updateModel();
 	});
 });

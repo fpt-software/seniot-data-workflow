@@ -27,6 +27,7 @@ function wsGateway() {
 	};
 	wsClient.onopen = function() {
 		connected = true;
+		powerOn = true;
 		initButtonEffect();
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		$("#power").addClass("ui-btn-active");

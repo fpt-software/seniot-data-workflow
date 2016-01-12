@@ -40,6 +40,7 @@ module.exports = function(RED) {
 		var node = this;
 
 		node.on("input", function(message) {
+			node.deviceId = message.deviceId || node.deviceId;
 			if (node.deviceId) {
 				var contextGlobal = RED.settings.get('functionGlobalContext');
 				console.log("FILE", contextGlobal.safeStorage + '/' + node.deviceId + "/device.json");
@@ -126,6 +127,7 @@ module.exports = function(RED) {
 		var node = this;
 
 		node.on("input", function(msg) {
+			node.deviceId = msg.deviceId || node.deviceId;
 			if (node.deviceId) {
 				var contextGlobal = RED.settings.get('functionGlobalContext');
 				console.log("FILE", contextGlobal.safeStorage + '/' + node.deviceId + "/device.json");

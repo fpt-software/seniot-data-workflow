@@ -67,7 +67,7 @@ module.exports = function(RED) {
 					});
 				});
 			} catch(ex) {
-				res.sendStatus(500).send('error', {
+				res.status(500).send('error', {
 					error : ex.toString()
 				});
 			}
@@ -93,7 +93,7 @@ module.exports = function(RED) {
 					});
 				});
 			} catch(err) {
-				res.sendStatus(500).send('error', {
+				res.status(500).send('error', {
 					error : ex.toString()
 				});
 			}
@@ -119,7 +119,7 @@ module.exports = function(RED) {
 					});
 				});
 			} catch(err) {
-				res.sendStatus(500).send('error', {
+				res.status(500).send('error', {
 					error : ex.toString()
 				});
 			}
@@ -136,7 +136,7 @@ module.exports = function(RED) {
 				});
 				child.stdout.on('data', function(data) {
 					console.log(data.toString());
-					res.sendStatus(200);
+					res.status(200);
 				});
 				child.stderr.on('data', function(error) {
 					res.status(500).send('error', {
@@ -144,7 +144,7 @@ module.exports = function(RED) {
 					});
 				});
 			} catch(err) {
-				res.sendStatus(500).send('error', {
+				res.status(500).send('error', {
 					error : ex.toString()
 				});
 			}

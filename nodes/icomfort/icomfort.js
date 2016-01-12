@@ -43,19 +43,19 @@ module.exports = function(RED) {
 			msg.payload = this.payload;
 			this.send(msg);
 		});
-		var certificateAuthorityLocation = RED.settings.get('functionGlobalContext').certificateAuthority;
+		var spawnOption = {
+			cachePassword : true,
+			prompt : 'Hi! Password is needed!',
+			spawnOptions : {
+				cwd : "/var/www/seniot-data-workflow/root-ca/"
+			}
+		};
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 		RED.httpNode.get("/lennox/certs", function(req, res, next) {
 			try {
-				var child = sudo(['ls', '-d', './*/'], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : certificateAuthorityLocation
-					}
-				});
+				var child = sudo(['ls', '-d', './*/'], spawnOption);
 				child.stdout.on('data', function(data) {
 					var result = data.toString().replace("\r\n", "\n").split('\n');
 					res.send({
@@ -74,13 +74,7 @@ module.exports = function(RED) {
 		RED.httpNode.get("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['ls', '', '.' + certificateId], {
-					cachePassword : true,
-					prompt : 'Hi! Password is needed!',
-					spawnOptions : {
-						cwd : certificateAuthorityLocation
-					}
-				});
+				var child = sudo(['ls', '', '.' + certificateId], spawnOption);
 				child.stdout.on('data', function(data) {
 					var result = data.toString().replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n');
 					res.send({

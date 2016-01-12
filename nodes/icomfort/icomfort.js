@@ -59,7 +59,7 @@ module.exports = function(RED) {
 				var child = sudo([ 'ls', '', './' + certificateId ], options);
 				child.stdout.on('data', function (data) {
 					res.send({
-						msg: data.toString().split('\n')
+						msg: data.toString().replace("\r\n", "\n").split('\n')
 					});
 				});
 			} catch(err) {

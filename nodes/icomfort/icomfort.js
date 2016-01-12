@@ -56,7 +56,7 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 		RED.httpNode.get("/lennox/certs", function(req, res, next) {
 			try {
-				var child = sudo(['ls', '-d', './*/'], sudoOptions);
+				var child = sudo(['pwd;ls', '-d', './*/'], sudoOptions);
 				child.stdout.on('data', function(data) {
 					var result = data.toString().replace("\r\n", "\n").split('\n');
 					res.send({

@@ -63,7 +63,7 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function (error) {
-					res.sendStatus(500, error.toString());
+					res.status(500).render('error', { error: error });
 				});
 			} catch(err) {
 				res.sendStatus(500);
@@ -79,10 +79,10 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function (error) {
-					res.sendStatus(500, error.toString());
+					res.status(500).render('error', { error: error });
 				});
 			} catch(err) {
-				res.sendStatus(500);
+				res.status(500);
 			}
 		});
 		RED.httpNode.post("/lennox/certs/:id", function(req, res) {

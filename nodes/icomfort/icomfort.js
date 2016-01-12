@@ -47,7 +47,7 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
-		RED.httpNode.get("/lennox/certs", function(req, res) {
+		RED.httpNode.get("/lennox/certs", function(req, res, next) {
 			try {
 				var child = sudo(['ls', '-d', './*/'], {
 					cachePassword : true,
@@ -57,22 +57,24 @@ module.exports = function(RED) {
 					}
 				});
 				child.stdout.on('data', function(data) {
+					console.log(data);
 					res.send({
 						msg : data.toString().replace("\r\n", "\n").split('\n')
-					}).end();
+					});
 				});
 				child.stderr.on('data', function(error) {
+					console.log(error);
 					res.status(500).send({
 						error : error.toString()
 					});
-				}).end();
+				});
 			} catch(ex) {
 				res.status(500).send({
 					error : ex.toString()
-				}).end();
+				});
 			}
 		});
-		RED.httpNode.get("/lennox/certs/:id", function(req, res) {
+		RED.httpNode.get("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
 				var child = sudo(['ls', '', './' + certificateId], {

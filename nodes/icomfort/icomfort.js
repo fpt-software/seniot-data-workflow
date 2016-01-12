@@ -63,7 +63,7 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function (error) {
-					res.status(500).render('error', { error: error });
+					res.status(500).send('error', { error: error });
 				});
 			} catch(err) {
 				res.sendStatus(500);
@@ -79,7 +79,7 @@ module.exports = function(RED) {
 					});
 				});
 				child.stderr.on('data', function (error) {
-					res.status(500).render('error', { error: error });
+					res.status(500).send('error', { error: error });
 				});
 			} catch(err) {
 				res.status(500);

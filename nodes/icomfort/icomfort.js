@@ -14,6 +14,7 @@
  * limitations under the License.
  **/
 var express = require("express");
+var sudo = require('sudo');
 
 module.exports = function(RED) {
 	"use strict";
@@ -35,7 +36,6 @@ module.exports = function(RED) {
 				nodes.splice(index, 1);
 			}
 		});
-
 		this.on("input", function(msg) {
 			var msg = {
 				topic : this.topic,
@@ -46,6 +46,54 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
+		RED.httpNode.get("/lennox/certs/:id", function(req, res) {
+			var certificateId = req.params.id;
+			try {
+				var options = {
+				    cachePassword: true,
+				    prompt: 'Hi! Password is needed!',
+				    spawnOptions: {
+				    	cwd: "/var/www/seniot-data-workflow/root-ca/"
+				    }
+				};
+				var child = sudo([ 'ls', '-l', './' ], options);
+				child.stdout.on('data', function (data) {
+				    console.log(data.toString());
+					res.send({
+						msg: data.toString()
+					});
+				});
+			} catch(err) {
+				res.sendStatus(500);
+			}
+		});
+		RED.httpNode.post("/lennox/certs/:id", function(req, res) {
+			var certificateId = req.params.id;
+			try {
+				res.sendStatus(200);
+			} catch(err) {
+				res.sendStatus(500);
+			}
+		});
+		RED.httpNode.delete("/lennox/certs/:id", function(req, res) {
+			var certificateId = req.params.id;
+			try {
+				var options = {
+				    cachePassword: true,
+				    prompt: 'Hi! Password is needed!',
+				    spawnOptions: {
+				    	cwd: "/var/www/seniot-data-workflow/root-ca/"
+				    }
+				};
+				var child = sudo([ 'ls', '-l', './' ], options);
+				child.stdout.on('data', function (data) {
+				    console.log(data.toString());
+				});
+				res.sendStatus(200);
+			} catch(err) {
+				res.sendStatus(500);
+			}
+		});
 	}
 
 	RED.nodes.registerType("icomfort", lennoxReg);

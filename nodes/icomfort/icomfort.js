@@ -75,7 +75,7 @@ module.exports = function(RED) {
 		RED.httpNode.post("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['./test-client.sh', certificateId], sudoOptions);
+				var child = sudo([RED.settings.get('functionGlobalContext').certificateAuthority + '/test-client.sh', certificateId], sudoOptions);
 				child.stdout.on('data', function(data) {
 					res.send({
 						msg : data.toString()
@@ -93,7 +93,7 @@ module.exports = function(RED) {
 		RED.httpNode.delete("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo([RED.settings.get('functionGlobalContext').certificateAuthority + '/revoke-client.sh', certificateId], sudoOptions);
+				var child = sudo([RED.settings.get('functionGlobalContext').certificateAuthority + '/test-revoke.sh', certificateId], sudoOptions);
 				child.stdout.on('data', function(data) {
 					res.send({
 						msg : data.toString()

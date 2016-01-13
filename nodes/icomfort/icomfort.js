@@ -91,7 +91,8 @@ module.exports = function(RED) {
 		RED.httpNode.delete("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				exec('cd ' + RED.settings.get('functionGlobalContext').certificateAuthority + ';./revoke-client.sh ' + certificateId, {encoding: 'binary', maxBuffer:10000000}, function (error, stdout, stderr) {
+				var cmd = '"cd ' + RED.settings.get('functionGlobalContext').certificateAuthority + ';./revoke-client.sh ' + certificateId + '"';
+				exec(cmd, {encoding: 'binary', maxBuffer:10000000}, function (error, stdout, stderr) {
                     if (error !== null) {
                         next(error);
                     } else {

@@ -65,6 +65,7 @@ module.exports = function(RED) {
 							text : "amqp.state.connected"
 						});
 						device.getReceiver(function(err, receiver) {
+							console.log("RECEIVER:", err, receiver);
 							if (receiver && !err) {
 								receiver.on('message', function(msg) {
 									node.send({

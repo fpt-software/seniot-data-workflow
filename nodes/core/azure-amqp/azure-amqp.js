@@ -40,6 +40,7 @@ module.exports = function(RED) {
 						deferred.reject({
 							Error : ex.message
 						});
+						console.log(ex);
 					}
 				} else {
 					deferred.reject({

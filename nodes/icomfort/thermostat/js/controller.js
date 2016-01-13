@@ -30,7 +30,7 @@ function wsThermostat() {
 		powerOn = true;
 		initButtonEffect();
 		data.ZoneId = window.location.hash.substr(1) || "default";
-		$("#zone-id").text(data.ZoneId.replace("_",""));
+		$("#zone-id").text(data.ZoneId.replace("_"," "));
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		$("#power").addClass("ui-btn-active");
 		$("#container").removeClass("power-off");

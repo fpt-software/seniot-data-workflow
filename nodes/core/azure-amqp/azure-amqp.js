@@ -58,6 +58,7 @@ module.exports = function(RED) {
 			node.deviceId = message.deviceId || node.deviceId;
 			if (node.deviceId) {
 				azureIoTConnect(node, "< RECV-FROM").then(function(device) {
+					console.log("HELLO", device);
 					if (device) {
 						node.status({
 							fill : "green",

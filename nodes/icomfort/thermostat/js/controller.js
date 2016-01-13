@@ -14,13 +14,13 @@ var data = {
 	outdoorLoTemperature : 72
 };
 
-function wsGateway() {
+function wsThermostat() {
 	wsClient = new WebSocket(wsUri);
 	$("#power").attr("disabled", true).addClass("ui-state-disabled");
 	wsClient.onmessage = function(m) {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
-		if (msg.type == "update") {
+		if (msg.type == "update" && msg.DeviceId == window.location.hash.substr(1)) {
 			data = msg.data;
 			updateModel();
 		}
@@ -29,6 +29,7 @@ function wsGateway() {
 		connected = true;
 		powerOn = true;
 		initButtonEffect();
+		data.DeviceId = window.location.hash.substr(1);
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		$("#power").addClass("ui-btn-active");
 		$("#container").removeClass("power-off");
@@ -46,7 +47,7 @@ function wsGateway() {
 		connected = false;
 		wsClient = null;
 		setPowerState(false);
-		setTimeout(wsGateway, 10000);
+		setTimeout(wsThermostat, 10000);
 	};
 	wsClient.onerror = function() {
 		$("#power").attr("disabled", true).addClass("ui-state-disabled");
@@ -55,7 +56,7 @@ function wsGateway() {
 	};
 }
 
-wsGateway();
+wsThermostat();
 
 String.prototype.toDash = function() {
 	return this.replace(/([A-Z])/g, function($1) {

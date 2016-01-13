@@ -3,7 +3,7 @@ module.exports = function(RED) {
 	var fs = require('fs');
 	var q = require('q');
 	var device = require('azure-iot-device');
-	var Message = Device.Message;
+	var Message = device.Message;
 
 	function azureIoTConnect(node, action) {
 		var deferred = q.defer();

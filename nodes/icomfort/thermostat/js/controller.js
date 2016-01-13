@@ -20,7 +20,7 @@ function wsThermostat() {
 	wsClient.onmessage = function(m) {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
-		if (msg.type == "update" && msg.ZoneId == window.location.hash.substr(1)) {
+		if (msg.type == "update" && msg.ZoneId == (window.location.hash.substr(1) || "default")) {
 			data = msg.data;
 			updateModel();
 		}
@@ -29,7 +29,7 @@ function wsThermostat() {
 		connected = true;
 		powerOn = true;
 		initButtonEffect();
-		data.ZoneId = window.location.hash.substr(1);
+		data.ZoneId = window.location.hash.substr(1) || "default";
 		$("#zone-id").text(data.ZoneId.replace("_",""));
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		$("#power").addClass("ui-btn-active");

@@ -3,7 +3,6 @@ module.exports = function(RED) {
 	var fs = require('fs');
 	var q = require('q');
 	var Device = require('azure-iot-device');
-	var Client = Device.Client;
 	var Message = Device.Message;
 
 	function azureIoTConnect(node, action) {
@@ -29,7 +28,7 @@ module.exports = function(RED) {
 						data = JSON.parse(data);
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 						console.log(action, node.deviceId, connectionString);
-						var device = new Client.fromConnectionString(connectionString, Device.Amqp);
+						var device = Device.Client.fromConnectionString(connectionString, Device.Amqp);
 						deferred.resolve(device);
 					} catch (ex) {
 						node.status({

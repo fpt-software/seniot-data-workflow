@@ -59,43 +59,43 @@ module.exports = function(RED) {
 								text : "httpin.status.receiving"
 							});
 							data = JSON.parse(data);
-							if (!node.device) {
-								var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
-								node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
-								node.device = new Client.fromConnectionString(connectionString);
-							}
-							node.device.receive(function(err, msg, res) {
-								if (!err) {
-									if (msg.getData().length) {
-										node.send({
-											error : err,
-											payload : JSON.parse(msg.getData())
-										});
-										node.device.complete(msg, function(error) {
-											if (error) {
-												node.status({
-													fill : "red",
-													shape : "dot",
-													text : "Notifying completed fail."
-												});
-												node.device = null;	
-											} else {
-												node.status({});		
-											}
-										});
+							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
+							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
+							node.device = new Client.fromConnectionString(connectionString);
+							if (node.device) {
+								node.device.receive(function(err, msg, res) {
+									if (!err) {
+										if (msg.getData().length) {
+											node.send({
+												error : err,
+												payload : JSON.parse(msg.getData())
+											});
+											node.device.complete(msg, function(error) {
+												if (error) {
+													node.status({
+														fill : "red",
+														shape : "dot",
+														text : "Notifying completed fail."
+													});
+													node.device = null;
+												} else {
+													node.status({});
+												}
+											});
+										} else {
+											node.status({});
+										}
 									} else {
-										node.status({});
+										node.status({
+											fill : "red",
+											shape : "dot",
+											text : err.Error
+										});
+										console.log(err);
+										node.device = null;
 									}
-								} else {
-									node.status({
-										fill : "red",
-										shape : "dot",
-										text : err.Error
-									});
-									console.log(err);
-									node.device = null;
-								}
-							});
+								});
+							}
 						} else {
 							node.status({
 								fill : "red",

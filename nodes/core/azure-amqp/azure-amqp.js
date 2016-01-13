@@ -21,20 +21,27 @@ module.exports = function(RED) {
 						node.status({
 							fill : "red",
 							shape : "dot",
-							text : "Read configuration file error."
+							text : "amqp.state.configuration-failed"
 						});
 					} else {
 						if (data && data != "") {
 							node.status({
 								fill : "blue",
 								shape : "dot",
-								text : "httpin.status.receiving"
+								text : "amqp.state.connecting"
 							});
 							data = JSON.parse(data);
 							if (!node.device) {
 								var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 								node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
 								node.device = new Client.fromConnectionString(connectionString, Device.Amqp);
+								if (node.device) {
+									node.status({
+										fill : "green",
+										shape : "dot",
+										text : "amqp.state.connected"
+									});
+								}
 							}
 							node.device.getReceiver(function(err, receiver) {
 								receiver.on('message', function(msg) {
@@ -71,7 +78,7 @@ module.exports = function(RED) {
 							node.status({
 								fill : "red",
 								shape : "dot",
-								text : "Configuration file is empty"
+								text : "amqp.state.configuration-failed"
 							});
 						}
 					}
@@ -80,7 +87,7 @@ module.exports = function(RED) {
 				node.status({
 					fill : "red",
 					shape : "dot",
-					text : "DeviceID is not set in the configuration settings."
+					text : "amqp.state.configuration-empty"
 				});
 			}
 		});
@@ -104,19 +111,26 @@ module.exports = function(RED) {
 						node.status({
 							fill : "red",
 							shape : "dot",
-							text : "Read configuration file error."
+							text : "amqp.state.configuration-failed"
 						});
 					} else {
 						if (data && data != "") {
 							node.status({
 								fill : "blue",
 								shape : "dot",
-								text : "httpin.status.requesting"
+								text : "amqp.state.connecting"
 							});
 							data = JSON.parse(data);
 							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
 							node.log("Sending data to: " + node.deviceId + ", " + connectionString);
 							var device = new Client.fromConnectionString(connectionString, Device.Amqp);
+							if (node.device) {
+								node.status({
+									fill : "green",
+									shape : "dot",
+									text : "amqp.state.connected"
+								});
+							}
 							if (!Buffer.isBuffer(msg.payload)) {
 								if ( typeof msg.payload === "object") {
 									msg.payload = JSON.stringify(msg.payload);
@@ -135,7 +149,7 @@ module.exports = function(RED) {
 							node.status({
 								fill : "red",
 								shape : "dot",
-								text : "Configuration file is empty"
+								text : "amqp.state.configuration-failed"
 							});
 						}
 					}
@@ -144,11 +158,12 @@ module.exports = function(RED) {
 				node.status({
 					fill : "red",
 					shape : "dot",
-					text : "DeviceID is not set in the configuration settings."
+					text : "amqp.state.configuration-empty"
 				});
 			}
 		});
 	}
+
 
 	RED.nodes.registerType("azure-amqp out", azureIoTHubNodeOut);
 };

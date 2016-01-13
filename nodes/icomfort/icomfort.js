@@ -58,11 +58,7 @@ module.exports = function(RED) {
 			var certificateId = req.params.id;
 			try {
 				var child = sudo(['service', 'nginx', 'restart'], sudoOptions);
-				child.stdout.on('data', function(data) {
-					res.send({
-						msg : data.toString()
-					});
-				});
+				res.send();
 			} catch(err) {
 				res.status(500).send({
 					error : ex.toString()

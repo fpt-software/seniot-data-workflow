@@ -20,7 +20,7 @@ function wsThermostat() {
 	wsClient.onmessage = function(m) {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
-		if (msg.type == "update") {
+		if (msg.type == "update" && msg.DeviceId == window.location.hash.substr(1)) {
 			data = msg.data;
 			updateModel();
 		}

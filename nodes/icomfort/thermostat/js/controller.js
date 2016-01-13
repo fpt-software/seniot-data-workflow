@@ -7,7 +7,7 @@ var data = {
 	heatIsOn : true,
 	indoorTemperature : 72,
 	indoorHumidity : 45,
-	setTempToCool : 72,
+	setTempToCool : 75,
 	setTempToHeat : 68,
 	outdoorTemperature : 83,
 	outdoorHiTemperature : 85,

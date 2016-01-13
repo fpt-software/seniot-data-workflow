@@ -30,14 +30,16 @@ module.exports = function(RED) {
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 						console.log(action, node.deviceId, connectionString);
 						var device = new Client.fromConnectionString(connectionString, Device.Amqp);
+						deferred.resolve(device);
 					} catch (ex) {
 						node.status({
 							fill : "red",
 							shape : "dot",
 							text : "amqp.state.disconnected"
 						});
-					} finally {
-						deferred.resolve(device);
+						deferred.reject({
+							Error : ex.message
+						});
 					}
 				} else {
 					deferred.reject({

@@ -28,7 +28,7 @@ module.exports = function(RED) {
 						data = JSON.parse(data);
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 						console.log(action, node.deviceId, connectionString);
-						var device = Device.Client.fromConnectionString(connectionString, Device.Amqp);
+						var device = Device.Client.fromConnectionString(connectionString, require('azure-iot-common').Amqp);
 						deferred.resolve(device);
 					} catch (ex) {
 						node.status({

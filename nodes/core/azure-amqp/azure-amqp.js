@@ -2,8 +2,7 @@ module.exports = function(RED) {
 	"use strict";
 	var fs = require('fs');
 	var q = require('q');
-	var Device = require('azure-iot-device');
-	var Message = Device.Message;
+	var device = require('azure-iot-device');
 
 	function azureIoTConnect(node, action) {
 		var deferred = q.defer();
@@ -29,8 +28,8 @@ module.exports = function(RED) {
 						var Device = require('azure-iot-device');
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 						console.log(action, node.deviceId, connectionString);
-						var device = Device.Client.fromConnectionString(connectionString, Device.Amqp);
-						deferred.resolve(device);
+						var deviceObj = device.Client.fromConnectionString(connectionString, device.Amqp);
+						deferred.resolve(deviceObj);
 					} catch (ex) {
 						node.status({
 							fill : "red",
@@ -61,16 +60,16 @@ module.exports = function(RED) {
 		node.on("input", function(message) {
 			node.deviceId = message.deviceId || node.deviceId;
 			if (node.deviceId) {
-				azureIoTConnect(node, "< RECV-FROM").then(function(device) {
-					console.log("HELLO", device);
-					if (device) {
+				azureIoTConnect(node, "< RECV-FROM").then(function(deviceObj) {
+					console.log("HELLO", deviceObj);
+					if (deviceObj) {
 						node.status({
 							fill : "green",
 							shape : "dot",
 							text : "amqp.state.connected"
 						});
 						console.log("RECEIVER INIT");
-						device.getReceiver(function(err, receiver) {
+						deviceObj.getReceiver(function(err, receiver) {
 							console.log("RECEIVER:", err, receiver);
 							if (receiver && !err) {
 								receiver.on('message', function(msg) {
@@ -144,9 +143,9 @@ module.exports = function(RED) {
 		node.on("input", function(msg) {
 			node.deviceId = msg.deviceId || node.deviceId;
 			if (node.deviceId) {
-				azureIoTConnect(node, "> SEND-TO").then(function(device) {
+				azureIoTConnect(node, "> SEND-TO").then(function(deviceObj) {
 				}, function(error) {
-					if (device) {
+					if (deviceObj) {
 						node.status({
 							fill : "green",
 							shape : "dot",
@@ -159,8 +158,8 @@ module.exports = function(RED) {
 								msg.payload = "" + msg.payload;
 							}
 						}
-						var message = new Message(msg.payload);
-						device.sendEvent(message, function(err, res) {
+						var message = new device.Message(msg.payload);
+						deviceObj.sendEvent(message, function(err, res) {
 							node.send({
 								error : err
 							});

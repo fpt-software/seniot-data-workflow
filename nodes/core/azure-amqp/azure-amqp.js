@@ -6,7 +6,7 @@ module.exports = function(RED) {
 	var Client = Device.Client;
 	var Message = Device.Message;
 
-	function azureIoTConnect(node) {
+	function azureIoTConnect(node, action) {
 		var deferred = q.defer();
 		var contextGlobal = RED.settings.get('functionGlobalContext');
 		console.log("FILE", contextGlobal.safeStorage + '/' + node.deviceId + "/device.json");
@@ -28,7 +28,7 @@ module.exports = function(RED) {
 					try {
 						data = JSON.parse(data);
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
-						node.log("Initiate Azure IoT Hub AMQP node for " + node.deviceId + ", " + connectionString);
+						console.log(action, node.deviceId, connectionString);
 						node.device = new Client.fromConnectionString(connectionString, Device.Amqp);
 					} catch (ex) {
 						node.status({
@@ -57,7 +57,7 @@ module.exports = function(RED) {
 		node.on("input", function(message) {
 			node.deviceId = message.deviceId || node.deviceId;
 			if (node.deviceId) {
-				azureIoTConnect(node).then(function(device) {
+				azureIoTConnect(node, "< RECV-FROM").then(function(device) {
 					if (device) {
 						node.status({
 							fill : "green",
@@ -70,7 +70,7 @@ module.exports = function(RED) {
 									node.send({
 										payload : JSON.parse(msg.getData())
 									});
-									console.log("RECEIVE", msg.getData());
+									console.log("***DATA", msg.getData());
 									receiver.complete(msg, function(error) {
 										if (error) {
 											node.status({
@@ -137,7 +137,7 @@ module.exports = function(RED) {
 		node.on("input", function(msg) {
 			node.deviceId = msg.deviceId || node.deviceId;
 			if (node.deviceId) {
-				azureIoTConnect(node).then(function(device) {
+				azureIoTConnect(node, "> SEND-TO").then(function(device) {
 				}, function(error) {
 					if (device) {
 						node.status({

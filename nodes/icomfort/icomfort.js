@@ -45,10 +45,7 @@ module.exports = function(RED) {
 		});
 		var sudoOptions = {
 			cachePassword : true,
-			prompt : 'Hi! Password is needed!',
-			spawnOptions : {
-				cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-			}
+			prompt : 'Hi! Password is needed!'
 		};
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));

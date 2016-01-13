@@ -15,6 +15,7 @@
  **/
 var express = require("express");
 var sudo = require('sudo');
+var exec = require('child_process').exec;
 
 module.exports = function(RED) {
 	"use strict";
@@ -45,10 +46,7 @@ module.exports = function(RED) {
 		});
 		var sudoOptions = {
 			cachePassword : true,
-			prompt : 'Hi! Password is needed!',
-			spawnOptions : {
-				cwd : RED.settings.get('functionGlobalContext').certificateAuthority
-			}
+			prompt : 'Hi! Password is needed!'
 		};
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
@@ -93,15 +91,16 @@ module.exports = function(RED) {
 		RED.httpNode.delete("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo([RED.settings.get('functionGlobalContext').certificateAuthority + '/revoke-client.sh', certificateId], sudoOptions);
-				child.stdout.on('data', function(data) {
-					res.send({
-						msg : data.toString()
-					});
-				});
-				child.stderr.on('data', function(error) {
-					next(error);
-				});
+				exec('cd ' + RED.settings.get('functionGlobalContext').certificateAuthority + ';./revoke-client.sh ' + certificateId, {encoding: 'binary', maxBuffer:10000000}, function (error, stdout, stderr) {
+                    if (error !== null) {
+                        next(error);
+                    } else {
+                    	res.send({
+							msg : (new Buffer(stdout,"binary")).toString()
+						});	
+						sudo(['service', 'nginx', 'restart'], sudoOptions);
+                    }
+                });
 			} catch(err) {
 				res.status(500).send({
 					error : ex.toString()

@@ -26,6 +26,13 @@
 	background-size: 475px 320px;
 	background-repeat: no-repeat;
 }
+#zone-id {
+	color: white;
+    text-shadow: 0 0 0;
+    vertical-align: middle;
+    font-size: 10px;
+    line-height: 20px;
+}
 .power-off {
     opacity: 0 !important;
     background: transparent !important;

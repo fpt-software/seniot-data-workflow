@@ -62,11 +62,9 @@
         "node-red-node-email":"0.1.*",
         "node-red-node-twitter":"0.1.*",
         "node-red-node-rbe":"0.1.*",
-        "azure-iot-device":"^1.0.0-preview.6",
-        "amqp10": "^2.0.3",
-	    "azure-iot-common": "^1.0.0-preview.6",
+	    "azure-iot-common": "^1.0.0-preview.9",
 	    "azure-iot-device": "1.0.0-preview.9",
-	    "azure-iothub": "^1.0.0-preview.6",
+	    "azure-iothub": "^1.0.0-preview.9",
 	    "request" : "^2.67.0",
 	    "q": "^1.4.1"
     },

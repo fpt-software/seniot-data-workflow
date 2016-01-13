@@ -3,7 +3,7 @@
     "version"       : "0.0.1",
     "description"   : "An azure-iot node for Node-RED",
     "dependencies"  : {
-    	"amqp10": ">=2.0.3",
+    	"amqp10": "^2.2.1",
         "azure-iot-device":"^1.0.0-preview.9",
 	    "azure-iot-common": "^1.0.0-preview.9",
 	    "azure-iothub": "^1.0.0-preview.9",

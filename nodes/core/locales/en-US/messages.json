@@ -206,7 +206,7 @@
 			"connected": "connected",
 			"disconnected": "disconnected",
 			"connect-failed": "connection failed",
-			"configuration-failed": "configuration file error.",
+			"configuration-failed": "unregistered",
 			"configuration-empty": "configuration is not set",
 			"connecting": "connecting"
 		}

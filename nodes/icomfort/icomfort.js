@@ -51,10 +51,10 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 		
-		RED.httpNode.post("/lennox/restart", function(req, res, next) {
+		RED.httpNode.post("/lennox/reload", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
-				var child = sudo(['service', 'nginx', 'restart'], sudoOptions);
+				var child = sudo(['service', 'nginx', 'reload'], sudoOptions);
 				res.send();
 			} catch(err) {
 				res.status(500).send({

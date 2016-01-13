@@ -14,66 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<script type="text/x-red" data-template-name="azure-amqp-device">
-	<div class="form-row">
-		<label for="node-config-input-name">Name</label>
-		<input type="text" id="node-config-input-name" placeholder="Name">
-	</div>
-	<div class="form-row">
-	<label for="node-config-input-deviceId">Device</label>
-	<select type="text" id="node-config-input-deviceId"></select>
-	</div>
-</script>
-
-
-<!-- MQTT Broker Configuration -->
-
-<script type="text/javascript">
-	RED.nodes.registerType('azure-amqp-device', {
-		category : 'config',
-		defaults : {
-			name : {
-				value : "",
-				required : true
-			},
-			deviceId : {
-				value : "",
-				required : true
-			}
-		},
-		label : function() {
-			return this.name;
-		},
-		oneditprepare : function() {
-			var that = this;
-			function fulfillOptions(certs) {
-				$("#node-config-input-deviceId").empty();
-				$.each(data, function(index, value) {
-					if (value != "") {
-						if (that.deviceId == value) {
-							$("#node-config-input-deviceId").append('<option value="' + value + '" selected>' + value + '</option>');
-						} else {
-							$("#node-config-input-deviceId").append('<option value="' + value + '">' + value + '</option>');
-						}
-					}
-				});
-				$("#node-config-input-deviceId").change();
-			}
-
-			$.get("/device/uuids", function(data) {
-				fulfillOptions(data);
-			}).fail(function() {				
-				var data = [];
-				fulfillOptions(data);
-			});
-		}
-	});
-</script>
-
 <script type="text/x-red" data-template-name="azure-amqp out">
 	<div class="form-row">
-		<label for="node-input-device">Device</label>
-		<input type="text" id="node-input-device">
+	<label for="node-input-name">Name</label>
+	<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+	<label for="node-input-deviceId">Device</label>
+	<select type="text" id="node-input-deviceId"></select>
 	</div>
 </script>
 
@@ -87,9 +35,11 @@ limitations under the License.
 		category : 'output',
 		color : "#fff",
 		defaults : {
-			device : {
-				type : "azure-amqp-device",
-				required : true
+			name : {
+				value : ""
+			},
+			deviceId : {
+				value : ""
 			}
 		},
 		inputs : 1,
@@ -97,19 +47,45 @@ limitations under the License.
 		icon : "bridge-dash.png",
 		align : "right",
 		label : function() {
-			var dbNode = RED.nodes.node(this.device);
-			return this.name || ( dbNode ? dbNode.label() : "azure-amqp");
+			return this.name || "azure-amqp";
 		},
 		labelStyle : function() {
 			return this.name ? "node_label_italic" : "";
+		},
+		oneditprepare : function() {
+			var that = this;
+			function fulfillOptions(data) {
+				$("#node-input-deviceId").empty();
+				$.each(data, function(index, value) {
+					if (value != "") {
+						if (that.deviceId == value) {
+							$("#node-input-deviceId").append('<option value="' + value + '" selected>' + value + '</option>');
+						} else {
+							$("#node-input-deviceId").append('<option value="' + value + '">' + value + '</option>');
+						}
+					}
+				});
+				$("#node-input-deviceId").change();
+			}
+
+			$.get("/azure/devices", function(data) {
+				fulfillOptions(data);
+			}).fail(function() {
+				var certs = [];
+				fulfillOptions(data);
+			});
 		}
 	});
 </script>
 
 <script type="text/x-red" data-template-name="azure-amqp in">
 	<div class="form-row">
-		<label for="node-input-device">Device</label>
-		<input type="text" id="node-input-device">
+	<label for="node-input-name">Name</label>
+	<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+	<label for="node-input-deviceId">Device</label>
+	<select type="text" id="node-input-deviceId"></select>
 	</div>
 </script>
 
@@ -124,24 +100,45 @@ limitations under the License.
 		category : 'input',
 		color : "#fff",
 		defaults : {
-			device : {
-				type : "azure-amqp-device",
-				required : true
+			name : {
+				value : ""
 			},
-			interval: {
-				value: 1000,
+			deviceId : {
+				value : ""
 			}
 		},
-		inputs : 0,
+		inputs : 1,
 		outputs : 1,
 		icon : "bridge-dash.png",
 		align : "left",
 		label : function() {
-			var dbNode = RED.nodes.node(this.device);
-			return this.name || ( dbNode ? dbNode.label() : "azure-amqp");
+			return this.name || "azure-amqp";
 		},
 		labelStyle : function() {
 			return this.name ? "node_label_italic" : "";
+		},
+		oneditprepare : function() {
+			var that = this;
+			function fulfillOptions(data) {
+				$("#node-input-deviceId").empty();
+				$.each(data, function(index, value) {
+					if (value != "") {
+						if (that.deviceId == value) {
+							$("#node-input-deviceId").append('<option value="' + value + '" selected>' + value + '</option>');
+						} else {
+							$("#node-input-deviceId").append('<option value="' + value + '">' + value + '</option>');
+						}
+					}
+				});
+				$("#node-input-deviceId").change();
+			}
+
+			$.get("/azure/devices", function(data) {
+				fulfillOptions(data);
+			}).fail(function() {
+				var certs = [];
+				fulfillOptions(data);
+			});
 		}
 	});
 </script>

@@ -28,7 +28,7 @@ module.exports = function(RED) {
 					try {
 						data = JSON.parse(data);
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
-						node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
+						node.log("Initiate Azure IoT Hub AMQP node for " + node.deviceId + ", " + connectionString);
 						node.device = new Client.fromConnectionString(connectionString, Device.Amqp);
 					} catch (ex) {
 						node.status({
@@ -70,6 +70,7 @@ module.exports = function(RED) {
 									node.send({
 										payload : JSON.parse(msg.getData())
 									});
+									console.log("RECEIVE", msg.getData());
 									receiver.complete(msg, function(error) {
 										if (error) {
 											node.status({
@@ -91,7 +92,7 @@ module.exports = function(RED) {
 									node.status({
 										fill : "red",
 										shape : "dot",
-										text : msg.Error
+										text : err.Error
 									});
 								});
 							} else {

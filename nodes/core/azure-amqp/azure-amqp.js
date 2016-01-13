@@ -29,7 +29,7 @@ module.exports = function(RED) {
 						data = JSON.parse(data);
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 						console.log(action, node.deviceId, connectionString);
-						node.device = new Client.fromConnectionString(connectionString, Device.Amqp);
+						var device = new Client.fromConnectionString(connectionString, Device.Amqp);
 					} catch (ex) {
 						node.status({
 							fill : "red",
@@ -37,7 +37,7 @@ module.exports = function(RED) {
 							text : "amqp.state.disconnected"
 						});
 					} finally {
-						deferred.resolve(node.device);
+						deferred.resolve(device);
 					}
 				} else {
 					deferred.reject({

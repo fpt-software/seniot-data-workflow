@@ -53,24 +53,6 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
-		RED.httpNode.get("/lennox/certs", function(req, res, next) {
-			try {
-				var child = sudo(['ls', '-d', RED.settings.get('functionGlobalContext').certStorage + "/*"], sudoOptions);
-				child.stdout.on('data', function(data) {
-					var result = data.toString().replace(RED.settings.get('functionGlobalContext').certStorage, "").replace("\r\n", "\n").split('\n');
-					res.send({
-						msg : result
-					});
-				});
-				child.stderr.on('data', function(error) {
-					next(error);
-				});
-			} catch(ex) {
-				res.status(500).send({
-					error : ex.toString()
-				});
-			}
-		});
 		RED.httpNode.get("/lennox/certs/:id", function(req, res, next) {
 			var certificateId = req.params.id;
 			try {
@@ -79,6 +61,42 @@ module.exports = function(RED) {
 					var result = data.toString().replace(RED.settings.get('functionGlobalContext').certStorage, "").replace("\r\n", "\n").replace(".\/" + certificateId + ":", "").split('\n');
 					res.send({
 						msg : result
+					});
+				});
+				child.stderr.on('data', function(error) {
+					next(error);
+				});
+			} catch(err) {
+				res.status(500).send({
+					error : ex.toString()
+				});
+			}
+		});
+		RED.httpNode.post("/lennox/certs/:id", function(req, res, next) {
+			var certificateId = req.params.id;
+			try {
+				var child = sudo(['./test-client.sh', certificateId], sudoOptions);
+				child.stdout.on('data', function(data) {
+					res.send({
+						msg : data.toString()
+					});
+				});
+				child.stderr.on('data', function(error) {
+					next(error);
+				});
+			} catch(err) {
+				res.status(500).send({
+					error : ex.toString()
+				});
+			}
+		});
+		RED.httpNode.delete("/lennox/certs/:id", function(req, res, next) {
+			var certificateId = req.params.id;
+			try {
+				var child = sudo(['./revoke-client.sh', certificateId], sudoOptions);
+				child.stdout.on('data', function(data) {
+					res.send({
+						msg : data.toString()
 					});
 				});
 				child.stderr.on('data', function(error) {

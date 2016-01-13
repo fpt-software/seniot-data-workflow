@@ -3,6 +3,7 @@ var connected = false;
 var nextStep = "UNKNOWN";
 var wsUri = "wss://" + window.location.hostname + "/ws/gateway";
 var wsClient = null;
+
 function wsGateway() {
 	wsClient = new WebSocket(wsUri);
 	$("#power").attr("disabled", true).addClass("ui-state-disabled");

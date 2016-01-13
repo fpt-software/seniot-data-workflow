@@ -68,9 +68,9 @@ module.exports = function(RED) {
 							if (receiver && !err) {
 								receiver.on('message', function(msg) {
 									node.send({
-										payload : JSON.parse(msg.getData())
+										payload : JSON.parse(msg.body)
 									});
-									console.log("***DATA", msg.getData());
+									console.log("***DATA", msg.body);
 									receiver.complete(msg, function(error) {
 										if (error) {
 											node.status({

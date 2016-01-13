@@ -17,5 +17,6 @@ azureCerts
 nodes/node-red-nodes/
 node_modules
 public
+storage
 locales/zz-ZZ
 nodes/core/locales/zz-ZZ

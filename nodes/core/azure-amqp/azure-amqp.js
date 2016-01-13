@@ -49,7 +49,11 @@ module.exports = function(RED) {
 										payload : msg.body
 									});
 									receiver.complete(msg, function() {
-										node.status({});
+										node.status({
+											fill : "green",
+											shape : "dot",
+											text : "amqp.state.connected"
+										});
 									});
 									receiver.reject(msg, function() {
 										node.status({
@@ -143,7 +147,11 @@ module.exports = function(RED) {
 								node.send({
 									error : err
 								});
-								node.status({});
+								node.status({
+									fill : "green",
+									shape : "dot",
+									text : "amqp.state.connected"
+								});
 							});
 						} else {
 							node.status({

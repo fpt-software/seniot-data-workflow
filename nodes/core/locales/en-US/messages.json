@@ -208,6 +208,7 @@
 			"connect-failed": "connection failed",
 			"configuration-failed": "unregistered",
 			"configuration-empty": "configuration is not set",
+			"confirmation-failed": "confirmation failed",
 			"connecting": "connecting"
 		}
 	},

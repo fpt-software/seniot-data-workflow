@@ -65,6 +65,7 @@ module.exports = function(RED) {
 							shape : "dot",
 							text : "amqp.state.connected"
 						});
+						console.log("RECEIVER INIT");
 						device.getReceiver(function(err, receiver) {
 							console.log("RECEIVER:", err, receiver);
 							if (receiver && !err) {

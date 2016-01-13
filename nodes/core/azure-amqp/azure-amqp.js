@@ -41,39 +41,53 @@ module.exports = function(RED) {
 									text : "amqp.state.connected"
 								});
 								node.device.getReceiver(function(err, receiver) {
-									receiver.on('message', function(msg) {
-										self.send({
-											payload : msg.body
-										});
-										receiver.complete(msg, function() {
-											node.status({
-												fill : "green",
-												shape : "dot",
-												text : "amqp.state.connected"
+									if (receiver) {
+										receiver.on('message', function(msg) {
+											self.send({
+												payload : msg.body
+											});
+											receiver.complete(msg, function() {
+												node.status({
+													fill : "green",
+													shape : "dot",
+													text : "amqp.state.connected"
+												});
+											});
+											receiver.reject(msg, function() {
+												node.status({
+													fill : "red",
+													shape : "dot",
+													text : msg
+												});
+											});
+											receiver.abandon(msg, function() {
+												node.status({
+													fill : "red",
+													shape : "dot",
+													text : msg
+												});
 											});
 										});
-										receiver.reject(msg, function() {
+										receiver.on('errorReceived', function(err) {
 											node.status({
 												fill : "red",
 												shape : "dot",
-												text : msg
+												text : msg.Error
 											});
 										});
-										receiver.abandon(msg, function() {
-											node.status({
-												fill : "red",
-												shape : "dot",
-												text : msg
-											});
-										});
-									});
-									receiver.on('errorReceived', function(err) {
+									} else {
 										node.status({
 											fill : "red",
 											shape : "dot",
-											text : msg.Error
+											text : "amqp.state.disconnected"
 										});
-									});
+									}
+								});
+							} else {
+								node.status({
+									fill : "red",
+									shape : "dot",
+									text : "amqp.state.disconnected"
 								});
 							}
 						} else {
@@ -149,6 +163,12 @@ module.exports = function(RED) {
 										shape : "dot",
 										text : "amqp.state.connected"
 									});
+								});
+							} else {
+								node.status({
+									fill : "red",
+									shape : "dot",
+									text : "amqp.state.disconnected"
 								});
 							}
 						} else {

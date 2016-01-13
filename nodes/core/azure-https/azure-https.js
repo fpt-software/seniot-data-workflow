@@ -60,7 +60,7 @@ module.exports = function(RED) {
 							});
 							data = JSON.parse(data);
 							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
-							node.log("Initiate Azure IoT Hub HTTPS node for " + node.deviceId + ", " + connectionString);
+							console.log("RECV FROM", node.deviceId, connectionString);
 							node.device = new Client.fromConnectionString(connectionString);
 							if (node.device) {
 								node.device.receive(function(err, msg, res) {
@@ -147,7 +147,7 @@ module.exports = function(RED) {
 							});
 							data = JSON.parse(data);
 							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
-							node.log("Sending data to: " + node.deviceId + ", " + connectionString);
+							console.log("SEND TO", node.deviceId, connectionString);
 							node.device = new Client.fromConnectionString(connectionString);
 							if (!Buffer.isBuffer(msg.payload)) {
 								if ( typeof msg.payload === "object") {

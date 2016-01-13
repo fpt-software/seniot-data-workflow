@@ -127,7 +127,7 @@ module.exports = function(RED) {
 							data = JSON.parse(data);
 							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
 							node.log("Sending data to: " + node.deviceId + ", " + connectionString);
-							var device = new Client.fromConnectionString(connectionString, Device.Amqp);
+							node.device = new Client.fromConnectionString(connectionString, Device.Amqp);
 							if (node.device) {
 								node.status({
 									fill : "green",
@@ -143,7 +143,7 @@ module.exports = function(RED) {
 								}
 							}
 							var message = new Message(msg.payload);
-							device.sendEvent(message, function(err, res) {
+							node.device.sendEvent(message, function(err, res) {
 								node.send({
 									error : err
 								});

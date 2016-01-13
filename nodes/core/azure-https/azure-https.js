@@ -148,7 +148,7 @@ module.exports = function(RED) {
 							data = JSON.parse(data);
 							var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKeyName=' + data.SharedAccessKeyName + ';SharedAccessKey=' + data.PrimaryKey + '';
 							node.log("Sending data to: " + node.deviceId + ", " + connectionString);
-							var device = new Client.fromConnectionString(connectionString);
+							node.device = new Client.fromConnectionString(connectionString);
 							if (!Buffer.isBuffer(msg.payload)) {
 								if ( typeof msg.payload === "object") {
 									msg.payload = JSON.stringify(msg.payload);
@@ -157,7 +157,7 @@ module.exports = function(RED) {
 								}
 							}
 							var message = new Message(msg.payload);
-							device.sendEvent(message, function(err, res) {
+							node.device.sendEvent(message, function(err, res) {
 								node.send({
 									error : err
 								});

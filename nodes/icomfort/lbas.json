@@ -136,7 +136,7 @@
 				],
 				"responses": {
 					"200": {
-						"description": "The Certificate has been created successfully.",
+						"description": "If there is a JSON body response, the Certificate has been created successfully. Otherwise, there was some errors. The validity of Download URL is within one minute.",
 						"schema": {
 							"$ref": "#/definitions/CertificateResponse"
 						}
@@ -165,13 +165,10 @@
 				],
 				"responses": {
 					"200": {
-						"description": "The Certificate has been revoked successfully",
+						"description": "If there is a JSON body response, the Certificate has been revoked successfully. Otherwise, there was some errors. The validity of Download URL is forever.",
 						"schema": {
 							"$ref": "#/definitions/CertificateResponse"
 						}
-					},
-					"400": {
-						"description": "Invalid Certificate ID or it has already revoked yet."
 					}
 				}
 			}

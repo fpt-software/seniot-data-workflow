@@ -51,7 +51,8 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
 		RED.httpNode.use("/lennox/api", express.static(__dirname + '/dist/'));
-		RED.httpNode.use("/lennox/api/lbas.json", express.static(__dirname + '/lbas.json'));
+		RED.httpNode.use("/lennox/api/devices.json", express.static(__dirname + '/devices.json'));
+		RED.httpNode.use("/lennox/api/certs.json", express.static(__dirname + '/certs.json'));
 		
 		RED.httpNode.post("/lennox/reload", function(req, res, next) {
 			var certificateId = req.params.id;

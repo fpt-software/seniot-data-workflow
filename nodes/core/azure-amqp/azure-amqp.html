@@ -23,6 +23,11 @@ limitations under the License.
 	<label for="node-input-deviceId">Device</label>
 	<select type="text" id="node-input-deviceId"></select>
 	</div>
+	<div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-websocket" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-websocket" style="width: 70%;"><span data-i18n="amqp.websocket"></span></label>
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="azure-amqp-hub out">
@@ -40,6 +45,9 @@ limitations under the License.
 			},
 			deviceId : {
 				value : ""
+			},
+			websocket : {
+				value : true 
 			}
 		},
 		inputs : 1,
@@ -87,6 +95,11 @@ limitations under the License.
 	<label for="node-input-deviceId">Device</label>
 	<select type="text" id="node-input-deviceId"></select>
 	</div>
+	<div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-websocket" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-websocket" style="width: 70%;"><span data-i18n="amqp.websocket"></span></label>
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="azure-amqp in">
@@ -105,6 +118,9 @@ limitations under the License.
 			},
 			deviceId : {
 				value : ""
+			},
+			websocket : {
+				value : true 
 			}
 		},
 		inputs : 1,

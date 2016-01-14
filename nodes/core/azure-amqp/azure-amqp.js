@@ -5,7 +5,7 @@ module.exports = function(RED) {
 	var common = require('azure-iot-common');
 	var device = require('azure-iot-device');
 
-	function azureIoTConnect(node, action) {
+	function azureIoTConnect(node, action, websocket) {
 		var deferred = q.defer();
 		var contextGlobal = RED.settings.get('functionGlobalContext');
 		console.log("FILE", contextGlobal.safeStorage + '/' + node.deviceId + "/device.json");
@@ -28,7 +28,7 @@ module.exports = function(RED) {
 						data = JSON.parse(data);
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 						console.log(action, node.deviceId, connectionString);
-						var deviceObj = device.Client.fromConnectionString(connectionString, device.AmqpWS);
+						var deviceObj = device.Client.fromConnectionString(connectionString, websocket ? device.AmqpWS : device.Amqp);
 						deferred.resolve(deviceObj);
 					} catch (ex) {
 						node.status({
@@ -53,12 +53,13 @@ module.exports = function(RED) {
 	function azureIoTHubNodeIn(n) {
 		RED.nodes.createNode(this, n);
 		this.deviceId = n.deviceId;
+		this.websocket = n.websocket;
 		var node = this;
 
 		node.on("input", function(message) {
 			node.deviceId = message.deviceId || node.deviceId;
 			if (node.deviceId) {
-				azureIoTConnect(node, "< RECV-FROM").then(function(deviceObj) {					
+				azureIoTConnect(node, "< RECV-FROM", node.websocket).then(function(deviceObj) {
 					if (deviceObj) {
 						node.status({
 							fill : "green",
@@ -134,12 +135,13 @@ module.exports = function(RED) {
 	function azureIoTHubNodeOut(n) {
 		RED.nodes.createNode(this, n);
 		this.deviceId = n.deviceId;
+		this.websocket = n.websocket;
 		var node = this;
 
 		node.on("input", function(msg) {
 			node.deviceId = msg.deviceId || node.deviceId;
 			if (node.deviceId) {
-				azureIoTConnect(node, "> SEND-TO").then(function(deviceObj) {
+				azureIoTConnect(node, "> SEND-TO", node.websocket).then(function(deviceObj) {
 				}, function(error) {
 					if (deviceObj) {
 						node.status({

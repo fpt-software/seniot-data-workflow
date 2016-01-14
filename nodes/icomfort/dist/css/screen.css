@@ -1272,15 +1272,15 @@
   border-radius: 4px;
 }
 .swagger-section #explore:hover {
-  background-color: #547f00;
+  background-color: #FFFFFF;
 }
 .swagger-section #header #logo {
   font-size: 1.5em;
   font-weight: bold;
   text-decoration: none;
-  background: transparent url(../images/logo_small.png) no-repeat left center;
+  background: transparent url('https://static.lennox.com/img/logo.png') no-repeat left center;
+  background-size: 40px 100px;
   padding: 20px 0 20px 40px;
-  color: white;
 }
 .swagger-section #content_message {
   margin: 10px 15px;

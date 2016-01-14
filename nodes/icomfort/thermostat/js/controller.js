@@ -26,7 +26,9 @@ function wsThermostat() {
 		console.log('< from-node-red:', m.data);
 		msg = JSON.parse(m.data);
 		if (msg.type == "update" && msg.ZoneId == (window.location.hash.substr(1) || "default")) {
-			data = msg.data;
+			for (var propertyName in msg.data) {
+				data[propertyName] = msg.data[propertyName];
+			}
 			updateModel();
 		}
 	};

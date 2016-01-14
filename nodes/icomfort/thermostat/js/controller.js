@@ -68,9 +68,22 @@ String.prototype.toDash = function() {
 		return "-" + $1.toLowerCase();
 	});
 };
+function isFloat(n){
+	try {
+		return n === Number(n) && n % 1 !== 0;	
+	} catch (ex) {
+		
+	}
+    return false;
+}
+
 function updateModel() {
 	for (var propertyName in data) {
-		$("#" + propertyName.toDash()).html(data[propertyName]);
+		value = data[propertyName];
+		if (isFloat(value) == true) {
+			value = data[propertyName].toFixed(0);
+		}
+		$("#" + propertyName.toDash()).html(value);
 	}
 }
 

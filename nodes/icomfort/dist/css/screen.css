@@ -1279,8 +1279,8 @@
   font-weight: bold;
   text-decoration: none;
   background: transparent url('https://static.lennox.com/img/logo.png') no-repeat left center;
-  background-size: 140px 40px;
-  padding: 20px 0 20px 150px;
+  background-size: 100px 30px;
+  padding: 20px 0 20px 120px;
   color: white;
 }
 .swagger-section #content_message {

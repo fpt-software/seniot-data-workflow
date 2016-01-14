@@ -28,7 +28,7 @@ module.exports = function(RED) {
 						data = JSON.parse(data);
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
 						console.log(action, node.deviceId, connectionString);
-						var deviceObj = device.Client.fromConnectionString(connectionString, device.Amqp);
+						var deviceObj = device.Client.fromConnectionString(connectionString, device.AmqpWS);
 						deferred.resolve(deviceObj);
 					} catch (ex) {
 						node.status({

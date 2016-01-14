@@ -210,7 +210,8 @@
 			"configuration-empty": "configuration is not set",
 			"confirmation-failed": "confirmation failed",
 			"connecting": "connecting"
-		}
+		},
+		"websocket": "Using WebSocket as Transportation Layer"
 	},
 	"mqtt": {
 		"label": {

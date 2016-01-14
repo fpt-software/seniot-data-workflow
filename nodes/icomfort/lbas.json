@@ -50,10 +50,10 @@
 						}
 					},
 					"400": {
-						"description": "Invalid ID supplied"
+						"description": "The DeviceID is not supplied"
 					},
 					"404": {
-						"description": "The device is not found"
+						"description": "The request is unauthorized. Client Certificate need to be presented for this request."
 					}
 				}
 			}
@@ -78,8 +78,17 @@
 					}
 				],
 				"responses": {
-					"405": {
-						"description": "Missing or invalid input parameters."
+					"200": {
+						"description": "The Device status has been changed into INSTALLED state.",
+						"schema": {
+							"$ref": "#/definitions/Device"
+						}
+					},
+					"400": {
+						"description": "The DeviceID is not supplied"
+					},
+					"404": {
+						"description": "The request is unauthorized. Client Certificate need to be presented for this request."
 					}
 				}
 			}
@@ -104,14 +113,14 @@
 					"200": {
 						"description": "The Device status has been changed into INSTALLED state.",
 						"schema": {
-							"$ref": "#/definitions/Device"
+							"$ref": "#/definitions/DeviceKey"
 						}
 					},
 					"400": {
-						"description": "Invalid ID supplied"
+						"description": "The DeviceID is not supplied"
 					},
 					"404": {
-						"description": "The Device is not found"
+						"description": "The request is unauthorized. Client Certificate need to be presented for this request."
 					}
 				}
 			}
@@ -281,6 +290,23 @@
 			},
 			"xml": {
 				"name": "Device"
+			}
+		},
+		"DeviceKey": {
+			"type": "object",
+			"properties": {
+				"HostName": {
+					"type": "string"
+				},
+				"DeviceId": {
+					"type": "string"
+				},
+				"PrimaryKey": {
+					"type": "string"
+				}
+			},
+			"xml": {
+				"name": "DeviceKey"
 			}
 		},
 		"Commands": {

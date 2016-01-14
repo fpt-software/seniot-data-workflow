@@ -3,9 +3,10 @@ var connected = false;
 var wsUri = "wss://" + window.location.hostname + "/ws/thermostat";
 var wsClient = null;
 
-function random (low, high) {
-    return Math.random() * (high - low) + low;
+function random(low, high) {
+	return Math.random() * (high - low) + low;
 }
+
 var data = {
 	fanStatus : "OFF",
 	heatIsOn : true,
@@ -34,7 +35,7 @@ function wsThermostat() {
 		powerOn = true;
 		initButtonEffect();
 		data.ZoneId = window.location.hash.substr(1) || "default";
-		$("#zone-id").text(data.ZoneId.replace("_"," "));
+		$("#zone-id").text(data.ZoneId.replace("_", " "));
 		$("#power").attr("disabled", false).removeClass("ui-state-disabled");
 		$("#power").addClass("ui-btn-active");
 		$("#container").removeClass("power-off");
@@ -68,13 +69,13 @@ String.prototype.toDash = function() {
 		return "-" + $1.toLowerCase();
 	});
 };
-function isFloat(n){
+function isFloat(n) {
 	try {
-		return n === Number(n) && n % 1 !== 0;	
+		return n === Number(n) && n % 1 !== 0;
 	} catch (ex) {
-		
+
 	}
-    return false;
+	return false;
 }
 
 function updateModel() {

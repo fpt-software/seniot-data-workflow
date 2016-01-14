@@ -70,12 +70,11 @@ module.exports = function(RED) {
 						});
 						console.log("RECEIVER INIT");
 						deviceObj.getReceiver(function(err, receiver) {
-							console.log("RECEIVER:", err, receiver);
 							if (receiver && !err) {
 								receiver.on('message', function(msg) {
 									console.log("***DATA", msg.body);
 									node.send({
-										payload : JSON.parse(msg.body)
+										payload : msg.body
 									});
 									receiver.complete(msg, function(error) {
 										if (error) {

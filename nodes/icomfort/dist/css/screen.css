@@ -1231,7 +1231,7 @@
   cursor: pointer;
 }
 .swagger-section #header {
-  background-color: #89bf04;
+  background-color: #000;
   padding: 14px;
 }
 .swagger-section #input_baseUrl {
@@ -1279,8 +1279,9 @@
   font-weight: bold;
   text-decoration: none;
   background: transparent url('https://static.lennox.com/img/logo.png') no-repeat left center;
-  background-size: 40px 100px;
-  padding: 20px 0 20px 40px;
+  background-size: 140px 40px;
+  padding: 20px 0 20px 150px;
+  color: white;
 }
 .swagger-section #content_message {
   margin: 10px 15px;

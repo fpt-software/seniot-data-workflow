@@ -60,15 +60,13 @@ module.exports = function(RED) {
 		node.on("input", function(message) {
 			node.deviceId = message.deviceId || node.deviceId;
 			if (node.deviceId) {
-				azureIoTConnect(node, "< RECV-FROM").then(function(deviceObj) {
-					console.log("HELLO", deviceObj);
+				azureIoTConnect(node, "< RECV-FROM").then(function(deviceObj) {					
 					if (deviceObj) {
 						node.status({
 							fill : "green",
 							shape : "dot",
 							text : "amqp.state.connected"
 						});
-						console.log("RECEIVER INIT");
 						deviceObj.getReceiver(function(err, receiver) {
 							if (receiver && !err) {
 								receiver.on('message', function(msg) {

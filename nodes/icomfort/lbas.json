@@ -1,0 +1,332 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "This is all about the Device Regitsration, Installation APIs and Certificate Management APIs",
+		"version": "1.0.0",
+		"title": "Lennox LBAS API Documentation",
+		"termsOfService": "//terms/",
+		"contact": {
+			"email": "cuongdd1@fsoft.com.vn"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"host": "/",
+	"basePath": "/",
+	"tags": [
+		{
+			"name": "devices",
+			"description": "Everything about Lennox LBAS Device Provisioning, Registration and Installation..."
+		}, {
+			"name": "certs",
+			"description": "Create and Revoke a client certificate from Certificate Managerment Server."
+		}
+	],
+	"schemes": ["https"],
+	"paths": {
+		"/api/v1/devices/{deviceId}": {
+			"get": {
+				"tags": ["Device Entity"],
+				"summary": "Get Device by ID",
+				"description": "Returns a single Device Object properties in the Database corresponding to its state",
+				"operationId": "GetDeviceById",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "deviceId",
+						"in": "path",
+						"description": "ID of Device to return in GUID format",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Your device has been retrieved successfully.",
+						"schema": {
+							"$ref": "#/definitions/Device"
+						}
+					},
+					"400": {
+						"description": "Invalid ID supplied"
+					},
+					"404": {
+						"description": "The device is not found"
+					}
+				}
+			}
+		},
+		"/api/v1/devices/{deviceId}/init": {
+			"post": {
+				"tags": ["Device Initialization"],
+				"summary": "Initialize the registration process for a specific DeviceId",
+				"description": "Return the initiated Device Object with an authentication PinCode property",
+				"operationId": "DeviceInitialization",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "The Device Object that needs to be verified by the Registration process.",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Device"
+						}
+					}
+				],
+				"responses": {
+					"405": {
+						"description": "Missing or invalid input parameters."
+					}
+				}
+			}
+		},
+		"/api/v1/devices/{deviceId}/key": {
+			"get": {
+				"tags": ["Get IoT Hub DeviceKey"],
+				"summary": "Get DeviceKey by ID",
+				"description": "Returns a single Device Key properties that generated from Azure IoT Hub",
+				"operationId": "GetDeviceKeyById",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "deviceId",
+						"in": "path",
+						"description": "ID of Device to return in GUID format",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The Device status has been changed into INSTALLED state.",
+						"schema": {
+							"$ref": "#/definitions/Device"
+						}
+					},
+					"400": {
+						"description": "Invalid ID supplied"
+					},
+					"404": {
+						"description": "The Device is not found"
+					}
+				}
+			}
+		},
+		"/lennox/certs": {
+			"post": {
+				"tags": ["Client Certificate Generation"],
+				"summary": "Generate the client certificates for LCC Device",
+				"description": "Thess certificates will be used for client authentication to the Device Management Server",
+				"operationId": "CreateCertificate",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "order placed for purchasing the pet",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CertificateRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The Certificate has been created successfully.",
+						"schema": {
+							"$ref": "#/definitions/CertificateResponse"
+						}
+					},
+					"400": {
+						"description": "Invalid Certificate ID or it has already used by another system."
+					}
+				}
+			},
+			"put": {
+				"tags": ["Client Certificate Revocation"],
+				"summary": "Revoke the client certificates of a LCC Device",
+				"description": "The revoked certificate will not be used for client authentication to the Device Management Server",
+				"operationId": "RevokeCertificate",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "order placed for purchasing the pet",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CertificateRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The Certificate has been revoked successfully",
+						"schema": {
+							"$ref": "#/definitions/CertificateResponse"
+						}
+					},
+					"400": {
+						"description": "Invalid Certificate ID or it has already revoked yet."
+					}
+				}
+			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "LBAS",
+			"in": "header"
+		}
+	},
+	"definitions": {
+		"DeviceProperties": {
+			"type": "object",
+			"properties": {
+				"DeviceID": {
+					"type": "string",
+					"default": "00000-DEV-6C-79944LK-32888D-82276"
+				},
+				"HubEnabledState": {
+					"type": "boolean",
+					"default": true
+				},
+				"DeviceState": {
+					"type": "string",
+					"default": "init"
+				},
+				"CreatedTime": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"Manufacturer": {
+					"type": "string",
+					"default": "Lennox International Inc."
+				},
+				"ModelNumber": {
+					"type": "string",
+					"default": "LCC-367"
+				},
+				"SerialNumber": {
+					"type": "string",
+					"default": "SER8305"
+				},
+				"FirmwareVersion": {
+					"type": "string",
+					"default": "2.06"
+				},
+				"Platform": {
+					"type": "string",
+					"default": "Linux 2.8"
+				},
+				"Processor": {
+					"type": "string",
+					"default": "iMX6"
+				},
+				"InstalledRAM": {
+					"type": "string",
+					"default": "256MB"
+				},
+				"Latitude": {
+					"type": "string",
+					"default": "47.593307"
+				},
+				"Longitude": {
+					"type": "string",
+					"default": "-122.332165"
+				}
+			},
+			"xml": {
+				"name": "DeviceProperties"
+			}
+		},
+		"Device": {
+			"type": "object",
+			"properties": {
+				"DeviceProperties": {
+					"$ref": "#/definitions/DeviceProperties"
+				},
+				"Version": {
+					"type": "string",
+					"default": "1.0"
+				},
+				"ObjectType": {
+					"type": "string",
+					"enum": ["DeviceInfo", "TelemetryData"]
+				},
+				"Name": {
+					"type": "string",
+					"default": "Lennox Device Name"
+				},
+				"Device2CloudStatus": {
+					"type": "string",
+					"default": ""
+				},
+				"Cloud2DeviceStatus": {
+					"type": "string",
+					"default": ""
+				},
+				"Commands": {
+					"type": "array",
+					"xml": {
+						"name": "Commands",
+						"wrapped": true
+					},
+					"items": {
+						"$ref": "#/definitions/Commands"
+					}
+				}
+			},
+			"xml": {
+				"name": "Device"
+			}
+		},
+		"Commands": {
+			"type": "object",
+			"properties": {
+				"Name": {
+					"type": "string",
+					"default": "Ping"
+				},
+				"Parameters": {
+					"type": "object",
+					"default": {}
+				}
+			},
+			"xml": {
+				"name": "Commands"
+			}
+		},
+		"CertificateRequest": {
+			"type": "object",
+			"properties": {
+				"CertificateId": {
+					"type": "string",
+					"default": "00000-DEV-6C-79944LK-32888D-82276"
+				}
+			},
+			"xml": {
+				"name": "CertificateRequest"
+			}
+		},
+		"CertificateResponse": {
+			"type": "object",
+			"properties": {
+				"CertificateId": {
+					"type": "string"
+				},
+				"DownloadUrl": {
+					"type": "string"
+				}
+			},
+			"xml": {
+				"name": "CertificateResponse"
+			}
+		}
+	}
+}

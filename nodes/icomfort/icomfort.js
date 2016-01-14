@@ -50,8 +50,9 @@ module.exports = function(RED) {
 		RED.httpNode.use("/lennox/gateway", express.static(__dirname + '/gateway'));
 		RED.httpNode.use("/lennox/thermostat", express.static(__dirname + '/thermostat'));
 		RED.httpNode.use("/lennox/xc25", express.static(__dirname + '/xc25'));
-		RED.httpNode.use("/lennox/devices/api", express.static(__dirname + '/dist/devices.html'));
-		RED.httpNode.use("/lennox/certs/api", express.static(__dirname + '/dist/certs.html'));
+		RED.httpNode.use("/lennox/devices/api", express.static(__dirname + '/devices.html'));
+		RED.httpNode.use("/lennox/certs/api", express.static(__dirname + '/certs.html'));
+		RED.httpNode.use("/lennox/api", express.static(__dirname + '/dist'));
 		RED.httpNode.use("/lennox/api/devices.json", express.static(__dirname + '/devices.json'));
 		RED.httpNode.use("/lennox/api/certs.json", express.static(__dirname + '/certs.json'));
 		

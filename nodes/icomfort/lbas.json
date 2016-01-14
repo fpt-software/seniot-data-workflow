@@ -28,7 +28,7 @@
 	"paths": {
 		"/api/v1/devices/{deviceId}": {
 			"get": {
-				"tags": ["Device Entity"],
+				"tags": ["Get Device Entity"],
 				"summary": "Get Device by ID",
 				"description": "Returns a single Device Object properties in the Database corresponding to its state",
 				"operationId": "GetDeviceById",

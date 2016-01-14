@@ -63,7 +63,7 @@
           }
 
           $('pre code').each(function(i, e) {
-            hljs.highlightBlock(e)
+            hljs.highlightBlock(e);
           });
 
           addApiKeyAuthorization();
@@ -89,12 +89,6 @@
 
       $('#input_apiKey').change(addApiKeyAuthorization);
 
-      // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
-      /*
-        var apiKey = "myApiKeyXXXX123456789";
-        $('#input_apiKey').val(apiKey);
-      */
-
       window.swaggerUi.load();
 
       function log() {
@@ -111,9 +105,8 @@
   <div class="swagger-ui-wrap">
     <a id="logo" href="http://swagger.io">swagger</a>
     <form id='api_selector'>
-      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-      <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
-      <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
+      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="hidden"/></div>
+      <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="hidden"/></div>
     </form>
   </div>
 </div>

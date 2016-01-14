@@ -2,15 +2,19 @@ var powerOn = false;
 var connected = false;
 var wsUri = "wss://" + window.location.hostname + "/ws/thermostat";
 var wsClient = null;
+
+function random (low, high) {
+    return Math.random() * (high - low) + low;
+}
 var data = {
 	fanStatus : "OFF",
 	heatIsOn : true,
-	indoorTemperature : 72,
-	indoorHumidity : 45,
-	setTempToCool : 75,
-	setTempToHeat : 68,
-	outdoorTemperature : 83,
-	outdoorHiTemperature : 85,
+	indoorTemperature : random(72, 80),
+	indoorHumidity : random(45, 55),
+	setTempToCool : random(75, 90),
+	setTempToHeat : random(60, 80),
+	outdoorTemperature : random(80, 90),
+	outdoorHiTemperature : 95,
 	outdoorLoTemperature : 72
 };
 

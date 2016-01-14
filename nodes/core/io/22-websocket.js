@@ -43,6 +43,7 @@ module.exports = function(RED) {
 
         function handleConnection(/*socket*/socket) {
             var id = (1+Math.random()*4294967295).toString(16);
+            console.log("SOCKET", socket);
             if (node.isServer) { node._clients[id] = socket; node.emit('opened',Object.keys(node._clients).length); }
             socket.on('open',function() {
                 if (!node.isServer) { node.emit('opened',''); }
@@ -77,7 +78,7 @@ module.exports = function(RED) {
                 if(event == "error" || event == "upgrade" || event == "listening"){
                     node._serverListeners[event] = listener;
                 }
-            }
+            };
 
             RED.server.addListener('newListener',storeListener);
 
@@ -124,7 +125,7 @@ module.exports = function(RED) {
 
     WebSocketListenerNode.prototype.registerInputNode = function(/*Node*/handler) {
         this._inputNodes.push(handler);
-    }
+    };
 
     WebSocketListenerNode.prototype.removeInputNode = function(/*Node*/handler) {
         this._inputNodes.forEach(function(node, i, inputNodes) {
@@ -132,7 +133,7 @@ module.exports = function(RED) {
                 inputNodes.splice(i, 1);
             }
         });
-    }
+    };
 
     WebSocketListenerNode.prototype.handleEvent = function(id,/*socket*/socket,/*String*/event,/*Object*/data,/*Object*/flags){
         var msg;
@@ -152,7 +153,7 @@ module.exports = function(RED) {
         for (var i = 0; i < this._inputNodes.length; i++) {
             this._inputNodes[i].send(msg);
         }
-    }
+    };
 
     WebSocketListenerNode.prototype.broadcast = function(data) {
         try {
@@ -168,7 +169,7 @@ module.exports = function(RED) {
         catch(e) { // swallow any errors
             this.warn("ws:"+i+" : "+e);
         }
-    }
+    };
 
     WebSocketListenerNode.prototype.reply = function(id,data) {
         var session = this._clients[id];
@@ -179,7 +180,7 @@ module.exports = function(RED) {
             catch(e) { // swallow any errors
             }
         }
-    }
+    };
 
     function WebSocketInNode(n) {
         RED.nodes.createNode(this,n);
@@ -244,4 +245,4 @@ module.exports = function(RED) {
         });
     }
     RED.nodes.registerType("websocket out",WebSocketOutNode);
-}
+};

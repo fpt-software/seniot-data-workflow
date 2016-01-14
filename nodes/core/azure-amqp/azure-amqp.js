@@ -39,8 +39,6 @@ module.exports = function(RED) {
 						deferred.reject({
 							Error : ex.message
 						});
-						console.log(ex);
-						throw ex;
 					}
 				} else {
 					deferred.reject({

@@ -73,10 +73,10 @@ module.exports = function(RED) {
 							console.log("RECEIVER:", err, receiver);
 							if (receiver && !err) {
 								receiver.on('message', function(msg) {
+									console.log("***DATA", msg.body);
 									node.send({
 										payload : JSON.parse(msg.body)
 									});
-									console.log("***DATA", msg.body);
 									receiver.complete(msg, function(error) {
 										if (error) {
 											node.status({

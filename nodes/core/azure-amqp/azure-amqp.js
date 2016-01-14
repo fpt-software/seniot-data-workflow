@@ -2,6 +2,7 @@ module.exports = function(RED) {
 	"use strict";
 	var fs = require('fs');
 	var q = require('q');
+	var common = require('azure-iot-common');
 	var device = require('azure-iot-device');
 
 	function azureIoTConnect(node, action) {
@@ -25,9 +26,8 @@ module.exports = function(RED) {
 					});
 					try {
 						data = JSON.parse(data);
-						var Device = require('azure-iot-device');
 						var connectionString = 'HostName=' + data.HostName + ';DeviceId=' + data.DeviceId + ';SharedAccessKey=' + data.PrimaryKey + '';
-						console.log(action, node.deviceId, connectionString, device.Amqp);
+						console.log(action, node.deviceId, connectionString);
 						var deviceObj = device.Client.fromConnectionString(connectionString, device.Amqp);
 						deferred.resolve(deviceObj);
 					} catch (ex) {
@@ -40,7 +40,7 @@ module.exports = function(RED) {
 							Error : ex.message
 						});
 						console.log(ex);
-						//throw ex;
+						throw ex;
 					}
 				} else {
 					deferred.reject({
@@ -50,7 +50,7 @@ module.exports = function(RED) {
 			}
 		});
 		return deferred.promise;
-	}
+	};
 
 	function azureIoTHubNodeIn(n) {
 		RED.nodes.createNode(this, n);
@@ -133,6 +133,7 @@ module.exports = function(RED) {
 		});
 	}
 
+
 	RED.nodes.registerType("azure-amqp in", azureIoTHubNodeIn);
 
 	function azureIoTHubNodeOut(n) {
@@ -186,6 +187,7 @@ module.exports = function(RED) {
 			}
 		});
 	}
+
 
 	RED.nodes.registerType("azure-amqp out", azureIoTHubNodeOut);
 };

@@ -3,9 +3,6 @@
     "version"       : "0.0.1",
     "description"   : "An azure-iot node for Node-RED",
     "dependencies"  : {
-        "azure-iot-device":"^1.0.0-preview.9",
-	    "azure-iot-common": "^1.0.0-preview.9",
-	    "q": "^1.4.1"
     },
     "license": "Apache-2.0",
     "keywords": [ "node-red", "azure-iot" ],

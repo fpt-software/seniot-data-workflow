@@ -1,0 +1,119 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "This is all about the Device Regitsration, Installation APIs and Certificate Management APIs",
+		"version": "1.0.0",
+		"title": "Lennox LBAS API Documentation",
+		"termsOfService": "//terms/",
+		"contact": {
+			"email": "cuongdd1@fsoft.com.vn"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"host": "lennox.go4smac.com",
+	"basePath": "/",
+	"tags": [
+		{
+			"name": "certs",
+			"description": "Create and Revoke a client certificate from Certificate Managerment Server."
+		}
+	],
+	"schemes": ["https"],
+	"paths": {
+		"/lennox/certs": {
+			"post": {
+				"tags": ["Client Certificate Generation"],
+				"summary": "Generate the client certificates for LCC Device",
+				"description": "Thess certificates will be used for client authentication to the Device Management Server",
+				"operationId": "CreateCertificate",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "order placed for purchasing the pet",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CertificateRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "If there is a JSON body response, the Certificate has been created successfully. Otherwise, there was some errors. The validity of Download URL is within one minute.",
+						"schema": {
+							"$ref": "#/definitions/CertificateResponse"
+						}
+					},
+					"400": {
+						"description": "Invalid Certificate ID or it has already used by another system."
+					}
+				}
+			},
+			"put": {
+				"tags": ["Client Certificate Revocation"],
+				"summary": "Revoke the client certificates of a LCC Device",
+				"description": "The revoked certificate will not be used for client authentication to the Device Management Server",
+				"operationId": "RevokeCertificate",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "order placed for purchasing the pet",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CertificateRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "If there is a JSON body response, the Certificate has been revoked successfully. Otherwise, there was some errors. The validity of Download URL is forever.",
+						"schema": {
+							"$ref": "#/definitions/CertificateResponse"
+						}
+					}
+				}
+			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "LBAS",
+			"in": "header"
+		}
+	},
+	"definitions": {
+		"CertificateRequest": {
+			"type": "object",
+			"properties": {
+				"CertificateId": {
+					"type": "string",
+					"default": "00000-DEV-6C-79944LK-32888D-82276"
+				}
+			},
+			"xml": {
+				"name": "CertificateRequest"
+			}
+		},
+		"CertificateResponse": {
+			"type": "object",
+			"properties": {
+				"CertificateId": {
+					"type": "string"
+				},
+				"DownloadUrl": {
+					"type": "string"
+				}
+			},
+			"xml": {
+				"name": "CertificateResponse"
+			}
+		}
+	}
+}

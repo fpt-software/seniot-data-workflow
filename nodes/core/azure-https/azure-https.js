@@ -64,6 +64,7 @@ module.exports = function(RED) {
 							node.device = new Client.fromConnectionString(connectionString);
 							if (node.device) {
 								node.device.receive(function(err, msg, res) {
+									console.log("RECV-DEBUG", err, msg.getData());
 									if (!err) {
 										if (msg.getData().length) {
 											node.send({
@@ -95,6 +96,8 @@ module.exports = function(RED) {
 										node.device = null;
 									}
 								});
+							} else {
+								console.log("ERROR", "Device is not created.");
 							}
 						} else {
 							node.status({

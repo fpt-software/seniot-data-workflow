@@ -44,6 +44,7 @@ module.exports = function(RED) {
 		}
 
 		function handleConnection(/*socket*/socket) {
+			console.log("handleConnection", socket.upgradeReq.connection.remoteAddress);
 			var id = (1 + Math.random() * 4294967295).toString(16);
 			if (node.isServer) {
 				node._clients[id] = socket;
